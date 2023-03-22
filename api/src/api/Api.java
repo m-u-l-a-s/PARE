@@ -16,25 +16,20 @@ public class Api {
         
         Sala sala = new Sala();
         SalaDAO salaController = new SalaDAO();
-      
-        sala.setSalaNome("5C");        
-        sala.setSalaDia("Segunda");
-        sala.setSalaHorario("16:00:00");
-        
-        salaController.cadastrarSala(sala);
-        
-        
         Aluno aluno = new Aluno();
         AlunoDAO alunoController = new AlunoDAO();
-        
-        aluno.setAlunoNome("Bruno");
-        aluno.setAlunoSala("5C");
-        
-        alunoController.cadastrar(aluno);
-        
-        
         Avaliacao avaliacao = new Avaliacao();
         AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
+      
+        sala.setSalaNome("9C");        
+        sala.setSalaDia("Segunda");
+        sala.setSalaHorario("16:00:00");
+        salaController.cadastrarSala(sala);
+        
+        aluno.setAlunoNome("Joaquim Barbosa dos Santos");
+        aluno.setAlunoSalaId(sala.getSalaId());
+        alunoController.cadastrar(aluno);
+          
         
         avaliacao.setAvaliacaoNome("Resenha sobre brás cubas");
         avaliacao.setAvaliacaoTipo("Redação");
@@ -42,18 +37,14 @@ public class Api {
         avaliacao.setAvaliacaoConceito(3.25);
         avaliacao.setAvaliacaoSalaId(1);
         
-        avaliacaoController.cadastrar(avaliacao);
+        sala.setSalaId(1);
+        sala.setSalaNome("9A");
+       avaliacaoController.cadastrar(avaliacao);
         
         
-        //System.out.println( salaController.buscarTodosAlunos(sala)); 
+       System.out.println( salaController.buscarTodosAlunos(sala)); 
         
-        
-        // BUSCAR ALUNO ESPECIFICO
-        aluno.setAlunoNome("Alexandre Jonas");
-        sala.setSalaNome("8A");
-        System.out.println(aluno.getAlunoNome());
-        System.out.println(sala.getSalaNome());
-        salaController.buscarAluno(sala, aluno);
+       
     }
     
     

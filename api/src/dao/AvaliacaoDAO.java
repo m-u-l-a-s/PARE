@@ -14,14 +14,13 @@ public class AvaliacaoDAO {
     }
     
     public void cadastrar(Avaliacao avaliacao){
-        String sqlQuery = "INSERT INTO avaliacao(AvaliacaoNome,AvaliacaoDataFinal,"
-                + "AvaliacaoTipo,AvaliacaoConceito,SalaId) VALUES(?,?,?,?,?)";
+        String sqlQuery = "INSERT INTO avaliacao(avaliacao_nome,avaliacao_data_final,"
+                + "avaliacao_tipo,avaliacao_conceito,sala_id) VALUES(?,?,?,?,?)";
         
         try(PreparedStatement stmt = connection.prepareStatement(sqlQuery,
                 Statement.RETURN_GENERATED_KEYS)){
             
-            
-            
+                
             
             stmt.setString(1, avaliacao.getAvaliacaoNome());
 stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoDataFinal())));
