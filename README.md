@@ -39,3 +39,5 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 
 ![ModeloLogico](https://user-images.githubusercontent.com/89790349/227070553-734a961e-0d25-4e60-92c1-c54b32a07819.png)
  
+![ProductBacklog_FatecAPI_page-0001](https://user-images.githubusercontent.com/111707785/228219887-d98a6b22-2a41-431d-aca8-0d080e416237.jpg)
+![ProductBacklog_FatecAPI_page-0002](https://user-images.githubusercontent.com/111707785/228219927-bb13fab5-5fb4-4dc7-bd82-2ed2113b5756.jpg)
