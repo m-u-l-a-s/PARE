@@ -37,7 +37,18 @@ O objetivo do projeto é desenvolver uma plataforma desktop na linguagem Java qu
 ## Banco de Dados:
 O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e nele serão armazenadas informações referente às instituições, salas, alunos e atividades. Segue abaixo o Modelo Lógico pensado para a primeira Sprint, onde constam as Entidades, seus Atributos e relações: 
 
+### Modelo Lógico:
+<img width="830px" margin="auto" src="https://user-images.githubusercontent.com/89790349/227070553-734a961e-0d25-4e60-92c1-c54b32a07819.png" >
 ![ModeloLogico](https://user-images.githubusercontent.com/89790349/227070553-734a961e-0d25-4e60-92c1-c54b32a07819.png)
+
+### Modelo Conceitual:
+![modelo_conceitual](https://user-images.githubusercontent.com/89790349/229095616-62a3c891-b513-441c-aa2a-268dc003d971.png)
+
+## Tecnologias Utilizadas
+
+![Tecnologias](https://user-images.githubusercontent.com/89790349/229111455-04b65973-7015-477e-9163-7e02883d8dc3.png)
+
+
 
 ## Backlog do Produto:
 ### User Stories:
