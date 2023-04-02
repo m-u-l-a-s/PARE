@@ -47,6 +47,9 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 
 ![Tecnologias](https://user-images.githubusercontent.com/89790349/229111455-04b65973-7015-477e-9163-7e02883d8dc3.png)
 
+### Protótipo (Wireframe)
+[apiFigma.webm](https://user-images.githubusercontent.com/53665466/229374066-6726121a-f0a8-454c-9545-9b427cc361d7.webm)
+
 
 
 ## Backlog do Produto:
