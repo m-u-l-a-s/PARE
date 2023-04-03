@@ -46,7 +46,7 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 * Java: Linguagem de programação utilizada na resolução do problema.
 * Trello: Ferramenta visual e colaborativa que auxilia no gerenciamento de projeto e fluxo de trabalho.
 * Apache NetBeans: Ambiente de desenvolvimento. 
-* Discord: Plataforma utilizada para realização de reuniões da equipe
+* Discord: Plataforma utilizada para realização de reuniões da equipe.
 * Figma: Prototipagem.
 * GitHub: Controle de versionamento, documentação e colaboração.
 * MySQL: Banco de Dados utilizado.
