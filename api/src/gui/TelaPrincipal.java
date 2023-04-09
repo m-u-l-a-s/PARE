@@ -5,7 +5,10 @@
 package gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import modelo.*;
 
 /**
  *
@@ -18,25 +21,111 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
-        PopulaTabela();
+        PopulaTabela(ComboSala.getSelectedIndex());
+        PopulaCombo();
         //tableAvaliacoesAluno.setSelectionBackground(Color.BLACK);
         listTrabalhos.setEnabled(false);
+        populaLista(ComboSala.getSelectedIndex());
         separaCor();
+        
+        
+    }
+    public void populaLista(int id)
+    {
+        if (id == 0)
+        {
+                String[] Lista =
+             {
+                 "Trabalho 1 - Aberto (15/03)",
+                 "Entregues:",
+                 "Não Entregues: ",
+                 "Tarefa criada em: 10/02/2023",
+                 "Encerrada em: 15/03/2023",
+                 "Trabalho 2 - Encerrado (10/02)",
+                 "Entregues: 27/30",
+                 "Não Entregues: 3/30",
+                 "Tarefa criada em: 10/01/2023",
+                 "Encerrada em: 10/02/2023",
+                 "Avaliação 1 - Encerrado (2/03)",
+                 "Entregues: 25/30",
+                 "Não Entregues: 5/30",
+                 "Tarefa criada em: 1/03/2023",
+                 "Encerrada em: 2/03/2023"
+             }; 
+             listTrabalhos.setListData(Lista);
+        }
+        else
+        {
+             String[] Lista =
+             {
+                 "Trabalho Ácidos e Bases - Aberto (29/06)",
+                 "Entregues:",
+                 "Não Entregues: ",
+                 "Tarefa criada em: 1/06/2023",
+                 "Encerrada em: 29/06/2023",
+                 "Trabalho Mols - Encerrado (25/05)",
+                 "Entregues: 25/25",
+                 "Não Entregues: 0/25",
+                 "Tarefa criada em: 10/04/2023",
+                 "Encerrada em: 25/05/2023",
+                 "Avaliação Mensal - Encerrado (10/04)",
+                 "Entregues: 24/25",
+                 "Não Entregues: 1/25",
+                 "Tarefa criada em: 20/03/2023",
+                 "Encerrada em: 10/04/2023"
+             }; 
+             listTrabalhos.setListData(Lista);
+        }
+        
+        
+    }
+    public void PopulaCombo()
+    {
+        Sala AuxSala = new Sala();
+        AuxSala.setSalaId(1);
+        AuxSala.setSalaNome("Química - 9° Ano C - Sala 208");
+        
+        ComboSala.addItem(AuxSala.getSalaNome());
+        
+        AuxSala.setSalaId(2);
+        AuxSala.setSalaNome("Química - 8° Ano A - Sala 302");
+        
+        ComboSala.addItem(AuxSala.getSalaNome());
+        
+        AuxSala.setSalaId(3);
+        AuxSala.setSalaNome("Ciência - 6° Ano C - Sala 308");
+        
+        ComboSala.addItem(AuxSala.getSalaNome());
     }
     
-    public void PopulaTabela()
+    public void PopulaTabela(int id)
     {
-      
         
-        DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
-        model.setRowCount(0);
-        tableAvaliacoesAluno.setModel(model);
+        if (id == 0)
+        {
+            DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
+            model.setRowCount(0);
+            tableAvaliacoesAluno.setModel(model);
         
-        model.addRow(new Object[]{"Alexandre","16/05"});
-        tableAvaliacoesAluno.setModel(model);
+            model.addRow(new Object[]{"Alexandre","16/05"});
+            tableAvaliacoesAluno.setModel(model);
 
-        model.addRow(new Object[]{"Samuel","13/05"});
-        tableAvaliacoesAluno.setModel(model);
+            model.addRow(new Object[]{"Samuel","13/05"});
+            tableAvaliacoesAluno.setModel(model);
+        }
+        else
+        {
+            DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
+            model.setRowCount(0);
+            tableAvaliacoesAluno.setModel(model);
+        
+            model.addRow(new Object[]{"Jonas","29/04"});
+            tableAvaliacoesAluno.setModel(model);
+
+            model.addRow(new Object[]{"Gomes","17/05"});
+            tableAvaliacoesAluno.setModel(model);
+        }
+        
 
     }
     
@@ -72,6 +161,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ComboSala = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 204));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
@@ -157,11 +247,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         labelAvaliacaoNome.setText("Trabalho 2");
         labelAvaliacaoNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        listTrabalhos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Trabalho 1 - Aberto (15/03)", "Entregues: ", "Não Entregues: ", "Tarefa criada em: 10/02/2023", "Encerrada em: 15/03/2023", "Trabalho 2 - Encerrado (10/02)", "Entregues: 27/30", "Não Entregues: 3/30", "Tarefa criada em: 10/01/2023", "Encerrada em: 10/02/2023", "Avaliação 1 - Encerrado (2/03)", "Entregues: 25/30", "Não Entregues: 5/30", "Tarefa criada em: 1/03/2023", "Encerrada em: 2/03/2023" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listTrabalhos.setRequestFocusEnabled(false);
         listTrabalhos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -170,7 +255,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listTrabalhos);
 
-        ComboSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Química - 9° Ano C - Sala 208", "Química - 8° Ano A - Sala 302" }));
+        ComboSala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboSalaActionPerformed(evt);
+            }
+        });
+        ComboSala.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ComboSalaPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,7 +307,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,8 +321,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -238,6 +332,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void listTrabalhosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTrabalhosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_listTrabalhosMouseClicked
+
+    private void ComboSalaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ComboSalaPropertyChange
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_ComboSalaPropertyChange
+
+    private void ComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboSalaActionPerformed
+        // TODO add your handling code here:
+       PopulaTabela(ComboSala.getSelectedIndex());
+       populaLista(ComboSala.getSelectedIndex());
+       separaCor();
+    }//GEN-LAST:event_ComboSalaActionPerformed
 
     /**
      * @param args the command line arguments
