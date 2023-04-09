@@ -4,8 +4,9 @@ package modelo;
 
 public class Sala {
     private String salaNome;
-    private String salaDia;
-    private String salaHorario;
+//    Alexandre - Comentando agora que tem a classe SalaHorario
+//    private String salaDia;
+//    private String salaHorario;
     private int salaId;
 
     public int getSalaId() {
@@ -23,22 +24,22 @@ public class Sala {
     public void setSalaNome(String salaNome) {
         this.salaNome = salaNome;
     }
-
-    public String getSalaDia() {
-        return salaDia;
-    }
-
-    public void setSalaDia(String salaDia) {
-        this.salaDia = salaDia;
-    }
-
-    public String getSalaHorario() {
-        return salaHorario;
-    }
-
-    public void setSalaHorario(String salaHorario) {
-        this.salaHorario = salaHorario;
-    }
+//    Alexandre - Comentando agora que tem a classe SalaHorario
+//    public String getSalaDia() {
+//        return salaDia;
+//    }
+//
+//    public void setSalaDia(String salaDia) {
+//        this.salaDia = salaDia;
+//    }
+//
+//    public String getSalaHorario() {
+//        return salaHorario;
+//    }
+//
+//    public void setSalaHorario(String salaHorario) {
+//        this.salaHorario = salaHorario;
+//    }
     
     
 }

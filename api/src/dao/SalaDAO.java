@@ -31,17 +31,18 @@ public class SalaDAO {
             throw new RuntimeException(u);
         }
         
-        String sqlQueryHorario = "INSERT INTO sala_horario(sala_hora,sala_dia,sala_id)"
-                + " VALUES(?,?,?)";  
-        try (PreparedStatement stmtHorario = connection.prepareStatement(sqlQueryHorario)){
-            stmtHorario.setString(1, sala.getSalaHorario());
-            stmtHorario.setString(2, sala.getSalaDia());
-            stmtHorario.setInt(3, sala.getSalaId());
-            stmtHorario.execute();
-            stmtHorario.close();
-        } catch(SQLException u){
-            throw new RuntimeException(u);
-        }
+          //Alexandre - 27/03/2023 - comentando código para inserir na tabela  salahorario agora que a classe salahorario já foi feita
+//        String sqlQueryHorario = "INSERT INTO sala_horario(sala_hora,sala_dia,sala_id)"
+//                + " VALUES(?,?,?)";  
+//        try (PreparedStatement stmtHorario = connection.prepareStatement(sqlQueryHorario)){
+//            stmtHorario.setString(1, sala.getSalaHorario());
+//            stmtHorario.setString(2, sala.getSalaDia());
+//            stmtHorario.setInt(3, sala.getSalaId());
+//            stmtHorario.execute();
+//            stmtHorario.close();
+//        } catch(SQLException u){
+//            throw new RuntimeException(u);
+//        }
     }
     
     public List<String> buscarTodosAlunos(Sala sala) {
@@ -88,5 +89,28 @@ public class SalaDAO {
         }
         return nome;
         
+    }
+    
+    //Alexandre - 27/03/2023 - Função para puxar o ID de uma sala a partir do nome
+    public int getSalaId(String SalaNome)
+    {
+        String sql =" SELECT sala_id from sala where sala_nome = ?;";
+        
+        int salaID;
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, SalaNome); 
+            
+            try(ResultSet rs = stmt.executeQuery()){
+                 rs.next();
+                 salaID = rs.getInt("sala_id");
+                 stmt.close();
+            }
+            
+        }
+        catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        return salaID;
     }
 }

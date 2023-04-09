@@ -9,11 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
+import dao.*;
 
-/**
- *
- * @author jetsoft
- */
 public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
@@ -21,117 +18,130 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
+        //Popula Tabela: Popula a tabela de AlunoAvaliação no lado direito da tela
         PopulaTabela(ComboSala.getSelectedIndex());
+        //PopulaCombo: Popula combo com os nomes das salas
         PopulaCombo();
-        //tableAvaliacoesAluno.setSelectionBackground(Color.BLACK);
+        
+        //Desabilita lista de trabalhos no lado esquerdo da tela para não sobreescrever as linhas destacadas quando o usuário clica
         listTrabalhos.setEnabled(false);
+        //populaLista: Popula lista de trabalhos de uma sala no lado esquerdo da tela
         populaLista(ComboSala.getSelectedIndex());
+        //separaCor: Destaca as linhas relacionadas ao título do trabalho
         separaCor();
-        
-        
+
+        //Dados mockados pra função de pegar os horarios pq lol
+        Sala salin = new Sala();
+        salin.setSalaNome("9C - Química - Sala 208");
+        //populaSalaHorario: Popula lista de horarios da sala atual
+        populaSalaHorario(salin);
     }
-    public void populaLista(int id)
-    {
-        if (id == 0)
-        {
-                String[] Lista =
-             {
-                 "Trabalho 1 - Aberto (15/03)",
-                 "Entregues:",
-                 "Não Entregues: ",
-                 "Tarefa criada em: 10/02/2023",
-                 "Encerrada em: 15/03/2023",
-                 "Trabalho 2 - Encerrado (10/02)",
-                 "Entregues: 27/30",
-                 "Não Entregues: 3/30",
-                 "Tarefa criada em: 10/01/2023",
-                 "Encerrada em: 10/02/2023",
-                 "Avaliação 1 - Encerrado (2/03)",
-                 "Entregues: 25/30",
-                 "Não Entregues: 5/30",
-                 "Tarefa criada em: 1/03/2023",
-                 "Encerrada em: 2/03/2023"
-             }; 
-             listTrabalhos.setListData(Lista);
+
+    public void populaSalaHorario(Sala sala) {
+        //Busca horarios de uma sala em formato de lista
+        List<SalaHorario> ListSalaHorario = new SalaHorarioDAO().buscarTodosHorarios(sala);
+        String[] listHorarios = new String[ListSalaHorario.size()];
+        //for para juntar e armazenar na lista as strings de dia e horario
+        for (int i = 0; i < ListSalaHorario.size(); i++) {
+            listHorarios[i] = (ListSalaHorario.get(i).getSalaHorarioDia() + " - " + ListSalaHorario.get(i).getSalaHorarioHora());
         }
-        else
-        {
-             String[] Lista =
-             {
-                 "Trabalho Ácidos e Bases - Aberto (29/06)",
-                 "Entregues:",
-                 "Não Entregues: ",
-                 "Tarefa criada em: 1/06/2023",
-                 "Encerrada em: 29/06/2023",
-                 "Trabalho Mols - Encerrado (25/05)",
-                 "Entregues: 25/25",
-                 "Não Entregues: 0/25",
-                 "Tarefa criada em: 10/04/2023",
-                 "Encerrada em: 25/05/2023",
-                 "Avaliação Mensal - Encerrado (10/04)",
-                 "Entregues: 24/25",
-                 "Não Entregues: 1/25",
-                 "Tarefa criada em: 20/03/2023",
-                 "Encerrada em: 10/04/2023"
-             }; 
-             listTrabalhos.setListData(Lista);
-        }
-        
-        
+        listSalaHorario.setListData(listHorarios);
     }
-    public void PopulaCombo()
-    {
+
+    public void populaLista(int id) {
+        //id = index da sala selecionada no combo
+        //id = 0 -> sala 9C - Química - Sala 208 selecionada
+        if (id == 0) {
+            String[] Lista
+                    = {
+                        "Trabalho 1 - Aberto (15/03)",
+                        "Entregues:",
+                        "Não Entregues: ",
+                        "Tarefa criada em: 10/02/2023",
+                        "Encerrada em: 15/03/2023",
+                        "Trabalho 2 - Encerrado (10/02)",
+                        "Entregues: 27/30",
+                        "Não Entregues: 3/30",
+                        "Tarefa criada em: 10/01/2023",
+                        "Encerrada em: 10/02/2023",
+                        "Avaliação 1 - Encerrado (2/03)",
+                        "Entregues: 25/30",
+                        "Não Entregues: 5/30",
+                        "Tarefa criada em: 1/03/2023",
+                        "Encerrada em: 2/03/2023"
+                    };
+            listTrabalhos.setListData(Lista);
+        } else {
+            String[] Lista
+                    = {
+                        "Trabalho Ácidos e Bases - Aberto (29/06)",
+                        "Entregues:",
+                        "Não Entregues: ",
+                        "Tarefa criada em: 1/06/2023",
+                        "Encerrada em: 29/06/2023",
+                        "Trabalho Mols - Encerrado (25/05)",
+                        "Entregues: 25/25",
+                        "Não Entregues: 0/25",
+                        "Tarefa criada em: 10/04/2023",
+                        "Encerrada em: 25/05/2023",
+                        "Avaliação Mensal - Encerrado (10/04)",
+                        "Entregues: 24/25",
+                        "Não Entregues: 1/25",
+                        "Tarefa criada em: 20/03/2023",
+                        "Encerrada em: 10/04/2023"
+                    };
+            listTrabalhos.setListData(Lista);
+        }
+
+    }
+
+    public void PopulaCombo() {
         Sala AuxSala = new Sala();
         AuxSala.setSalaId(1);
         AuxSala.setSalaNome("Química - 9° Ano C - Sala 208");
-        
+
         ComboSala.addItem(AuxSala.getSalaNome());
-        
+
         AuxSala.setSalaId(2);
-        AuxSala.setSalaNome("Química - 8° Ano A - Sala 302");
-        
+        AuxSala.setSalaNome("8C");
+
         ComboSala.addItem(AuxSala.getSalaNome());
-        
+
         AuxSala.setSalaId(3);
         AuxSala.setSalaNome("Ciência - 6° Ano C - Sala 308");
-        
+
         ComboSala.addItem(AuxSala.getSalaNome());
     }
-    
-    public void PopulaTabela(int id)
-    {
-        
-        if (id == 0)
-        {
+
+    public void PopulaTabela(int id) {
+        //id = index da sala selecionada no combo
+        //id = 0 -> sala 9C - Química - Sala 208 selecionada
+        if (id == 0) {
             DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
             model.setRowCount(0);
             tableAvaliacoesAluno.setModel(model);
-        
-            model.addRow(new Object[]{"Alexandre","16/05"});
+
+            model.addRow(new Object[]{"Alexandre", "16/05"});
             tableAvaliacoesAluno.setModel(model);
 
-            model.addRow(new Object[]{"Samuel","13/05"});
+            model.addRow(new Object[]{"Samuel", "13/05"});
             tableAvaliacoesAluno.setModel(model);
-        }
-        else
-        {
+        } else {
             DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
             model.setRowCount(0);
             tableAvaliacoesAluno.setModel(model);
-        
-            model.addRow(new Object[]{"Jonas","29/04"});
+
+            model.addRow(new Object[]{"Jonas", "29/04"});
             tableAvaliacoesAluno.setModel(model);
 
-            model.addRow(new Object[]{"Gomes","17/05"});
+            model.addRow(new Object[]{"Gomes", "17/05"});
             tableAvaliacoesAluno.setModel(model);
         }
-        
 
     }
-    
-    public void separaCor()
-    {
-        int[] indices = {0,5,10};
+
+    public void separaCor() {
+        int[] indices = {0, 5, 10};
         listTrabalhos.setSelectedIndices(indices);
     }
 
@@ -204,11 +214,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnNovoTrabalho.setText("Novo Trabalho");
         btnNovoTrabalho.setBorder(null);
 
-        listSalaHorario.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Segunda-feira\t- 9h15", "Quarta-feira\t- 19h", "Sexta-feira\t- 19h" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listSalaHorario);
 
         tableAvaliacoesAluno.setModel(new javax.swing.table.DefaultTableModel(
@@ -335,14 +340,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ComboSalaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ComboSalaPropertyChange
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_ComboSalaPropertyChange
 
     private void ComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboSalaActionPerformed
-        // TODO add your handling code here:
-       PopulaTabela(ComboSala.getSelectedIndex());
-       populaLista(ComboSala.getSelectedIndex());
-       separaCor();
+        //Função executada quando o valor do combo muda:
+        PopulaTabela(ComboSala.getSelectedIndex());
+        populaLista(ComboSala.getSelectedIndex());
+        separaCor();
+
+        //Dados mockados pra pegar os horarios certinho do banco pq lol
+        Sala salin = new Sala();
+        salin.setSalaNome("9C - Química - Sala 208");
+        if (ComboSala.getSelectedIndex() != 0) {
+            salin.setSalaNome("8C");
+        }
+        populaSalaHorario(salin);
     }//GEN-LAST:event_ComboSalaActionPerformed
 
     /**
