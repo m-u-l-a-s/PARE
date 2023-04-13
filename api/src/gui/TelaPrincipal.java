@@ -96,21 +96,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     public void PopulaCombo() {
-        Sala AuxSala = new Sala();
-        AuxSala.setSalaId(1);
-        AuxSala.setSalaNome("Química - 9° Ano C - Sala 208");
+        
+        List<String> ListSalas = new SalaDAO().buscarTodasSalas();
+           
+        for(int i = 0; i < ListSalas.size(); i++){
+            ComboSala.addItem(ListSalas.get(i));
+                
+        }
 
-        ComboSala.addItem(AuxSala.getSalaNome());
-
-        AuxSala.setSalaId(2);
-        AuxSala.setSalaNome("8C");
-
-        ComboSala.addItem(AuxSala.getSalaNome());
-
-        AuxSala.setSalaId(3);
-        AuxSala.setSalaNome("Ciência - 6° Ano C - Sala 308");
-
-        ComboSala.addItem(AuxSala.getSalaNome());
+     
     }
 
     public void PopulaTabela(int id) {
