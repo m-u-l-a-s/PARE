@@ -8,6 +8,7 @@ import modelo.Avaliacao;
 import dao.AvaliacaoDAO;
 import modelo.SalaHorario;
 import dao.SalaHorarioDAO;
+import java.util.*;
 
 public class Api {
 
@@ -46,7 +47,22 @@ public class Api {
         avaliacaoController.cadastrar(avaliacao);
 
         System.out.println(salaController.buscarTodosAlunos(sala));
-
+        
+        System.out.println(salaController.buscarTodasSalas());
+        
+        List<String> ListSalas = new SalaDAO().buscarTodasSalas();
+        
+        for(int i = 0; i < ListSalas.size(); i++){
+            System.out.println(ListSalas.get(i));
+                
+        }
+        
+       
+            
+        }
+        
+        
+        
     }
 
-}
+

@@ -45,6 +45,27 @@ public class SalaDAO {
 //        }
     }
     
+       //Michael - 13/04/2023 - Função para puxar nome de todas as salas e mostrar no comboxBox
+
+    public List<String> buscarTodasSalas(){
+        List<String> salasNome = new ArrayList<>();
+        
+        String sql = "select distinct sala_nome from api.sala;";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            try (ResultSet rs = stmt.executeQuery()){
+                while(rs.next()){
+                    String sala = rs.getString("sala_nome");
+                    salasNome.add(sala);
+                }
+            }
+        } catch (SQLException e){throw new RuntimeException(e);
+        
+        }
+        return salasNome;
+    
+}
+    
     public List<String> buscarTodosAlunos(Sala sala) {
         List<String> studentNames = new ArrayList<>();
 
@@ -112,5 +133,9 @@ public class SalaDAO {
             throw new RuntimeException(e);
         }
         return salaID;
-    }
+    }    
 }
+
+
+
+    
