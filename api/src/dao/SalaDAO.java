@@ -50,7 +50,7 @@ public class SalaDAO {
     public List<String> buscarTodasSalas(){
         List<String> salasNome = new ArrayList<>();
         
-        String sql = "select distinct sala_nome from api.sala;";
+        String sql = "select distinct sala_nome from api.sala order by sala_nome;";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
             try (ResultSet rs = stmt.executeQuery()){

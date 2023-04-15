@@ -342,13 +342,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         PopulaTabela(ComboSala.getSelectedIndex());
         populaLista(ComboSala.getSelectedIndex());
         separaCor();
-
-        //Dados mockados pra pegar os horarios certinho do banco pq lol
+        
+        //Pega o texto do valor atual do combo e salva na classe sala, que então é usada como parâmetro
+        //para popular a lista de horários
         Sala salin = new Sala();
-        salin.setSalaNome("9C - Química - Sala 208");
-        if (ComboSala.getSelectedIndex() != 0) {
-            salin.setSalaNome("8C");
-        }
+        salin.setSalaNome(ComboSala.getSelectedItem().toString());
         populaSalaHorario(salin);
     }//GEN-LAST:event_ComboSalaActionPerformed
 
