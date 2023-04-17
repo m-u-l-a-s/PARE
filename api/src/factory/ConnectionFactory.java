@@ -26,7 +26,7 @@ public class ConnectionFactory {
 		String mydatabase = "api";
 		String url = "jdbc:mysql://"+serverName+"/"+mydatabase;
 		String username = "root";
-		String password = "Desenv1243$";
+		String password = "fatec";
 		connection = DriverManager.getConnection(url, username, password);
 		
 		// Testa conexão:

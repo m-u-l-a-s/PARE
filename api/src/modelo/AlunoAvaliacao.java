@@ -1,11 +1,20 @@
 package modelo;
 
 public class AlunoAvaliacao {
+    private int alunoAvaliacaoId;
     private int alunoId;
     private int avaliacaoId;
     private String alunoAvaliacaoData;
     private float alunoAvaliacaoNota;
 
+     public AlunoAvaliacao(int alunoAvaliacaoId,int alunoID, int avaliacaoId, String Data, float nota)
+    {
+        this.alunoAvaliacaoId = alunoAvaliacaoId;
+        this.alunoId = alunoID;
+        this.avaliacaoId = avaliacaoId;
+        this.alunoAvaliacaoData = Data;
+        this.alunoAvaliacaoNota = nota;
+    }
     
     public void setAlunoId(int alunoId) {
         this.alunoId = alunoId;
@@ -32,7 +41,13 @@ public class AlunoAvaliacao {
         return alunoAvaliacaoNota;
     }
 
-       
-   
-    
+     public void setAlunoAvaliacaoId(int id)
+    {
+        this.alunoAvaliacaoId = id;
+    }
+
+    public int getAlunoAvaliacaoId()
+    {
+        return this.alunoAvaliacaoId;
+    }  
 }

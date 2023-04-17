@@ -29,12 +29,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         populaLista(ComboSala.getSelectedIndex());
         //separaCor: Destaca as linhas relacionadas ao título do trabalho
         separaCor();
-
-        //Dados mockados pra função de pegar os horarios pq lol
-        Sala salin = new Sala();
-        salin.setSalaNome("9C - Química - Sala 208");
-        //populaSalaHorario: Popula lista de horarios da sala atual
-        populaSalaHorario(salin);
     }
 
     public void populaSalaHorario(Sala sala) {
@@ -103,34 +97,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
             ComboSala.addItem(ListSalas.get(i));
                 
         }
-
-     
     }
 
     public void PopulaTabela(int id) {
-        //id = index da sala selecionada no combo
-        //id = 0 -> sala 9C - Química - Sala 208 selecionada
-        if (id == 0) {
-            DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
-            model.setRowCount(0);
-            tableAvaliacoesAluno.setModel(model);
-
-            model.addRow(new Object[]{"Alexandre", "16/05"});
-            tableAvaliacoesAluno.setModel(model);
-
-            model.addRow(new Object[]{"Samuel", "13/05"});
-            tableAvaliacoesAluno.setModel(model);
-        } else {
-            DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
-            model.setRowCount(0);
-            tableAvaliacoesAluno.setModel(model);
-
-            model.addRow(new Object[]{"Jonas", "29/04"});
-            tableAvaliacoesAluno.setModel(model);
-
-            model.addRow(new Object[]{"Gomes", "17/05"});
-            tableAvaliacoesAluno.setModel(model);
-        }
+        DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
+        model.setRowCount(0);
+        tableAvaliacoesAluno.setModel(model);
+        
+        Avaliacao av = new Avaliacao();
+        av.setAvaliacaoId(3);
+        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+          
+          for(int i = 0; i< ListAlunoAvaliacao.size(); i++)
+          {
+              String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
+              String data = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
+              model.addRow(new Object[] {nome, data});
+              tableAvaliacoesAluno.setModel(model);
+          }
 
     }
 
