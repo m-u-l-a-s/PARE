@@ -104,10 +104,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         model.setRowCount(0);
         tableAvaliacoesAluno.setModel(model);
         
+        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
+        labelAvaliacaoNome.setText(AvaliacaoNome);
+        //Mockando ID por enquanto pq lol
         Avaliacao av = new Avaliacao();
         av.setAvaliacaoId(3);
+        
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
-          
           for(int i = 0; i< ListAlunoAvaliacao.size(); i++)
           {
               String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());

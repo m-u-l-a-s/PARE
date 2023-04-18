@@ -40,5 +40,24 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
         }catch(SQLException u){throw new RuntimeException(u);}
     }
     
+    public String getAvaliacaoNome(int id)
+    {
+        String sql = "select avaliacao_nome from api.avaliacao where avaliacao_id = ?";
+         String nome = "";
+         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setInt(1, id );
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    nome = rs.getString("avaliacao_nome");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return nome;
+    }
     
 }
