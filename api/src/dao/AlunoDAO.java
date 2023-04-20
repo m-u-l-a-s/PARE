@@ -60,6 +60,24 @@ public class AlunoDAO {
 
         return nome;
     }
+
+    public ArrayList getIDsAlunosSala(int id_sala) {
+        ArrayList<Integer> idsAlunos = new ArrayList<Integer>();
+        String sql = "select aluno_id from aluno WHERE sala_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id_sala);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    idsAlunos.add(rs.getInt("aluno_id"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return idsAlunos;
+    }
     
 }
     
