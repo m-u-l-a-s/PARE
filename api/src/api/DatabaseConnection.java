@@ -24,7 +24,7 @@ public class DatabaseConnection {
 		String mydatabase = "mysql";
 		String url = "jdbc:mysql://"+serverName+"/"+mydatabase;
 		String username = "root";
-		String password = "mulinhas";
+		String password = "Desenv1243$";
 		connection = DriverManager.getConnection(url, username, password);
 		
 		// Testa conexão:
