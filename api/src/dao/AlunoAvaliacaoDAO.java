@@ -51,5 +51,32 @@ public class AlunoAvaliacaoDAO {
         return ListAlunoAvaliacao;
     }
     
+    //Função para retornar os alunos atrasados de acordo com a variavel id da avaliação
+    public List<String> AlunosAtrasados(int id)
+    {
+        List<String> ListAtrasados = new ArrayList<>();
+
+        String sql = "select aluno_avaliacao.aluno_id as Atrasado from api.aluno_avaliacao, api.avaliacao where avaliacao.avaliacao_id = ? and aluno_avaliacao.avaliacao_id = ? and aluno_avaliacao.aluno_avaliacao_data_entrega > avaliacao.avaliacao_data_final;";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setInt(1, id );
+            stmt.setInt(2, id );
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    
+                    String AlunoAtrasado = rs.getString("Atrasado");
+                    ListAtrasados.add(AlunoAtrasado);
+                    
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ListAtrasados;
+    }
+    
     
 }
