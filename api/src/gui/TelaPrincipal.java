@@ -162,6 +162,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.setBorder(null);
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
 
         btnSalas.setText("Salas");
         btnSalas.setBorder(null);
@@ -336,6 +341,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         salin.setSalaNome(ComboSala.getSelectedItem().toString());
         populaSalaHorario(salin);
     }//GEN-LAST:event_ComboSalaActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+    new CadastroAluno().setVisible(true); dispose();
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
