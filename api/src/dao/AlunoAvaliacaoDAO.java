@@ -7,6 +7,8 @@ import java.sql.*;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+import dao.AlunoDAO;
+import dao.AvaliacaoDAO;
 
 public class AlunoAvaliacaoDAO {
     private Connection connection;
@@ -15,10 +17,30 @@ public class AlunoAvaliacaoDAO {
         this.connection = new ConnectionFactory().getConexaoMySQL();
 
     }
+    
+    public void cadastrarTodasAvaliacoes(Avaliacao avaliacao){
+        ArrayList<Integer> idsAlunos = new AlunoDAO().getIDsAlunosSala(avaliacao.getAvaliacaoSalaId());
+        for (int i=0; i<idsAlunos.size(); i++){
+            Aluno aluno = new Aluno();
+            aluno.setAlunoId(idsAlunos.get(i));
+                cadastrarAlunoAvaliacao(aluno, avaliacao);
+        }
+    
+    }
 
-    public void cadastrarAlunoAvaliacao(Aluno aluno,Avaliacao avalicao){
-        String sql = "INSERT INTO aluno_avaliacao(sala_id,avaliacao_id,aluno_id)"
-        + "VALUES(?,?,?);";
+    public void cadastrarAlunoAvaliacao(Aluno aluno,Avaliacao avaliacao){
+        String sql = "INSERT INTO aluno_avaliacao(avaliacao_id,aluno_id)"
+        + "VALUES(?,?);";
+        
+        try(PreparedStatement stmt = connection.prepareStatement(sql,
+                Statement.RETURN_GENERATED_KEYS)){
+                           
+            stmt.setInt(1, avaliacao.getAvaliacaoId());
+            stmt.setInt(2, aluno.getAlunoId());
+            
+            stmt.execute();           
+            stmt.close();
+        }catch(SQLException u){throw new RuntimeException(u);}
 
     }
 
