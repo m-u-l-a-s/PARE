@@ -294,11 +294,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 88, Short.MAX_VALUE))
+                .addGap(0, 86, Short.MAX_VALUE))
         );
 
         btnCadastrar.setBackground(new java.awt.Color(101, 142, 169));
         btnCadastrar.setFont(new java.awt.Font("Dubai", 1, 14));
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/api/icones/aluna.png"))); // NOI18N
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.setBorder(null);
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -321,6 +322,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnNovoTrabalho.setBackground(new java.awt.Color(101, 142, 169));
         btnNovoTrabalho.setFont(new java.awt.Font("Dubai", 1, 14));
+        btnNovoTrabalho.setIcon(new javax.swing.ImageIcon(getClass().getResource("/api/icones/tarefa.png"))); // NOI18N
         btnNovoTrabalho.setText("Novo Trabalho");
         btnNovoTrabalho.setBorder(null);
         btnNovoTrabalho.addActionListener(new java.awt.event.ActionListener() {
@@ -337,18 +339,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(428, 428, 428)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
@@ -357,14 +357,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ComboSala, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

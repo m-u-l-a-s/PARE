@@ -61,11 +61,11 @@ public class CadastroAluno extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         comboSala = new javax.swing.JComboBox<>();
-        jTextField4 = new javax.swing.JTextField();
+        NomeDoAluno = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel7 = new javax.swing.JLabel();
+        ListaAlunosSala = new javax.swing.JList<>();
+        AlunoSalaX = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -244,7 +244,6 @@ public class CadastroAluno extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        comboSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboSalaActionPerformed(evt);
@@ -252,20 +251,20 @@ public class CadastroAluno extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(comboSala);
 
-        jTextField4.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField4.setText("Nome do(a) Aluno(a):");
-        jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+        NomeDoAluno.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
+        NomeDoAluno.setForeground(new java.awt.Color(102, 102, 102));
+        NomeDoAluno.setText("Nome do(a) Aluno(a):");
+        NomeDoAluno.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField4FocusGained(evt);
+                NomeDoAlunoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField4FocusLost(evt);
+                NomeDoAlunoFocusLost(evt);
             }
         });
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        NomeDoAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                NomeDoAlunoActionPerformed(evt);
             }
         });
 
@@ -278,13 +277,11 @@ public class CadastroAluno extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        jScrollPane3.setViewportView(ListaAlunosSala);
 
-        jLabel7.setFont(new java.awt.Font("Dubai", 1, 14)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Alunos da sala selecionada");
+        AlunoSalaX.setFont(new java.awt.Font("Dubai", 1, 14)); // NOI18N
+        AlunoSalaX.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AlunoSalaX.setText("Alunos da sala selecionada");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,11 +299,11 @@ public class CadastroAluno extends javax.swing.JFrame {
                             .addGap(77, 77, 77)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(NomeDoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane3)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(AlunoSalaX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(35, 35, 35)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,11 +334,11 @@ public class CadastroAluno extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(NomeDoAluno, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AlunoSalaX, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -366,10 +363,10 @@ public class CadastroAluno extends javax.swing.JFrame {
 
         
         Aluno aluno= new Aluno();
-            aluno.setAlunoNome(jTextField4.getText());
+            aluno.setAlunoNome(NomeDoAluno.getText());
             aluno.setAlunoSalaId(1);
         
-        if (jTextField4.getText().isEmpty()){
+        if (NomeDoAluno.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"O campo está vazio, favor preenchê-lo");
         }
         else{
@@ -378,29 +375,29 @@ public class CadastroAluno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Aluno cadastrado!");
         }        
         
-        jTextField4.setText("Nome do(a) Aluno(a):");
-        jTextField4.setForeground(new Color(102, 102, 102));
+        NomeDoAluno.setText("Nome do(a) Aluno(a):");
+        NomeDoAluno.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new TelaPrincipal().setVisible(true); dispose();        // TODO add your handling code here:
+    new TelaPrincipal().setVisible(true); dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusGained
-    if (jTextField4.getText().equals("Nome do(a) Aluno(a):"))
+    private void NomeDoAlunoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NomeDoAlunoFocusGained
+    if (NomeDoAluno.getText().equals("Nome do(a) Aluno(a):"))
     {
-        jTextField4.setText("");
-        jTextField4.setForeground(Color.black);
+        NomeDoAluno.setText("");
+        NomeDoAluno.setForeground(Color.black);
     }
-    }//GEN-LAST:event_jTextField4FocusGained
+    }//GEN-LAST:event_NomeDoAlunoFocusGained
 
-    private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
-    if (jTextField4.getText().equals(""))
+    private void NomeDoAlunoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NomeDoAlunoFocusLost
+    if (NomeDoAluno.getText().equals(""))
     {
-        jTextField4.setText("Nome do(a) Aluno(a):");
-        jTextField4.setForeground(new Color(102, 102, 102));
+        NomeDoAluno.setText("Nome do(a) Aluno(a):");
+        NomeDoAluno.setForeground(new Color(102, 102, 102));
     }
-    }//GEN-LAST:event_jTextField4FocusLost
+    }//GEN-LAST:event_NomeDoAlunoFocusLost
 
     private void jTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusGained
     if (jTextField3.getText().equals("Nome:"))
@@ -461,24 +458,36 @@ public class CadastroAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSalaActionPerformed
-       
+    AlunoSalaX.setText("Alunos da sala " + comboSala.getSelectedItem().toString());
+    
+    Sala salin = new Sala();
+    salin.setSalaNome(comboSala.getSelectedItem().toString());
+    salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
+    populaSalaAluno(salin); 
         
     }//GEN-LAST:event_comboSalaActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void NomeDoAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomeDoAlunoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_NomeDoAlunoActionPerformed
 
-      public void PopulaCombo() {
-          comboSala.removeAllItems();
-        
+      public void PopulaCombo() {        
         List<String> ListSalas = new SalaDAO().buscarTodasSalas();
            
         for(int i = 0; i < ListSalas.size(); i++){
-            comboSala.addItem(ListSalas.get(i));
-                
+            comboSala.addItem(ListSalas.get(i));                
+        }        
+    }
+      
+        public void populaSalaAluno(Sala sala) {
+        //Busca os nomes dos alunos de uma sala em formato de lista
+        List<String> studentNames = new SalaDAO().buscarTodosAlunos(sala);
+        String listNomes[] = new String[studentNames.size()];
+        //for para juntar e armazenar na lista a string com os nomes
+        for (int i = 0; i < studentNames.size(); i++) {
+            listNomes[i] = (studentNames.get(i));
         }
-        
+        ListaAlunosSala.setListData(listNomes);
     }
   
     /**
@@ -517,6 +526,9 @@ public class CadastroAluno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AlunoSalaX;
+    private javax.swing.JList<String> ListaAlunosSala;
+    private javax.swing.JTextField NomeDoAluno;
     private javax.swing.JComboBox<String> comboSala;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -527,7 +539,6 @@ public class CadastroAluno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -536,11 +547,9 @@ public class CadastroAluno extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 
     private ComboBoxModel<String> add(String testE1) {
