@@ -182,7 +182,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return diaSemana + ", " + horaFormatada;
     }
 
-    String turma_e_horario = getDiaEHora() + ". Estamos na sala " + salaHorarioController.getSalaAtual();
+    String turma_e_horario = salaHorarioController.getSalaAtual().equals("")
+            ? getDiaEHora() + ". Não há turmas neste horário."
+            : getDiaEHora() + ". Estamos na sala " + salaHorarioController.getSalaAtual();
 
     /**
      * This method is called from within the constructor to initialize the form.
