@@ -4,9 +4,12 @@
  */
 package gui;
 
-import java.awt.Color;
-import java.util.ArrayList;
+import dao.SalaHorarioDAO;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.List;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import dao.*;
@@ -17,12 +20,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
+
         initComponents();
         //Popula Tabela: Popula a tabela de AlunoAvaliação no lado direito da tela
         PopulaTabela(ComboSala.getSelectedIndex());
         //PopulaCombo: Popula combo com os nomes das salas
         PopulaCombo();
-        
+
+        // setCombo: Altera valor do combo box para sala atual.
+        setCombo();
+
         //Desabilita lista de trabalhos no lado esquerdo da tela para não sobreescrever as linhas destacadas quando o usuário clica
         listTrabalhos.setEnabled(false);
         //populaLista: Popula lista de trabalhos de uma sala no lado esquerdo da tela
@@ -99,6 +106,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }
 
+    public void setCombo() {
+        ComboSala.setSelectedItem(salaHorarioController.getSalaAtual());
+    }
+
     public void PopulaTabela(int id) {
         DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
         model.setRowCount(0);
@@ -135,6 +146,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listTrabalhos.setSelectedIndices(indices);
     }
 
+    SalaHorarioDAO salaHorarioController = new SalaHorarioDAO();
+
+    public String getDiaEHora() {
+        int hora = LocalDateTime.now().getHour();
+        int minuto = LocalDateTime.now().getMinute();
+        DayOfWeek dia = LocalDateTime.now().getDayOfWeek();
+        String horaFormatada = Integer.toString(hora) + ":" + Integer.toString(minuto);
+        String diaSemana = "";
+
+        switch (dia) {
+            case MONDAY:
+                diaSemana = "Segunda";
+                break;
+            case TUESDAY:
+                diaSemana = "Terça";
+                break;
+            case WEDNESDAY:
+                diaSemana = "Quarta";
+                break;
+            case THURSDAY:
+                diaSemana = "Quinta";
+                break;
+            case FRIDAY:
+                diaSemana = "Sexta";
+                break;
+            case SATURDAY:
+                diaSemana = "Sábado";
+                break;
+            case SUNDAY:
+                diaSemana = "Domingo";
+                break;
+        }
+
+        return diaSemana + ", " + horaFormatada;
+    }
+
+    String turma_e_horario = getDiaEHora() + ". Estamos na sala " + salaHorarioController.getSalaAtual();
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,10 +204,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnNovoTrabalho = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listSalaHorario = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
-        setPreferredSize(new java.awt.Dimension(1022, 700));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -217,7 +266,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
                         .addContainerGap())
                     .addComponent(labelAvaliacaoNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
@@ -226,7 +275,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labelAvaliacaoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
         );
 
@@ -254,21 +303,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(listSalaHorario);
 
+        jLabel1.setText(turma_e_horario);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(428, 428, 428)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(jLabel1)
+                        .addGap(295, 295, 295)
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,14 +332,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -360,6 +418,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboSala;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnNovoTrabalho;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -369,4 +428,5 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JList<String> listTrabalhos;
     private javax.swing.JTable tableAvaliacoesAluno;
     // End of variables declaration//GEN-END:variables
+
 }

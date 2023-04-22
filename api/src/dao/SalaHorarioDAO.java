@@ -6,6 +6,9 @@ package dao;
 
 import factory.ConnectionFactory;
 import java.sql.*;
+import java.time.DayOfWeek;
+//import static java.time.DayOfWeek.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.SalaHorario;
@@ -57,5 +60,65 @@ public class SalaHorarioDAO {
 
         return ListSalaHorario;
     }
+    
+        public String getSalaAtual() {
+
+            // Pegar a hora do sistema:
+            DayOfWeek localDay = LocalDateTime.now().getDayOfWeek();
+            String diaSemana = "";
+            String turma_e_Horario = "";
+
+            switch (localDay) {
+                case MONDAY:
+                    diaSemana = "Segunda";
+                    break;
+                case TUESDAY:
+                    diaSemana = "Terça";
+                    break;
+                case WEDNESDAY:
+                    diaSemana = "Quarta";
+                    break;
+                case THURSDAY:
+                    diaSemana = "Quinta";
+                    break;
+                case FRIDAY:
+                    diaSemana = "Sexta";
+                    break;
+                case SATURDAY:
+                    diaSemana = "Sábado";
+                    break;
+                case SUNDAY:
+                    diaSemana = "Domingo";
+                    break;
+            }
+
+            int hora = LocalDateTime.now().getHour();
+            String horaFormatada = Integer.toString(hora) + ":00";
+
+            // Pesquisando BD pela disciplina do horário atual:
+            String sql = "SELECT sala_hora, sala_nome FROM sala_horario, sala WHERE sala_dia = \"" + diaSemana + ""
+                    + "\" AND sala_hora <= \"" + horaFormatada + "\" AND sala.sala_id = sala_horario.sala_id ORDER BY sala_hora DESC;";
+
+            String salaNome = "";
+            try (
+                    Statement stmt = connection.createStatement();
+                    ResultSet rs = stmt.executeQuery(sql)) {
+
+                if (rs.next()) {
+                    salaNome = rs.getString("sala_nome");
+                    Time horaDisciplina = rs.getTime("sala_hora");
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+            return salaNome;
+        }
+
+
+
+
+
     
 }
