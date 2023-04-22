@@ -353,7 +353,8 @@ public class CadastroAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jTextField4.setText("");
+        jTextField4.setText("Nome do(a) Aluno(a):");
+        jTextField4.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -364,14 +365,14 @@ public class CadastroAluno extends javax.swing.JFrame {
     if (jTextField4.getText().equals("Nome do(a) Aluno(a):"))
     {
         jTextField4.setText("");
-        jTextField4.setForeground(new Color(0,0,0));
+        jTextField4.setForeground(Color.black);
     }
     }//GEN-LAST:event_jTextField4FocusGained
 
     private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
     if (jTextField4.getText().equals(""))
     {
-        jTextField4.setText("Nome do(a) Aluno(a)");
+        jTextField4.setText("Nome do(a) Aluno(a):");
         jTextField4.setForeground(new Color(102, 102, 102));
     }
     }//GEN-LAST:event_jTextField4FocusLost
