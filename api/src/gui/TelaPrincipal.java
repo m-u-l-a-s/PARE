@@ -134,7 +134,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 //                  System.out.println(nome); 
 //              }
               
-              
+              if (dataAluno.contains("9999"))
+              {
+                  dataAluno = "-";
+              }
               model.addRow(new Object[] {nome, dataAluno});
               tableAvaliacoesAluno.setModel(model);
           }
@@ -222,7 +225,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Nome", "Data"
+                "Nome", "Data de Entrega"
             }
         ) {
             Class[] types = new Class [] {

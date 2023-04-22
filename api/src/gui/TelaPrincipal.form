@@ -122,7 +122,7 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="2" rowCount="4">
                     <Column editable="false" title="Nome" type="java.lang.String"/>
-                    <Column editable="false" title="Data" type="java.lang.String"/>
+                    <Column editable="false" title="Data de Entrega" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">

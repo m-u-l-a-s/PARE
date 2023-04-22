@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import dao.AlunoDAO;
 import dao.AvaliacaoDAO;
+import java.time.LocalDate;
 
 public class AlunoAvaliacaoDAO {
     private Connection connection;
@@ -29,14 +30,15 @@ public class AlunoAvaliacaoDAO {
     }
 
     public void cadastrarAlunoAvaliacao(Aluno aluno,Avaliacao avaliacao){
-        String sql = "INSERT INTO aluno_avaliacao(avaliacao_id,aluno_id)"
-        + "VALUES(?,?);";
+        String sql = "INSERT INTO aluno_avaliacao(avaliacao_id,aluno_id,aluno_avaliacao_data_entrega)"
+        + "VALUES(?,?,?);";
         
         try(PreparedStatement stmt = connection.prepareStatement(sql,
                 Statement.RETURN_GENERATED_KEYS)){
                            
             stmt.setInt(1, avaliacao.getAvaliacaoId());
             stmt.setInt(2, aluno.getAlunoId());
+            stmt.setDate(3, java.sql.Date.valueOf(LocalDate.parse("9999-12-12")));
             
             stmt.execute();           
             stmt.close();

@@ -234,6 +234,7 @@ public class PopupCadastroAvaliacao extends javax.swing.JFrame {
         else{
             AvaliacaoDAO dao=new AvaliacaoDAO();
             dao.cadastrar(avaliacao);
+            //new AlunoAvaliacaoDAO().cadastrarTodasAvaliacoes(avaliacao);
             JOptionPane.showMessageDialog(null,"Cadastrado com sucesso!");
         }
         
