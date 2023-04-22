@@ -4,8 +4,12 @@
  */
 package gui;
 
+import dao.SalaDAO;
 import java.awt.Color;
-import javax.swing.ImageIcon;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+
+
 
 /**
  *
@@ -18,10 +22,13 @@ public class CadastroAluno extends javax.swing.JFrame {
      */
     public CadastroAluno() {
         initComponents();
+        PopulaCombo();
         getContentPane().setBackground(Color.decode("#658EA9"));
         setLocationRelativeTo(null);
         
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,7 +57,7 @@ public class CadastroAluno extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        comboSala = new javax.swing.JComboBox<>();
         jTextField4 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -234,14 +241,13 @@ public class CadastroAluno extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        comboSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSalaActionPerformed(evt);
+            }
         });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.setToolTipText("aaa");
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(comboSala);
 
         jTextField4.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(102, 102, 102));
@@ -325,13 +331,13 @@ public class CadastroAluno extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap(137, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(140, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(91, 91, 91)
@@ -431,6 +437,23 @@ public class CadastroAluno extends javax.swing.JFrame {
     jTextField1.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void comboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSalaActionPerformed
+       
+        
+    }//GEN-LAST:event_comboSalaActionPerformed
+
+      public void PopulaCombo() {
+          comboSala.removeAllItems();
+        
+        List<String> ListSalas = new SalaDAO().buscarTodasSalas();
+           
+        for(int i = 0; i < ListSalas.size(); i++){
+            comboSala.addItem(ListSalas.get(i));
+                
+        }
+        
+    }
+  
     /**
      * @param args the command line arguments
      */
@@ -467,6 +490,7 @@ public class CadastroAluno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboSala;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -477,7 +501,6 @@ public class CadastroAluno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -492,4 +515,8 @@ public class CadastroAluno extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
+
+    private ComboBoxModel<String> add(String testE1) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
