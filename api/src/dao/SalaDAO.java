@@ -69,7 +69,7 @@ public class SalaDAO {
     public List<String> buscarTodosAlunos(Sala sala) {
         List<String> studentNames = new ArrayList<>();
 
-        String sql = "select aluno.aluno_nome from api.aluno join api.sala on sala.sala_id = ?;";
+        String sql = "select aluno_nome from api.aluno where sala_id = ?;";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, sala.getSalaId());
