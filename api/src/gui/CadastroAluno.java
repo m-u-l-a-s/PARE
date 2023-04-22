@@ -8,6 +8,9 @@ import dao.SalaDAO;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.ComboBoxModel;
+import modelo.*;
+import dao.*;
+import javax.swing.JOptionPane;
 
 
 
@@ -260,6 +263,11 @@ public class CadastroAluno extends javax.swing.JFrame {
                 jTextField4FocusLost(evt);
             }
         });
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(136, 178, 204));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/api/icones/house.jpeg"))); // NOI18N
@@ -355,6 +363,21 @@ public class CadastroAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        
+        Aluno aluno= new Aluno();
+            aluno.setAlunoNome(jTextField4.getText());
+            aluno.setAlunoSalaId(1);
+        
+        if (jTextField4.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"O campo está vazio, favor preenchê-lo");
+        }
+        else{
+            AlunoDAO alunodao= new AlunoDAO();
+            alunodao.cadastrar(aluno);
+            JOptionPane.showMessageDialog(null, "Aluno cadastrado!");
+        }        
+        
         jTextField4.setText("Nome do(a) Aluno(a):");
         jTextField4.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -441,6 +464,10 @@ public class CadastroAluno extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_comboSalaActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
       public void PopulaCombo() {
           comboSala.removeAllItems();
