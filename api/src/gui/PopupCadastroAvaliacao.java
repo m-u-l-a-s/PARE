@@ -218,8 +218,13 @@ public class PopupCadastroAvaliacao extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String bn= jTextField4.getText() + "-" + jTextField3.getText()+ "-"+ jTextField2.getText();
+        String dia = String.format("%02d", Integer.parseInt(jTextField2.getText()));
+        String mes = String.format("%02d", Integer.parseInt(jTextField3.getText()));
+        
+        String bn= jTextField4.getText() + "-" + mes + "-" + dia;
         float d=Float.parseFloat(jTextField6.getText());
+        
+       
         
         Avaliacao avaliacao = new Avaliacao();
             avaliacao.setAvaliacaoNome(jTextField1.getText());
@@ -234,7 +239,7 @@ public class PopupCadastroAvaliacao extends javax.swing.JFrame {
         else{
             AvaliacaoDAO dao=new AvaliacaoDAO();
             dao.cadastrar(avaliacao);
-            //new AlunoAvaliacaoDAO().cadastrarTodasAvaliacoes(avaliacao);
+            new AlunoAvaliacaoDAO().cadastrarTodasAvaliacoes(avaliacao);
             JOptionPane.showMessageDialog(null,"Cadastrado com sucesso!");
         }
         
