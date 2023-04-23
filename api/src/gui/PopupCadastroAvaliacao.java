@@ -16,8 +16,17 @@ public class PopupCadastroAvaliacao extends javax.swing.JFrame {
     /**
      * Creates new form popup
      */
-    public PopupCadastroAvaliacao() {
+    
+    int sala_id;
+    
+    public PopupCadastroAvaliacao(int sala_id) {
         initComponents();
+        this.sala_id = sala_id;
+    }
+    
+     public PopupCadastroAvaliacao() {
+        initComponents();
+        
     }
 
     /**
@@ -231,7 +240,7 @@ public class PopupCadastroAvaliacao extends javax.swing.JFrame {
             avaliacao.setAvaliacaoDataFinal(bn);
             avaliacao.setAvaliacaoTipo(jTextField5.getText());
             avaliacao.setAvaliacaoConceito(d);
-            avaliacao.setAvaliacaoSalaId(1);
+            avaliacao.setAvaliacaoSalaId(this.sala_id);
             
         if (jTextField1.getText().isEmpty()||jTextField2.getText().isEmpty()||jTextField3.getText().isEmpty()||jTextField4.getText().isEmpty()||jTextField5.getText().isEmpty()||jTextField6.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar");

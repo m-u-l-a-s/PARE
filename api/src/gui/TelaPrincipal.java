@@ -67,11 +67,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         AlunoAvaliacaoDAO alunoController = new AlunoAvaliacaoDAO();
 
         int control = 0;
+        Sala sala = new Sala();
+        sala.setSalaId(id_sala);
+        int numAlunos = new SalaDAO().buscarTodosAlunos(sala).size();
 
         for (int i = 0; i < avaliacoes.size(); i++) {
+            
+            int numAtrasados = alunoController.AlunosAtrasados(avaliacoes.get(i).getAvaliacaoId()).size();
+            
             linhasTabela[i + control] = "Nome da Avaliação: " + avaliacoes.get(i).getAvaliacaoNome();
-            linhasTabela[i + control + 1] = "Entregaram: " + "0 / 30";
-            linhasTabela[i + control + 2] = "Não entregaram: " + String.valueOf(alunoController.AlunosAtrasados(avaliacoes.get(i).getAvaliacaoId()).size());
+            linhasTabela[i + control + 1] = "Entregaram: " + String.valueOf(numAlunos - numAtrasados) +  " / " +  String.valueOf(numAlunos);
+            linhasTabela[i + control + 2] = "Não entregaram: " + String.valueOf(numAtrasados) + " / " +  String.valueOf(numAlunos);
             linhasTabela[i + control + 3] = "Data final: " + avaliacoes.get(i).getAvaliacaoDataFinal();
             
             cor[i] = i + control;
@@ -399,7 +405,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnNovoTrabalhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTrabalhoActionPerformed
         // TODO add your handling code here:
-        PopupCadastroAvaliacao f2= new PopupCadastroAvaliacao();
+        int sala_id = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
+        PopupCadastroAvaliacao f2= new PopupCadastroAvaliacao(sala_id);
         f2.setVisible(true);
     }//GEN-LAST:event_btnNovoTrabalhoActionPerformed
 
