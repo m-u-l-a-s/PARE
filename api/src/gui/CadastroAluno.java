@@ -364,7 +364,7 @@ public class CadastroAluno extends javax.swing.JFrame {
         
         Aluno aluno= new Aluno();
             aluno.setAlunoNome(NomeDoAluno.getText());
-            aluno.setAlunoSalaId(1);
+            aluno.setAlunoSalaId(new SalaDAO().getSalaId(comboSala.getSelectedItem().toString()));
         
         if (NomeDoAluno.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"O campo está vazio, favor preenchê-lo");
@@ -377,6 +377,9 @@ public class CadastroAluno extends javax.swing.JFrame {
         
         NomeDoAluno.setText("Nome do(a) Aluno(a):");
         NomeDoAluno.setForeground(new Color(102, 102, 102));
+        Sala sala = new Sala();
+        sala.setSalaId(aluno.getAlunoSalaId());
+        populaSalaAluno(sala);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
