@@ -46,7 +46,7 @@ create table aluno_avaliacao(
 );
 
 insert into sala(sala_nome)
-values("9C"),("8C"),("9B"),("8A");
+values("Sala 1ºA"),("Sala 1ºB"),("Sala 2ºA"),("Sala 2ºB"), ("Sala 3ºA"), ("Sala 3ºB");
 
 
 INSERT INTO sala_horario(sala_id, sala_dia, sala_hora) 
@@ -102,17 +102,36 @@ values
 (1,"João Paulo Lima");
 
 insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
-avaliacao_conceito,sala_id) values("Primeira Guerra","2023/05/02",
+avaliacao_conceito,sala_id) values("Revolução Russa de 1917","2023/05/02",
 "Apresentação",3,1);
 
 insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
-avaliacao_conceito,sala_id) values("Primeira Guerra","2023/06/03",
+avaliacao_conceito,sala_id) values("Primeira Guerra Mundial","2023/06/03",
 "Prova",5,1);
 
 insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
-avaliacao_conceito,sala_id) values("Resenha Capitães da areia","2023/03/21",
-"Redação",2,1);
+avaliacao_conceito,sala_id) values("Resenha: Capitães da Areia","2023/03/21",
+"Redação",2,2);
 
+insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
+avaliacao_conceito,sala_id) values("Modernismo Brasileiro","2023/06/03",
+"Prova",5,2);
+
+insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
+avaliacao_conceito,sala_id) values("Resenha: Memórias Póstumas de Brás Cubas","2023/03/21",
+"Redação",2,3);
+
+insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
+avaliacao_conceito,sala_id) values("Segunda Guerra Mundial","2023/06/03",
+"Prova",5,3);
+
+insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
+avaliacao_conceito,sala_id) values("Resenha: Macunaíma","2023/03/21",
+"Redação",2,4);
+
+insert into avaliacao(avaliacao_nome,avaliacao_data_final,avaliacao_tipo,
+avaliacao_conceito,sala_id) values("Modernismo Brasileiro","2023/06/03",
+"Prova",5,4);
 
 insert into aluno_avaliacao(aluno_avaliacao_data_entrega,aluno_id,avaliacao_id)
 values("2023/03/21",1,3);

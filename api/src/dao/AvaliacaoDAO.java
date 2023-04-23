@@ -5,6 +5,7 @@ import modelo.Avaliacao;
 import java.sql.*;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class AvaliacaoDAO {
     private Connection connection;
@@ -60,10 +61,10 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
         return nome;
     }
 
-    public String getAvaliacoesDaSala(int sala_id) {
+    public ArrayList<Avaliacao> getAvaliacoesDaSala(int sala_id) {
         String sql = "SELECT * FROM avaliacao WHERE sala_id = ? ;";
 
-        String avaliacoes = "";
+        ArrayList<Avaliacao> avaliacoes = new ArrayList<>();
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 
@@ -71,7 +72,15 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    avaliacoes += rs.getString("avaliacao_nome") + "\n";
+                    int avaliacaoId = rs.getInt("avaliacao_id");
+                    String nome = rs.getString("avaliacao_nome");
+                    String dataFinal = rs.getDate("avaliacao_data_final").toString();
+                    String tipo = rs.getString("avaliacao_tipo");
+                    double conceito = rs.getDouble("avaliacao_conceito");
+                    int salaId = rs.getInt("sala_id");
+
+                    Avaliacao avaliacao = new Avaliacao(avaliacaoId, nome, dataFinal, tipo, conceito, salaId);
+                    if (!avaliacoes.contains(avaliacao)) avaliacoes.add(avaliacao);
                 }
             }
         } catch (SQLException e) {

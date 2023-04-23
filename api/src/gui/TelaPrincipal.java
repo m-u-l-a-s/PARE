@@ -4,12 +4,10 @@
  */
 package gui;
 
-import dao.SalaHorarioDAO;
-
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import dao.*;
@@ -40,7 +38,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Desabilita lista de trabalhos no lado esquerdo da tela para não sobreescrever as linhas destacadas quando o usuário clica
         listTrabalhos.setEnabled(false);
         //populaLista: Popula lista de trabalhos de uma sala no lado esquerdo da tela
-        populaLista(ComboSala.getSelectedIndex());
+        populaLista();
         //separaCor: Destaca as linhas relacionadas ao título do trabalho
         separaCor();
     }
@@ -56,50 +54,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listSalaHorario.setListData(listHorarios);
     }
 
-    public void populaLista(int id) {
+    public void populaLista() {
         //id = index da sala selecionada no combo
         //id = 0 -> sala 9C - Química - Sala 208 selecionada
-        if (id == 0) {
-            String[] Lista
-                    = {
-                        "Trabalho 1 - Aberto (15/03)",
-                        "Entregues:",
-                        "Não Entregues: ",
-                        "Tarefa criada em: 10/02/2023",
-                        "Encerrada em: 15/03/2023",
-                        "Trabalho 2 - Encerrado (10/02)",
-                        "Entregues: 27/30",
-                        "Não Entregues: 3/30",
-                        "Tarefa criada em: 10/01/2023",
-                        "Encerrada em: 10/02/2023",
-                        "Avaliação 1 - Encerrado (2/03)",
-                        "Entregues: 25/30",
-                        "Não Entregues: 5/30",
-                        "Tarefa criada em: 1/03/2023",
-                        "Encerrada em: 2/03/2023"
-                    };
-            listTrabalhos.setListData(Lista);
-        } else {
-            String[] Lista
-                    = {
-                        "Trabalho Ácidos e Bases - Aberto (29/06)",
-                        "Entregues:",
-                        "Não Entregues: ",
-                        "Tarefa criada em: 1/06/2023",
-                        "Encerrada em: 29/06/2023",
-                        "Trabalho Mols - Encerrado (25/05)",
-                        "Entregues: 25/25",
-                        "Não Entregues: 0/25",
-                        "Tarefa criada em: 10/04/2023",
-                        "Encerrada em: 25/05/2023",
-                        "Avaliação Mensal - Encerrado (10/04)",
-                        "Entregues: 24/25",
-                        "Não Entregues: 1/25",
-                        "Tarefa criada em: 20/03/2023",
-                        "Encerrada em: 10/04/2023"
-                    };
-            listTrabalhos.setListData(Lista);
+
+//        Campos:
+//        "Trabalho 1 - Nome: ",
+//        "Entreguaram: ",
+//        "Não Entregaram: ",
+//        "Data de entrega: "
+        AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
+        int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
+        ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
+        String[] linhasTabela = new String[avaliacoes.size() * 4];
+        AlunoAvaliacaoDAO alunoController = new AlunoAvaliacaoDAO();
+
+        int control = 0;
+
+        for (int i = 0; i < avaliacoes.size(); i++) {
+            linhasTabela[i + control] = "Nome da Avaliação: " + avaliacoes.get(i).getAvaliacaoNome();
+            linhasTabela[i + control + 1] = "Entregaram: " + "0 / 30";
+            linhasTabela[i + control + 2] = "Não entregaram: " + String.valueOf(alunoController.AlunosAtrasados(avaliacoes.get(i).getAvaliacaoId()).size());
+            linhasTabela[i + control + 3] = "Data final: " + avaliacoes.get(i).getAvaliacaoDataFinal();
+            control += 3;
         }
+
+        listTrabalhos.setListData(linhasTabela);
 
     }
 
@@ -152,7 +132,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     public void separaCor() {
-        int[] indices = {0, 5, 10};
+        int[] indices = {0, 4, 8};
         listTrabalhos.setSelectedIndices(indices);
     }
 
@@ -408,7 +388,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void ComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboSalaActionPerformed
         //Função executada quando o valor do combo muda:
         PopulaTabela(ComboSala.getSelectedIndex());
-        populaLista(ComboSala.getSelectedIndex());
+        populaLista();
         separaCor();
         
         //Pega o texto do valor atual do combo e salva na classe sala, que então é usada como parâmetro
