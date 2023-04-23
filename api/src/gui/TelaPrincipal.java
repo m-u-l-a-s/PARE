@@ -39,8 +39,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listTrabalhos.setEnabled(false);
         //populaLista: Popula lista de trabalhos de uma sala no lado esquerdo da tela
         populaLista();
-        //separaCor: Destaca as linhas relacionadas ao título do trabalho
-        separaCor();
     }
 
     public void populaSalaHorario(Sala sala) {
@@ -55,8 +53,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     public void populaLista() {
-        //id = index da sala selecionada no combo
-        //id = 0 -> sala 9C - Química - Sala 208 selecionada
 
 //        Campos:
 //        "Trabalho 1 - Nome: ",
@@ -67,6 +63,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
         ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
         String[] linhasTabela = new String[avaliacoes.size() * 4];
+        int[] cor = new int[avaliacoes.size()];
         AlunoAvaliacaoDAO alunoController = new AlunoAvaliacaoDAO();
 
         int control = 0;
@@ -76,10 +73,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             linhasTabela[i + control + 1] = "Entregaram: " + "0 / 30";
             linhasTabela[i + control + 2] = "Não entregaram: " + String.valueOf(alunoController.AlunosAtrasados(avaliacoes.get(i).getAvaliacaoId()).size());
             linhasTabela[i + control + 3] = "Data final: " + avaliacoes.get(i).getAvaliacaoDataFinal();
+            
+            cor[i] = i + control;
+            
             control += 3;
         }
 
         listTrabalhos.setListData(linhasTabela);
+        listTrabalhos.setSelectedIndices(cor);
 
     }
 
@@ -129,11 +130,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
               tableAvaliacoesAluno.setModel(model);
           }
 
-    }
-
-    public void separaCor() {
-        int[] indices = {0, 4, 8};
-        listTrabalhos.setSelectedIndices(indices);
     }
 
     SalaHorarioDAO salaHorarioController = new SalaHorarioDAO();
@@ -389,7 +385,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Função executada quando o valor do combo muda:
         PopulaTabela(ComboSala.getSelectedIndex());
         populaLista();
-        separaCor();
         
         //Pega o texto do valor atual do combo e salva na classe sala, que então é usada como parâmetro
         //para popular a lista de horários
