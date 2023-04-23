@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import dao.*;
 import java.awt.Color;
+import java.time.LocalDate;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
@@ -122,17 +123,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
           {
               String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
               String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
+              String status = "Entregue";
               
-//              if (dataAluno > av.getAvaliacaoDataFinal())
-//              {
-//                  System.out.println(nome); 
-//              }
+              if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal())))
+              {
+                  status = "Atrasado";
+              }
               
               if (dataAluno.contains("9999"))
               {
                   dataAluno = "-";
+                  status = "Pendente";
               }
-              model.addRow(new Object[] {nome, dataAluno});
+              model.addRow(new Object[] {nome, dataAluno, status});
               tableAvaliacoesAluno.setModel(model);
           }
 
@@ -210,20 +213,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tableAvaliacoesAluno.setFont(new java.awt.Font("Dubai", 0, 14));
         tableAvaliacoesAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nome", "Data de Entrega"
+                "Nome", "Data de Entrega", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

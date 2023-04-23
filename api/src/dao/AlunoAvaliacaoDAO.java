@@ -49,7 +49,7 @@ public class AlunoAvaliacaoDAO {
     public List<AlunoAvaliacao> buscarTodosAlunoAvaliacao(Avaliacao avaliacao) {
         List<AlunoAvaliacao> ListAlunoAvaliacao = new ArrayList<>();
 
-        String sql = "select * from api.aluno_avaliacao where avaliacao_id = ?;";
+        String sql = "select * from api.aluno_avaliacao where avaliacao_id = ? order by aluno_avaliacao_data_entrega desc;";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             
