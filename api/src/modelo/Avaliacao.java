@@ -9,6 +9,21 @@ public class Avaliacao {
     private String avaliacaoDataFinal;
     private String avaliacaoTipo;
     private double avaliacaoConceito;
+    
+    public Avaliacao(int avaliacaoId, String nome, String dataFinal,String tipo, double conceito, int salaId)
+    {
+        this.avaliacaoId = avaliacaoId;
+        this.avaliacaoNome = nome;
+        this.avaliacaoDataFinal = dataFinal;
+        this.avaliacaoTipo = tipo;
+        this.avaliacaoConceito = conceito;
+        this.avaliacaoSalaId = salaId;
+    }
+    
+    public Avaliacao()
+    {
+        
+    }
 
     public int getAvaliacaoSalaId() {
         return avaliacaoSalaId;
