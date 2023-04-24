@@ -6,8 +6,8 @@ Plataforma de Acompanhamento de Rendimento Escolar
 ## Sumário:
 * [Apresentação da Equipe](#apresentação-da-equipe)
 * [Objetivo](#objetivo-do-produto)
-* [Banco de Dados](#banco-de-dados)
 * [Tecnologias](#tecnologias-utilizadas)
+* [Banco de Dados](#banco-de-dados)
 * [Protótipo](#protótipo-wireframe)
 * [Backlog](#backlog-do-produto)
 * [Planejamento de Entregas](#planejamento-de-entregas)
@@ -30,16 +30,7 @@ Nosso foco é identificar a principal finalidade de um produto para desenvolver 
 * [Alexandre Jonas de Souza Fonseca](https://github.com/AlexandreJonas)
 
 ## Objetivo do Produto:
-O objetivo do projeto é desenvolver uma plataforma desktop na linguagem Java que auxilie professores no processo de documentação de provas e trabalhos, além de facilitar o acompanhamento do desempenho individual dos alunos e das turmas. Na plataforma PARE poderão ser cadastradas novas atribuições, cada qual com suas especificidades, datas de entrega e opções pertinentes a cada aluno, como a própria nota ou as informações "entregue", "não entregue", ou "entregue com atraso".
-
-## Banco de Dados:
-O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e nele serão armazenadas informações referente às instituições, salas, alunos e atividades. Segue abaixo os Modelos Lógico e Conceitual pensados para a primeira Sprint, onde constam as Entidades, seus Atributos e relações: 
-
-### Modelo Lógico:
-![ModeloLogico](docs/ModeloLogicoDB_PARE.png)
-
-### Modelo Conceitual:
-![modelo_conceitual](docs/modeloConceitual_PARE.png)
+O objetivo do projeto é desenvolver uma plataforma desktop na linguagem Java que auxilie professores no processo de documentação de provas e trabalhos, além de facilitar o acompanhamento do desempenho individual dos alunos e das turmas. Na plataforma PARE poderão ser cadastradas novas atribuições, cada qual com suas especificidades, datas de entrega e opções pertinentes a cada aluno, como a própria nota ou as informações de entrega.
 
 ## Tecnologias Utilizadas
 ![Tecnologias utilizadas](https://user-images.githubusercontent.com/89790349/229389076-857ff85d-35bc-4f2e-baf9-32f371403a37.png)
@@ -51,14 +42,27 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 * GitHub: Controle de versionamento, documentação e colaboração.
 * MySQL: Banco de Dados utilizado.
 
+## Banco de Dados:
+O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e nele serão armazenadas informações referente às instituições, salas, alunos e atividades. Segue abaixo os Modelos Lógico e Conceitual pensados para a primeira Sprint, onde constam as Entidades, seus Atributos e relações: 
+
+### Modelo Lógico:
+![ModeloLogico](docs/ModeloLogicoDB_PARE.png)
+
+### Modelo Conceitual:
+![modelo_conceitual](docs/modeloConceitual_PARE.png)
+
 ## Protótipo (Wireframe)
+### Vídeo Demonstrativo
 [apiFigma.webm](https://user-images.githubusercontent.com/53665466/229374066-6726121a-f0a8-454c-9545-9b427cc361d7.webm)
+
+### Link Figma
+[Neste link](https://www.figma.com/file/0Ryi85LRWO7ZbmtkwX3PGo/Cadastro-Michael?fuid=1144429158156920531) é possível visualizar o protótipo das telas pensadas, como a inicial, a de busca e de cadastro.
 
 ## Backlog do Produto:
 ### User Stories:
- 
-![ProductBacklog_FatecAPI_page-0001](https://user-images.githubusercontent.com/111707785/228219887-d98a6b22-2a41-431d-aca8-0d080e416237.jpg)
-![ProductBacklog_FatecAPI_page-0002](https://user-images.githubusercontent.com/111707785/228219927-bb13fab5-5fb4-4dc7-bd82-2ed2113b5756.jpg)
+
+![user story1](https://user-images.githubusercontent.com/89790349/233874355-e7b72f10-0f7a-4ca8-b3f0-7a10aa682ad1.png)
+![user story2](https://user-images.githubusercontent.com/89790349/233874358-5699192e-4ba2-4b83-a5c9-9ed90d26048d.png)
 
 ## Planejamento de Entregas:
 ![Sprints](https://user-images.githubusercontent.com/89790349/229389192-a60fc7ed-d497-40e3-ae0e-6f54c8420048.png)
