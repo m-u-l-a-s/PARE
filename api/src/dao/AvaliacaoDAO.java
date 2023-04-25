@@ -60,6 +60,26 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
 
         return nome;
     }
+    
+    public int getAvaliacaoID(String nome)
+    {
+        String sql = "select avaliacao_id from api.avaliacao where avaliacao_nome = ?";
+         int id = -1;
+         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setString(1, nome );
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt("avaliacao_id");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return id;
+    }
 
     public ArrayList<Avaliacao> getAvaliacoesDaSala(int sala_id) {
         String sql = "SELECT * FROM avaliacao WHERE sala_id = ? ;";

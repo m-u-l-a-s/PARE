@@ -23,19 +23,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setBackground(Color.decode("#658EA9"));
         getContentPane().setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
 
-        
-        
-
         initComponents();
-        
-        //Popula Tabela: Popula a tabela de AlunoAvaliação no lado direito da tela
-        PopulaTabela(ComboSala.getSelectedIndex());
         //PopulaCombo: Popula combo com os nomes das salas
         PopulaCombo();
 
         // setCombo: Altera valor do combo box para sala atual.
         setCombo();
-
+        PopulaComboAvaliacao();
         //Desabilita lista de trabalhos no lado esquerdo da tela para não sobreescrever as linhas destacadas quando o usuário clica
         listTrabalhos.setEnabled(false);
         //populaLista: Popula lista de trabalhos de uma sala no lado esquerdo da tela
@@ -100,22 +94,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 
         }
     }
+    
+    public void PopulaComboAvaliacao()
+    {
+        comboAvaliacao.removeAllItems();
+        AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
+        int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
+        ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
+        
+        for (int i = 0; i < avaliacoes.size(); i++) {
+            comboAvaliacao.addItem(avaliacoes.get(i).getAvaliacaoNome());
+        }
+    }
 
     public void setCombo() {
         ComboSala.setSelectedItem(salaHorarioController.getSalaAtual());
     }
 
-    public void PopulaTabela(int id) {
+    public void PopulaTabela() {
+        
+        int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
+        
         DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
         model.setRowCount(0);
         tableAvaliacoesAluno.setModel(model);
         
-        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
-        labelAvaliacaoNome.setText(AvaliacaoNome);
+          //Não apaga pq vai q volta a usar depois
+//        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
+//        labelAvaliacaoNome.setText(AvaliacaoNome);
         
         //Mockando ID por enquanto pq lol
         Avaliacao av = new Avaliacao();
-        av.setAvaliacaoId(3);
+        av.setAvaliacaoId(id);
         av.setAvaliacaoDataFinal("2023-03-20");
         
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
@@ -193,12 +203,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableAvaliacoesAluno = new javax.swing.JTable();
-        labelAvaliacaoNome = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listTrabalhos = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         listSalaHorario = new javax.swing.JList<>();
         labelAvaliacaoNome1 = new javax.swing.JLabel();
+        comboAvaliacao = new javax.swing.JComboBox<>();
         btnCadastrar = new javax.swing.JButton();
         ComboSala = new javax.swing.JComboBox<>();
         btnNovoTrabalho = new javax.swing.JButton();
@@ -241,12 +251,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tableAvaliacoesAluno.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tableAvaliacoesAluno);
 
-        labelAvaliacaoNome.setBackground(new java.awt.Color(255, 255, 255));
-        labelAvaliacaoNome.setFont(new java.awt.Font("Dubai", 0, 21));
-        labelAvaliacaoNome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelAvaliacaoNome.setText("Trabalho 2");
-        labelAvaliacaoNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         listTrabalhos.setFont(new java.awt.Font("Dubai", 0, 14));
         listTrabalhos.setRequestFocusEnabled(false);
         listTrabalhos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -265,6 +269,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         labelAvaliacaoNome1.setText("Horários da Turma");
         labelAvaliacaoNome1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        comboAvaliacao.setFont(new java.awt.Font("Dubai", 0, 21));
+        comboAvaliacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAvaliacaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -274,29 +285,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelAvaliacaoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(labelAvaliacaoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 81, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 84, Short.MAX_VALUE))
         );
 
         btnCadastrar.setBackground(new java.awt.Color(101, 142, 169));
@@ -345,20 +355,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelAvaliacaoNome2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(btnNovoTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(labelAvaliacaoNome2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,9 +402,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboSalaActionPerformed
         //Função executada quando o valor do combo muda:
-        PopulaTabela(ComboSala.getSelectedIndex());
         populaLista();
-        
+        PopulaComboAvaliacao();
         //Pega o texto do valor atual do combo e salva na classe sala, que então é usada como parâmetro
         //para popular a lista de horários
         Sala salin = new Sala();
@@ -412,6 +421,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         PopupCadastroAvaliacao f2= new PopupCadastroAvaliacao(sala_id);
         f2.setVisible(true);
     }//GEN-LAST:event_btnNovoTrabalhoActionPerformed
+
+    private void comboAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAvaliacaoActionPerformed
+        // TODO add your handling code here:
+        if( comboAvaliacao.getSelectedIndex() != -1)
+        {
+            PopulaTabela();
+        }
+    }//GEN-LAST:event_comboAvaliacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -452,11 +469,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboSala;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnNovoTrabalho;
+    private javax.swing.JComboBox<String> comboAvaliacao;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel labelAvaliacaoNome;
     private javax.swing.JLabel labelAvaliacaoNome1;
     private javax.swing.JLabel labelAvaliacaoNome2;
     private javax.swing.JList<String> listSalaHorario;
