@@ -31,9 +31,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setCombo();
         PopulaComboAvaliacao();
         //Desabilita lista de trabalhos no lado esquerdo da tela para não sobreescrever as linhas destacadas quando o usuário clica
-        listTrabalhos.setEnabled(false);
-        //populaLista: Popula lista de trabalhos de uma sala no lado esquerdo da tela
-        populaLista();
+        //listTrabalhos.setEnabled(false);
+       
     }
 
     public void populaSalaHorario(Sala sala) {
@@ -57,7 +56,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
         int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
         ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
-        String[] linhasTabela = new String[avaliacoes.size() * 4];
+        String[] linhasTabela = new String[avaliacoes.size()];
         int[] cor = new int[avaliacoes.size()];
         AlunoAvaliacaoDAO alunoController = new AlunoAvaliacaoDAO();
 
@@ -70,19 +69,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             
             int numAtrasados = alunoController.AlunosAtrasados(avaliacoes.get(i).getAvaliacaoId()).size();
             
-            linhasTabela[i + control] = "Nome da Avaliação: " + avaliacoes.get(i).getAvaliacaoNome();
-            linhasTabela[i + control + 1] = "Entregaram: " + String.valueOf(numAlunos - numAtrasados) +  " / " +  String.valueOf(numAlunos);
-            linhasTabela[i + control + 2] = "Não entregaram: " + String.valueOf(numAtrasados) + " / " +  String.valueOf(numAlunos);
-            linhasTabela[i + control + 3] = "Data final: " + avaliacoes.get(i).getAvaliacaoDataFinal();
-            
-            cor[i] = i + control;
-            
-            control += 3;
+            linhasTabela[i] = "<html>Nome da Avaliação: "+avaliacoes.get(i).getAvaliacaoNome()+
+                             "<br>Entregaram: " + String.valueOf(numAlunos - numAtrasados) +  " / " +  String.valueOf(numAlunos) +
+                             "<br>Não entregaram: "+ String.valueOf(numAtrasados) + " / " +  String.valueOf(numAlunos) +
+                             "<br>Data final: "+ avaliacoes.get(i).getAvaliacaoDataFinal() +
+                             "<br><br>";
         }
 
         listTrabalhos.setListData(linhasTabela);
-        listTrabalhos.setSelectedIndices(cor);
-
     }
 
     public void PopulaCombo() {
@@ -259,7 +253,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tableAvaliacoesAluno);
 
         listTrabalhos.setFont(new java.awt.Font("Dubai", 0, 14));
+        listTrabalhos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listTrabalhos.setFocusable(false);
         listTrabalhos.setRequestFocusEnabled(false);
+        listTrabalhos.setVerifyInputWhenFocusTarget(false);
+        listTrabalhos.setVisibleRowCount(4);
         listTrabalhos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listTrabalhosMouseClicked(evt);
@@ -400,7 +398,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listTrabalhosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTrabalhosMouseClicked
-        // TODO add your handling code here:
+        
+        String nome = listTrabalhos.getSelectedValue();
+        nome = nome.substring(25,listTrabalhos.getSelectedValue().indexOf("<br>Entregaram: "));
+        comboAvaliacao.setSelectedItem(nome);
     }//GEN-LAST:event_listTrabalhosMouseClicked
 
     private void ComboSalaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ComboSalaPropertyChange
