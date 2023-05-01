@@ -103,4 +103,28 @@ public class AlunoAvaliacaoDAO {
     }
     
     
+    public void UpdateAlunosAvaliacao(AlunoAvaliacao AA)
+    {
+
+        String sql = "update api.aluno_avaliacao set aluno_avaliacao_data_entrega = ?, aluno_avaliacao_nota = ? where aluno_avaliacao_id = ?;";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setDate(1, java.sql.Date.valueOf(LocalDate.parse(AA.getAlunoAvaliacaoData())));
+            stmt.setFloat(2, AA.getAlunoAvaliacaoNota());
+            stmt.setInt(3, AA.getAlunoAvaliacaoId());
+            
+            stmt.execute();           
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public void UpdateTodosAlunoAvaliacao( List<AlunoAvaliacao> ListAlunoAvaliacao)
+    {
+         for (int i=0; i<ListAlunoAvaliacao.size(); i++){
+                UpdateAlunosAvaliacao(ListAlunoAvaliacao.get(i));
+        }
+    }
 }

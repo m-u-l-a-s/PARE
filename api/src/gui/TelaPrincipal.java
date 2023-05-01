@@ -19,6 +19,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form TelaPrincipal
      */
+    
+    List<AlunoAvaliacao> GlobalListAlunoAvaliacao;
+    
     public TelaPrincipal() {
         getContentPane().setBackground(Color.decode("#658EA9"));
         getContentPane().setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
@@ -107,8 +110,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     public void PopulaTabela() {
         
-        int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
-        
         DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
         model.setRowCount(0);
         tableAvaliacoesAluno.setModel(model);
@@ -117,29 +118,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
 //        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
 //        labelAvaliacaoNome.setText(AvaliacaoNome);
         
-        //Mockando ID por enquanto pq lol
+        int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
         Avaliacao av = new Avaliacao();
         av.setAvaliacaoId(id);
         av.setAvaliacaoDataFinal("2023-03-20");
         
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+        GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
           for(int i = 0; i< ListAlunoAvaliacao.size(); i++)
           {
               String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
               String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
               String status = "Entregue";
+              float nota =  ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
               
-              if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal())))
+              if (LocalDate.parse(dataAluno).isBefore(LocalDate.parse(av.getAvaliacaoDataFinal())))
               {
+              } else {
                   status = "Atrasado";
-              }
+            }
               
               if (dataAluno.contains("9999"))
               {
                   dataAluno = "-";
                   status = "Pendente";
               }
-              model.addRow(new Object[] {nome, dataAluno, status});
+              model.addRow(new Object[] {nome, dataAluno, nota, status});
               tableAvaliacoesAluno.setModel(model);
           }
 
@@ -203,6 +207,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listSalaHorario = new javax.swing.JList<>();
         labelAvaliacaoNome1 = new javax.swing.JLabel();
         comboAvaliacao = new javax.swing.JComboBox<>();
+        btnSalvar = new javax.swing.JButton();
         btnCadastrar = new javax.swing.JButton();
         ComboSala = new javax.swing.JComboBox<>();
         btnNovoTrabalho = new javax.swing.JButton();
@@ -224,20 +229,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tableAvaliacoesAluno.setFont(new java.awt.Font("Dubai", 0, 14));
         tableAvaliacoesAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nome", "Data de Entrega", "Status"
+                "Nome", "Data de Entrega", "Nota", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -281,6 +286,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnSalvar.setBackground(new java.awt.Color(101, 142, 169));
+        btnSalvar.setFont(new java.awt.Font("Dubai", 1, 14));
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/api/icones/aluna.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.setBorder(null);
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -291,28 +307,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
+                    .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 84, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 34, Short.MAX_VALUE))
         );
 
         btnCadastrar.setBackground(new java.awt.Color(101, 142, 169));
@@ -445,6 +463,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
         PopulaComboAvaliacao();
     }//GEN-LAST:event_formWindowGainedFocus
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+        int colunaNota = 2;
+        int colunaData = 1;
+        List<AlunoAvaliacao> ListAlunoAvaliacao = new ArrayList<>();
+        for (int i = 0; i < tableAvaliacoesAluno.getRowCount(); i++) {
+            AlunoAvaliacao Aux = GlobalListAlunoAvaliacao.get(i);
+            if ( (tableAvaliacoesAluno.getValueAt(i, colunaData) != "-") && (
+                    (tableAvaliacoesAluno.getValueAt(i, colunaData) != Aux.getAlunoAvaliacaoData())
+                    || (tableAvaliacoesAluno.getValueAt(i, colunaNota) != String.valueOf(Aux.getAlunoAvaliacaoNota()) )))
+            {
+                
+                Aux.setAlunoAvaliacaoNota(Float.valueOf(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaNota))) );
+                Aux.setAlunoAvaliacaoData(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaData)) );
+                ListAlunoAvaliacao.add(Aux);
+            }
+            
+        }
+        if (ListAlunoAvaliacao.size() > 0)
+        {
+          new AlunoAvaliacaoDAO().UpdateTodosAlunoAvaliacao(ListAlunoAvaliacao);
+        }
+       
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -484,6 +527,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboSala;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnNovoTrabalho;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboAvaliacao;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
