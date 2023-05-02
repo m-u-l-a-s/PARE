@@ -34,13 +34,14 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 [apiFigma.webm](https://user-images.githubusercontent.com/53665466/229374066-6726121a-f0a8-454c-9545-9b427cc361d7.webm)
 
 
-
 ## Backlog do Produto:
 ### User Stories:
-
- 
 ![ProductBacklog_FatecAPI_page-0001](https://user-images.githubusercontent.com/111707785/228219887-d98a6b22-2a41-431d-aca8-0d080e416237.jpg)
 ![ProductBacklog_FatecAPI_page-0002](https://user-images.githubusercontent.com/111707785/228219927-bb13fab5-5fb4-4dc7-bd82-2ed2113b5756.jpg)
+
+## Burndown da Sprint 1
+![image](https://user-images.githubusercontent.com/53665466/235779385-f4d77640-5f49-4163-bf1a-6e2e6de819aa.png)
+
 
 ## Apresentação da Equipe:
 Somos uma equipe de jovens programadores interessados em criar soluções simples para problemas complexos e em aprender o máximo possível no processo.
