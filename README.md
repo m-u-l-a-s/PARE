@@ -53,9 +53,9 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 ## Planejamento de Entregas:
 ![Sprints](https://user-images.githubusercontent.com/89790349/229389192-a60fc7ed-d497-40e3-ae0e-6f54c8420048.png)
 ### Burndown das Sprints
-[Sprint 1](https://github.com/m-u-l-a-s/PARE/docs/Sprint01) |
-[Sprint 2](https://github.com/m-u-l-a-s/PARE/docs/Sprint02) |
-[Sprint 3](https://github.com/m-u-l-a-s/PARE/docs/Sprint03) |
+[Sprint 1](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint01) |
+[Sprint 2](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint02) |
+[Sprint 3](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint03) |
 
 
 ## Apresentação da Equipe:
