@@ -50,6 +50,10 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 ![user story1](https://user-images.githubusercontent.com/112016792/234735452-b65ea839-7820-4da2-bf86-403c8cdfe616.png)
 ![user story2](https://user-images.githubusercontent.com/112016792/234735681-bdd42ad4-6f65-4300-a74c-3b6566e3d00d.png)
 
+## Burndown da Sprint 2
+![image](https://user-images.githubusercontent.com/53665466/235781611-2c863d13-8ee6-473a-b3e9-034b8944859d.png)
+
+
 ## Planejamento de Entregas:
 ![Sprints](https://user-images.githubusercontent.com/89790349/229389192-a60fc7ed-d497-40e3-ae0e-6f54c8420048.png)
 ### Burndown das Sprints
