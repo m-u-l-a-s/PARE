@@ -12,22 +12,8 @@ Plataforma de Acompanhamento de Rendimento Escolar
 * [Backlog](#backlog-do-produto)
 * [Planejamento de Entregas](#planejamento-de-entregas)
 
-## Apresentação da Equipe:
-Somos uma equipe de jovens programadores interessados em criar soluções simples para problemas complexos e em aprender o máximo possível no processo.
-Nosso foco é identificar a principal finalidade de um produto para desenvolver soluções de maneira gradual e modular em torno deste objetivo, de forma que cada passo possa ser validado pelo(a) cliente e/ou usuários e o produto evolua organicamente.
 
-## Integrantes:
 
-#### Devs:
-* [Alita Willians da Silva Amancio](https://github.com/AlitaAmancio)
-* [Amanda Mendes Caldeira](https://github.com/AmendoaM)
-* [Jonas Alves Bueno](https://github.com/dodekafonos)
-* [Michael Morais](https://github.com/itsmorais)
-* [Vitor F. Morais](https://github.com/vmorais111)
-#### Product Owner:
-* [Jean Cesar de Oliveira Rodrigues](https://github.com/JeanRodrigues1)
-#### Scrum Master:
-* [Alexandre Jonas de Souza Fonseca](https://github.com/AlexandreJonas)
 
 ## Objetivo do Produto:
 O objetivo do projeto é desenvolver uma plataforma desktop na linguagem Java que auxilie professores no processo de documentação de provas e trabalhos, além de facilitar o acompanhamento do desempenho individual dos alunos e das turmas. Na plataforma PARE poderão ser cadastradas novas atribuições, cada qual com suas especificidades, datas de entrega e opções pertinentes a cada aluno, como a própria nota ou as informações de entrega.
@@ -66,5 +52,27 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 
 ## Planejamento de Entregas:
 ![Sprints](https://user-images.githubusercontent.com/89790349/229389192-a60fc7ed-d497-40e3-ae0e-6f54c8420048.png)
+### Burndown das Sprints
+[Sprint 1](https://github.com/m-u-l-a-s/PARE/docs/Sprint01) |
+[Sprint 2](https://github.com/m-u-l-a-s/PARE/docs/Sprint02) |
+[Sprint 3](https://github.com/m-u-l-a-s/PARE/docs/Sprint03) |
+
+
+## Apresentação da Equipe:
+Somos uma equipe de jovens programadores interessados em criar soluções simples para problemas complexos e em aprender o máximo possível no processo.
+Nosso foco é identificar a principal finalidade de um produto para desenvolver soluções de maneira gradual e modular em torno deste objetivo, de forma que cada passo possa ser validado pelo(a) cliente e/ou usuários e o produto evolua organicamente.
+
+## Integrantes:
+
+#### Devs:
+* [Alita Willians da Silva Amancio](https://github.com/AlitaAmancio)
+* [Amanda Mendes Caldeira](https://github.com/AmendoaM)
+* [Jonas Alves Bueno](https://github.com/dodekafonos)
+* [Michael Morais](https://github.com/itsmorais)
+* [Vitor F. Morais](https://github.com/vmorais111)
+#### Product Owner:
+* [Jean Cesar de Oliveira Rodrigues](https://github.com/JeanRodrigues1)
+#### Scrum Master:
+* [Alexandre Jonas de Souza Fonseca](https://github.com/AlexandreJonas)
 
 
