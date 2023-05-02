@@ -14,23 +14,6 @@ Plataforma de Acompanhamento de Rendimento Escolar
 * [Planejamento de Entregas](#planejamento-de-entregas)
 * [Preview da Plataforma](#plataforma)
 
-## Apresentação da Equipe:
-Somos uma equipe de jovens programadores interessados em criar soluções simples para problemas complexos e em aprender o máximo possível no processo.
-Nosso foco é identificar a principal finalidade de um produto para desenvolver soluções de maneira gradual e modular em torno deste objetivo, de forma que cada passo possa ser validado pelo(a) cliente e/ou usuários e o produto evolua organicamente.
-
-## Integrantes:
-
-#### Devs:
-* [Alita Willians da Silva Amancio](https://github.com/AlitaAmancio)
-* [Amanda Mendes Caldeira](https://github.com/AmendoaM)
-* [Jonas Alves Bueno](https://github.com/dodekafonos)
-* [Michael Morais](https://github.com/itsmorais)
-* [Vitor F. Morais](https://github.com/vmorais111)
-#### Product Owner:
-* [Jean Cesar de Oliveira Rodrigues](https://github.com/JeanRodrigues1)
-#### Scrum Master:
-* [Alexandre Jonas de Souza Fonseca](https://github.com/AlexandreJonas)
-
 ## Objetivo do Produto:
 O objetivo do projeto é desenvolver uma plataforma desktop na linguagem Java que auxilie professores no processo de documentação de provas e trabalhos, além de facilitar o acompanhamento do desempenho individual dos alunos e das turmas. Na plataforma PARE poderão ser cadastradas novas atribuições, cada qual com suas especificidades, datas de entrega e opções pertinentes a cada aluno, como a própria nota ou as informações "entregue", "não entregue", ou "entregue com atraso".
 
@@ -58,3 +41,20 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
  
 ![ProductBacklog_FatecAPI_page-0001](https://user-images.githubusercontent.com/111707785/228219887-d98a6b22-2a41-431d-aca8-0d080e416237.jpg)
 ![ProductBacklog_FatecAPI_page-0002](https://user-images.githubusercontent.com/111707785/228219927-bb13fab5-5fb4-4dc7-bd82-2ed2113b5756.jpg)
+
+## Apresentação da Equipe:
+Somos uma equipe de jovens programadores interessados em criar soluções simples para problemas complexos e em aprender o máximo possível no processo.
+Nosso foco é identificar a principal finalidade de um produto para desenvolver soluções de maneira gradual e modular em torno deste objetivo, de forma que cada passo possa ser validado pelo(a) cliente e/ou usuários e o produto evolua organicamente.
+
+## Integrantes:
+
+#### Devs:
+* [Alita Willians da Silva Amancio](https://github.com/AlitaAmancio)
+* [Amanda Mendes Caldeira](https://github.com/AmendoaM)
+* [Jonas Alves Bueno](https://github.com/dodekafonos)
+* [Michael Morais](https://github.com/itsmorais)
+* [Vitor F. Morais](https://github.com/vmorais111)
+#### Product Owner:
+* [Jean Cesar de Oliveira Rodrigues](https://github.com/JeanRodrigues1)
+#### Scrum Master:
+* [Alexandre Jonas de Souza Fonseca](https://github.com/AlexandreJonas)
