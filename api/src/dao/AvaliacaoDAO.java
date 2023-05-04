@@ -111,4 +111,22 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
 
     }
     
+    public boolean avaliacaoExiste(String nomeAvaliacao) {
+        boolean existe = false;
+        String sql = "select * from api.avaliacao where avaliacao_nome = ? ";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, nomeAvaliacao);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
+    
 }

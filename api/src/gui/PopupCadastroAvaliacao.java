@@ -253,6 +253,13 @@ public class PopupCadastroAvaliacao extends javax.swing.JFrame {
         String mes = String.format("%02d", Integer.parseInt((String) jComboBox2.getSelectedItem()));
         String ano = String.format("%02d", Integer.parseInt((String) jComboBox3.getSelectedItem()));
         
+        String nomeAvaliacao = jTextField1.getText();
+        
+        if (new AvaliacaoDAO().avaliacaoExiste(nomeAvaliacao)) {
+            JOptionPane.showMessageDialog(rootPane, "Erro: Avaliação já cadastrada.");
+        }
+        
+        
         String bn= ano + "-" + mes + "-" + dia;
         float d=Float.parseFloat(jTextField6.getText());
         
