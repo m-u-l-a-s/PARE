@@ -439,7 +439,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboSalaActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-    new CadastroAluno().setVisible(true); dispose();
+    new NovaTelaCadastro().setVisible(true); dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnNovoTrabalhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTrabalhoActionPerformed
