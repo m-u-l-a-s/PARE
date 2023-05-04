@@ -43,7 +43,7 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
     
     public String getAvaliacaoNome(int id)
     {
-        String sql = "select avaliacao_nome from api.avaliacao where avaliacao_id = ?";
+        String sql = "select avaliacao_nome from api.avaliacao where avaliacao_id = ? ";
          String nome = "";
          try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             
@@ -82,7 +82,7 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
     }
 
     public ArrayList<Avaliacao> getAvaliacoesDaSala(int sala_id) {
-        String sql = "SELECT * FROM avaliacao WHERE sala_id = ? ;";
+        String sql = "SELECT * FROM avaliacao WHERE sala_id = ? ORDER BY avaliacao_data_final;";
 
         ArrayList<Avaliacao> avaliacoes = new ArrayList<>();
 
