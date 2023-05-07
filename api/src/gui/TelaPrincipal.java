@@ -460,8 +460,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         // TODO add your handling code here:
+        int aux = comboAvaliacao.getSelectedIndex();
+        int auxLista = listTrabalhos.getSelectedIndex();
         populaLista();
         PopulaComboAvaliacao();
+        listTrabalhos.setSelectedIndex(auxLista);
+        comboAvaliacao.setSelectedIndex(aux);
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
