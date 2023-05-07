@@ -129,4 +129,25 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
         return existe;
     }
     
+    public Avaliacao getAvaliacao(int id)
+    {
+        Avaliacao av = new Avaliacao();
+        String sql = "select * from api.avaliacao where avaliacao_id = ?";
+         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setInt(1, id );
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt("avaliacao_id");
+                    av.setAvaliacaoId(id);
+                    av.setAvaliacaoDataFinal(rs.getDate("avaliacao_data_final").toString());
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return av;
+    }
 }

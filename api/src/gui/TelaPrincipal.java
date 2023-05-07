@@ -119,9 +119,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 //        labelAvaliacaoNome.setText(AvaliacaoNome);
         
         int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
-        Avaliacao av = new Avaliacao();
-        av.setAvaliacaoId(id);
-        av.setAvaliacaoDataFinal("2023-03-20");
+        Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
+        
         
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
         GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
@@ -132,11 +131,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
               String status = "Entregue";
               float nota =  ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
               
-              if (LocalDate.parse(dataAluno).isBefore(LocalDate.parse(av.getAvaliacaoDataFinal())))
+              if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal())))
               {
-              } else {
                   status = "Atrasado";
-            }
+              } else
+              {
+                  
+              }
               
               if (dataAluno.contains("9999"))
               {
