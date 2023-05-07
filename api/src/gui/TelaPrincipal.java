@@ -71,8 +71,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         for (int i = 0; i < avaliacoes.size(); i++) {
             
             int numAtrasados = alunoController.AlunosAtrasados(avaliacoes.get(i).getAvaliacaoId()).size();
-            
-            linhasTabela[i] = "<html>Nome da Avaliação: "+avaliacoes.get(i).getAvaliacaoNome()+
+            String status = " (Aberto)";
+            if (LocalDate.now().isAfter(LocalDate.parse(avaliacoes.get(i).getAvaliacaoDataFinal())) )
+            {
+                status = " (Encerrado)";
+            }
+                    
+            linhasTabela[i] = "<html>Nome da Avaliação: "+avaliacoes.get(i).getAvaliacaoNome()+ status +
                              "<br>Entregaram: " + String.valueOf(numAlunos - numAtrasados) +  " / " +  String.valueOf(numAlunos) +
                              "<br>Não entregaram: "+ String.valueOf(numAtrasados) + " / " +  String.valueOf(numAlunos) +
                              "<br>Data final: "+ avaliacoes.get(i).getAvaliacaoDataFinal() +
@@ -419,7 +424,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void listTrabalhosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTrabalhosMouseClicked
         
         String nome = listTrabalhos.getSelectedValue();
-        nome = nome.substring(25,listTrabalhos.getSelectedValue().indexOf("<br>Entregaram: "));
+        nome = nome.substring(25,listTrabalhos.getSelectedValue().indexOf(" ("));
         comboAvaliacao.setSelectedItem(nome);
     }//GEN-LAST:event_listTrabalhosMouseClicked
 
