@@ -372,6 +372,10 @@ public class CadastroAluno extends javax.swing.JFrame {
         else{
             AlunoDAO alunodao= new AlunoDAO();
             alunodao.cadastrar(aluno);
+            alunodao.cadastrarAlunoEmAvaliacoes(aluno);
+            
+        
+        
             JOptionPane.showMessageDialog(null, "Aluno cadastrado!");
         }        
         

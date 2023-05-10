@@ -8,6 +8,7 @@ import java.sql.*;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Avaliacao;
 
 public class AlunoDAO {
     private Connection connection;
@@ -39,6 +40,21 @@ public class AlunoDAO {
         catch(SQLException u){
             throw new RuntimeException(u);
         }
+    }
+    
+    public void cadastrarAlunoEmAvaliacoes(Aluno aluno){
+        AvaliacaoDAO avaliacao = new AvaliacaoDAO();
+        AlunoAvaliacaoDAO alunoAvaliacao = new AlunoAvaliacaoDAO();
+        
+ArrayList<Avaliacao> avaliacoesDaSala = avaliacao.getAvaliacoesDaSala(aluno.getAlunoSalaId());
+        for(int i = 0; i < avaliacoesDaSala.size();i++){
+            System.out.println(avaliacoesDaSala.get(i).getAvaliacaoNome());
+            alunoAvaliacao.cadastrarAlunoAvaliacao(aluno, avaliacoesDaSala.get(i));
+            
+            
+        }
+        
+        
     }
     
     public String getAlunoNome(int id)
