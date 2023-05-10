@@ -11,6 +11,7 @@ import javax.swing.ComboBoxModel;
 import modelo.*;
 import dao.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -365,6 +366,10 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
             jTextField1.setVisible(false);
             jLabel5.setVisible(false);
         }
+    Sala salin = new Sala();
+    salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+    salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
+    populaSalaAluno(salin);
     }//GEN-LAST:event_NovoComboSalaItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -437,4 +442,27 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         }
 
     }
+    
+            public void populaSalaAluno(Sala sala){
+              DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0);
+        jTable3.setModel(model);
+            
+            List<String> studentNames = new SalaDAO().buscarTodosAlunos(sala);
+            
+            for (int i = 0; i < studentNames.size(); i++) {
+                String nome = studentNames.get(i);
+                model.addRow(new Object[] { false,nome});
+               // model.addRow(new Object[] {false, nome});
+                jTable3.setModel(model);
+                
+            }
+            
+//            String listNomes[] = new String[studentNames.size()];
+//            for (int i = 0; i < studentNames.size(); i++){
+//                listNomes[i] = (studentNames.get(i));
+//            }
+//            ListaAlunosSala.setListData(listNomes);           
+        }
+            
 }
