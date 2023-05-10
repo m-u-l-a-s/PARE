@@ -45,16 +45,12 @@ public class AlunoDAO {
     public void cadastrarAlunoEmAvaliacoes(Aluno aluno){
         AvaliacaoDAO avaliacao = new AvaliacaoDAO();
         AlunoAvaliacaoDAO alunoAvaliacao = new AlunoAvaliacaoDAO();
-        
 ArrayList<Avaliacao> avaliacoesDaSala = avaliacao.getAvaliacoesDaSala(aluno.getAlunoSalaId());
+        
         for(int i = 0; i < avaliacoesDaSala.size();i++){
-            System.out.println(avaliacoesDaSala.get(i).getAvaliacaoNome());
             alunoAvaliacao.cadastrarAlunoAvaliacao(aluno, avaliacoesDaSala.get(i));
-            
-            
-        }
-        
-        
+   
+        }        
     }
     
     public String getAlunoNome(int id)
