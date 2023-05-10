@@ -64,6 +64,8 @@ public class AlunoAvaliacaoDAO {
                     int avaliacao_id = rs.getInt("avaliacao_id");
                     String data = rs.getDate("aluno_avaliacao_data_entrega").toString();
                     AlunoAvaliacao alunoavaliacao = new AlunoAvaliacao(aluno_avaliacaoid ,aluno_id,avaliacao_id,data,nota);
+                    String nome = new AlunoDAO().getAlunoNome(aluno_id);
+                    alunoavaliacao.setAlunoNome(nome);
                     ListAlunoAvaliacao.add(alunoavaliacao);
                     
                 }

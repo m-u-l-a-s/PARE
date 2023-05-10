@@ -1,6 +1,7 @@
 package modelo;
 
 public class AlunoAvaliacao {
+    private String alunoNome;
     private int alunoAvaliacaoId;
     private int alunoId;
     private int avaliacaoId;
@@ -14,6 +15,14 @@ public class AlunoAvaliacao {
         this.avaliacaoId = avaliacaoId;
         this.alunoAvaliacaoData = Data;
         this.alunoAvaliacaoNota = nota;
+    }
+
+    public String getAlunoNome() {
+        return alunoNome;
+    }
+
+    public void setAlunoNome(String alunoNome) {
+        this.alunoNome = alunoNome;
     }
     
     public void setAlunoId(int alunoId) {

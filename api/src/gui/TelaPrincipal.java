@@ -13,15 +13,16 @@ import modelo.*;
 import dao.*;
 import java.awt.Color;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaPrincipal
      */
-    
     List<AlunoAvaliacao> GlobalListAlunoAvaliacao;
-    
+
     public TelaPrincipal() {
         getContentPane().setBackground(Color.decode("#658EA9"));
         getContentPane().setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
@@ -35,7 +36,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         PopulaComboAvaliacao();
         //Desabilita lista de trabalhos no lado esquerdo da tela para não sobreescrever as linhas destacadas quando o usuário clica
         //listTrabalhos.setEnabled(false);
-       
+
     }
 
     public void populaSalaHorario(Sala sala) {
@@ -69,41 +70,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
         int numAlunos = new SalaDAO().buscarTodosAlunos(sala).size();
 
         for (int i = 0; i < avaliacoes.size(); i++) {
-            
+
             int numAtrasados = alunoController.AlunosAtrasados(avaliacoes.get(i).getAvaliacaoId()).size();
             String status = " (Aberto)";
-            if (LocalDate.now().isAfter(LocalDate.parse(avaliacoes.get(i).getAvaliacaoDataFinal())) )
-            {
+            if (LocalDate.now().isAfter(LocalDate.parse(avaliacoes.get(i).getAvaliacaoDataFinal()))) {
                 status = " (Encerrado)";
             }
-                    
-            linhasTabela[i] = "<html>Nome da Avaliação: "+avaliacoes.get(i).getAvaliacaoNome()+ status +
-                             "<br>Entregaram: " + String.valueOf(numAlunos - numAtrasados) +  " / " +  String.valueOf(numAlunos) +
-                             "<br>Não entregaram: "+ String.valueOf(numAtrasados) + " / " +  String.valueOf(numAlunos) +
-                             "<br>Data final: "+ avaliacoes.get(i).getAvaliacaoDataFinal() +
-                             "<br><br>";
+
+            linhasTabela[i] = "<html>Nome da Avaliação: " + avaliacoes.get(i).getAvaliacaoNome() + status
+                    + "<br>Entregaram: " + String.valueOf(numAlunos - numAtrasados) + " / " + String.valueOf(numAlunos)
+                    + "<br>Não entregaram: " + String.valueOf(numAtrasados) + " / " + String.valueOf(numAlunos)
+                    + "<br>Data final: " + avaliacoes.get(i).getAvaliacaoDataFinal()
+                    + "<br><br>";
         }
 
         listTrabalhos.setListData(linhasTabela);
     }
 
     public void PopulaCombo() {
-        
+
         List<String> ListSalas = new SalaDAO().buscarTodasSalas();
-           
-        for(int i = 0; i < ListSalas.size(); i++){
+
+        for (int i = 0; i < ListSalas.size(); i++) {
             ComboSala.addItem(ListSalas.get(i));
-                
+
         }
     }
-    
-    public void PopulaComboAvaliacao()
-    {
+
+    public void PopulaComboAvaliacao() {
         comboAvaliacao.removeAllItems();
         AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
         int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
         ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
-        
+
         for (int i = 0; i < avaliacoes.size(); i++) {
             comboAvaliacao.addItem(avaliacoes.get(i).getAvaliacaoNome());
         }
@@ -114,44 +113,84 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     public void PopulaTabela() {
-        
+
         DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
         model.setRowCount(0);
         tableAvaliacoesAluno.setModel(model);
-        
-          //Não apaga pq vai q volta a usar depois
+
+        //Não apaga pq vai q volta a usar depois
 //        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
 //        labelAvaliacaoNome.setText(AvaliacaoNome);
-        
         int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
         Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
-        
-        
+
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+
         GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
-          for(int i = 0; i< ListAlunoAvaliacao.size(); i++)
-          {
-              String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
-              String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
-              String status = "Entregue";
-              float nota =  ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
-              
-              if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal())))
-              {
-                  status = "Atrasado";
-              } else
-              {
-                  
-              }
-              
-              if (dataAluno.contains("9999"))
-              {
-                  dataAluno = "-";
-                  status = "Pendente";
-              }
-              model.addRow(new Object[] {nome, dataAluno, nota, status});
-              tableAvaliacoesAluno.setModel(model);
-          }
+
+        for (int i = 0; i < ListAlunoAvaliacao.size(); i++) {
+            String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
+            String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
+            String status = "Entregue";
+            float nota = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
+
+            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
+                status = "Atrasado";
+            } else {
+
+            }
+
+            if (dataAluno.contains("9999")) {
+                dataAluno = "-";
+                status = "Pendente";
+            }
+            model.addRow(new Object[]{nome, dataAluno, nota, status});
+            tableAvaliacoesAluno.setModel(model);
+        }
+
+    }
+
+    public void PopulaTabelaPorNome() {
+
+        DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
+        model.setRowCount(0);
+        tableAvaliacoesAluno.setModel(model);
+
+        //Não apaga pq vai q volta a usar depois
+//        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
+//        labelAvaliacaoNome.setText(AvaliacaoNome);
+        int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
+        Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
+
+        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+
+        GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
+        Collections.sort(ListAlunoAvaliacao, new Comparator<AlunoAvaliacao>() {
+            @Override
+            public int compare(AlunoAvaliacao aluno1, AlunoAvaliacao aluno2) {
+                return aluno1.getAlunoNome().compareTo(aluno2.getAlunoNome());
+            }
+        ;
+        });
+          for (int i = 0; i < ListAlunoAvaliacao.size(); i++) {
+            String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
+            String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
+            String status = "Entregue";
+            float nota = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
+
+            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
+                status = "Atrasado";
+            } else {
+
+            }
+
+            if (dataAluno.contains("9999")) {
+                dataAluno = "-";
+                status = "Pendente";
+            }
+            model.addRow(new Object[]{nome, dataAluno, nota, status});
+            tableAvaliacoesAluno.setModel(model);
+        }
 
     }
 
@@ -204,6 +243,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ordenarTarefas = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableAvaliacoesAluno = new javax.swing.JTable();
@@ -214,6 +254,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         labelAvaliacaoNome1 = new javax.swing.JLabel();
         comboAvaliacao = new javax.swing.JComboBox<>();
         btnSalvar = new javax.swing.JButton();
+        ordenarPorData = new javax.swing.JRadioButton();
+        ordenarPorNome = new javax.swing.JRadioButton();
         btnCadastrar = new javax.swing.JButton();
         ComboSala = new javax.swing.JComboBox<>();
         btnNovoTrabalho = new javax.swing.JButton();
@@ -303,6 +345,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        ordenarTarefas.add(ordenarPorData);
+        ordenarPorData.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
+        ordenarPorData.setSelected(true);
+        ordenarPorData.setText("Ordenar por Data");
+        ordenarPorData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ordenarPorDataActionPerformed(evt);
+            }
+        });
+
+        ordenarTarefas.add(ordenarPorNome);
+        ordenarPorNome.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
+        ordenarPorNome.setText("Ordenar por Nome");
+        ordenarPorNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ordenarPorNomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -313,12 +374,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
-                    .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1)
-                    .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ordenarPorData)
+                        .addGap(18, 18, 18)
+                        .addComponent(ordenarPorNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -330,7 +397,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ordenarPorData)
+                            .addComponent(ordenarPorNome))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -422,9 +492,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listTrabalhosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTrabalhosMouseClicked
-        
+
         String nome = listTrabalhos.getSelectedValue();
-        nome = nome.substring(25,listTrabalhos.getSelectedValue().indexOf(" ("));
+        nome = nome.substring(25, listTrabalhos.getSelectedValue().indexOf(" ("));
         comboAvaliacao.setSelectedItem(nome);
     }//GEN-LAST:event_listTrabalhosMouseClicked
 
@@ -445,21 +515,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboSalaActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-    new NovaTelaCadastro().setVisible(true); dispose();
+        new NovaTelaCadastro().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnNovoTrabalhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTrabalhoActionPerformed
         // TODO add your handling code here:
         int sala_id = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
-        PopupCadastroAvaliacao f2= new PopupCadastroAvaliacao(sala_id);
+        PopupCadastroAvaliacao f2 = new PopupCadastroAvaliacao(sala_id);
         f2.setVisible(true);
     }//GEN-LAST:event_btnNovoTrabalhoActionPerformed
 
     private void comboAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAvaliacaoActionPerformed
         // TODO add your handling code here:
-        if( comboAvaliacao.getSelectedIndex() != -1)
-        {
-            PopulaTabela();
+        if (comboAvaliacao.getSelectedIndex() != -1) {
+            if (ordenarPorData.isSelected()) {
+                PopulaTabela();
+            }
+            if (ordenarPorNome.isSelected()) {
+                PopulaTabelaPorNome();
+            }
         }
     }//GEN-LAST:event_comboAvaliacaoActionPerformed
 
@@ -480,23 +555,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
         List<AlunoAvaliacao> ListAlunoAvaliacao = new ArrayList<>();
         for (int i = 0; i < tableAvaliacoesAluno.getRowCount(); i++) {
             AlunoAvaliacao Aux = GlobalListAlunoAvaliacao.get(i);
-            if ( (tableAvaliacoesAluno.getValueAt(i, colunaData) != "-") && (
-                    (tableAvaliacoesAluno.getValueAt(i, colunaData) != Aux.getAlunoAvaliacaoData())
-                    || (tableAvaliacoesAluno.getValueAt(i, colunaNota) != String.valueOf(Aux.getAlunoAvaliacaoNota()) )))
-            {
-                
-                Aux.setAlunoAvaliacaoNota(Float.valueOf(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaNota))) );
-                Aux.setAlunoAvaliacaoData(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaData)) );
+            if ((tableAvaliacoesAluno.getValueAt(i, colunaData) != "-") && ((tableAvaliacoesAluno.getValueAt(i, colunaData) != Aux.getAlunoAvaliacaoData())
+                    || (tableAvaliacoesAluno.getValueAt(i, colunaNota) != String.valueOf(Aux.getAlunoAvaliacaoNota())))) {
+
+                Aux.setAlunoAvaliacaoNota(Float.valueOf(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaNota))));
+                Aux.setAlunoAvaliacaoData(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaData)));
                 ListAlunoAvaliacao.add(Aux);
             }
-            
+
         }
-        if (ListAlunoAvaliacao.size() > 0)
-        {
-          new AlunoAvaliacaoDAO().UpdateTodosAlunoAvaliacao(ListAlunoAvaliacao);
+        if (ListAlunoAvaliacao.size() > 0) {
+            new AlunoAvaliacaoDAO().UpdateTodosAlunoAvaliacao(ListAlunoAvaliacao);
         }
-       
+
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void ordenarPorDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordenarPorDataActionPerformed
+        ((DefaultTableModel) tableAvaliacoesAluno.getModel()).setRowCount(0);
+        PopulaTabela();
+    }//GEN-LAST:event_ordenarPorDataActionPerformed
+
+    private void ordenarPorNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordenarPorNomeActionPerformed
+        ((DefaultTableModel) tableAvaliacoesAluno.getModel()).setRowCount(0);
+        PopulaTabelaPorNome();
+    }//GEN-LAST:event_ordenarPorNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -547,6 +629,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelAvaliacaoNome2;
     private javax.swing.JList<String> listSalaHorario;
     private javax.swing.JList<String> listTrabalhos;
+    private javax.swing.JRadioButton ordenarPorData;
+    private javax.swing.JRadioButton ordenarPorNome;
+    private javax.swing.ButtonGroup ordenarTarefas;
     private javax.swing.JTable tableAvaliacoesAluno;
     // End of variables declaration//GEN-END:variables
 
