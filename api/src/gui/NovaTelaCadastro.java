@@ -370,6 +370,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
     salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
     populaSalaAluno(salin);
+    populaSalaHorario(salin);
     }//GEN-LAST:event_NovoComboSalaItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -465,4 +466,21 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 //            ListaAlunosSala.setListData(listNomes);           
         }
             
+             public void populaSalaHorario(Sala sala){
+              DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        jTable1.setModel(model);
+            
+            List<SalaHorario> ListSalaHorario = new SalaHorarioDAO().buscarTodosHorarios(sala);
+            
+            for (int i = 0; i < ListSalaHorario.size(); i++) {
+                String dia = ListSalaHorario.get(i).getSalaHorarioDia();
+                String hora = ListSalaHorario.get(i).getSalaHorarioHora();
+                model.addRow(new Object[] { false, dia, hora});
+               // model.addRow(new Object[] {false, nome});
+                jTable1.setModel(model);
+                
+            }
+            
+}
 }
