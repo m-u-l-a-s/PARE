@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.ComboBoxModel;
 import modelo.*;
 import dao.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Franc
  */
 public class NovaTelaCadastro extends javax.swing.JFrame {
-
+    List<SalaHorario> GlobalListSalaHorario = new ArrayList<>();
     /**
      * Creates new form NovaTelaCadastro
      */
@@ -352,6 +353,31 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        List<SalaHorario> ListSalahorario = GlobalListSalaHorario;
+        int ct=0;
+        for (int i=0; i< jTable1.getRowCount();i++){
+            if (Boolean.valueOf(String.valueOf(jTable1.getValueAt(i, 0))))
+            {      
+//                System.out.println(i);
+                int id =  ListSalahorario.get(i).getSalaHorarioID();
+//                System.out.println(id);
+                new SalaHorarioDAO().deleteSalaHorario(id);
+                ct++;
+            }
+//            else{
+//             System.out.println("BN");
+//            }
+        }
+        if (ct>0){
+        JOptionPane.showMessageDialog(null, "Deletado com sucesso");
+        }
+        else{
+        JOptionPane.showMessageDialog(null, "Selecione o horário para deletá-lo");
+        }
+        Sala salin = new Sala();
+        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
+        populaSalaHorario(salin);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -472,7 +498,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         jTable1.setModel(model);
             
             List<SalaHorario> ListSalaHorario = new SalaHorarioDAO().buscarTodosHorarios(sala);
-            
+            GlobalListSalaHorario = ListSalaHorario;
             for (int i = 0; i < ListSalaHorario.size(); i++) {
                 String dia = ListSalaHorario.get(i).getSalaHorarioDia();
                 String hora = ListSalaHorario.get(i).getSalaHorarioHora();

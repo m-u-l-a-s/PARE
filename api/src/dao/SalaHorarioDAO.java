@@ -50,7 +50,9 @@ public class SalaHorarioDAO {
                 while (rs.next()) {
                     String dia = rs.getString("sala_dia");
                     String hora = rs.getString("sala_hora");
+                    int id = rs.getInt("sala_horario_id");
                     SalaHorario salaHorario = new SalaHorario(salaID, dia, hora);
+                    salaHorario.setSalaHorarioID(id);
                     ListSalaHorario.add(salaHorario);
                 }
             }
@@ -116,9 +118,15 @@ public class SalaHorarioDAO {
             return salaNome;
         }
 
+    public void deleteSalaHorario(int id){
+        String sqlQueryHorario = "delete from api.sala_horario where sala_horario_id = ?";  
+        try (PreparedStatement stmtHorario = connection.prepareStatement(sqlQueryHorario)){
+            stmtHorario.setInt(1, id);
+            stmtHorario.execute();
+            stmtHorario.close();
+        } catch(SQLException u){
+            throw new RuntimeException(u);
+        }
+    }
 
-
-
-
-    
 }
