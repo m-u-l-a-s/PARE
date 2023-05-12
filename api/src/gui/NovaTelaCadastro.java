@@ -90,6 +90,11 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 NovoComboSalaItemStateChanged(evt);
             }
         });
+        NovoComboSala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NovoComboSalaActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(136, 178, 204));
         jButton3.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
@@ -382,26 +387,40 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void NovoComboSalaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_NovoComboSalaItemStateChanged
-        if (NovoComboSala.getSelectedItem().toString().equals("Nova Sala")) {
-            jLabel4.setVisible(true);
-            jTextField1.setVisible(true);
-            jLabel5.setVisible(true);
-    }
-        else {
-            jLabel4.setVisible(false);
-            jTextField1.setVisible(false);
-            jLabel5.setVisible(false);
-        }
-    Sala salin = new Sala();
-    salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
-    salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
-    populaSalaAluno(salin);
-    populaSalaHorario(salin);
+
     }//GEN-LAST:event_NovoComboSalaItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void NovoComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NovoComboSalaActionPerformed
+         Sala salin = new Sala();
+         salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        if (NovoComboSala.getSelectedItem().toString().equals("Nova Sala")) {
+            jLabel4.setVisible(true);
+            jTextField1.setVisible(true);
+            jLabel5.setVisible(true);
+            
+//            jTable1.setModel(new DefaultTableModel());
+//            jTable3.setModel(new DefaultTableModel());
+           
+            salin.setSalaId(999); 
+    }
+        else {
+            jLabel4.setVisible(false);
+            jTextField1.setVisible(false);
+            jLabel5.setVisible(false);  
+            
+            
+            salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome())); 
+            
+        }
+        
+       
+    populaSalaAluno(salin);
+    populaSalaHorario(salin);
+    }//GEN-LAST:event_NovoComboSalaActionPerformed
     
 
     /**
