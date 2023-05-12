@@ -80,7 +80,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             linhasTabela[i] = "<html>Nome da Avaliação: " + avaliacoes.get(i).getAvaliacaoNome() + status
                     + "<br>Entregaram: " + String.valueOf(numAlunos - numAtrasados) + " / " + String.valueOf(numAlunos)
                     + "<br>Não entregaram: " + String.valueOf(numAtrasados) + " / " + String.valueOf(numAlunos)
-                    + "<br>Data final: " + avaliacoes.get(i).getAvaliacaoDataFinal()
+                    + "<br>Data final: " + alunoController.formataData(avaliacoes.get(i).getAvaliacaoDataFinal())
                     + "<br><br>";
         }
 
@@ -131,6 +131,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         for (int i = 0; i < ListAlunoAvaliacao.size(); i++) {
             String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
             String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
+            String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
             String status = "Entregue";
             float nota = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
 
@@ -140,11 +141,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             }
 
-            if (dataAluno.contains("9999")) {
-                dataAluno = "-";
+            if (dataAlunoFormatada.contains("9999")) {
+                dataAlunoFormatada = "-";
                 status = "Pendente";
             }
-            model.addRow(new Object[]{nome, dataAluno, nota, status});
+            model.addRow(new Object[]{nome, dataAlunoFormatada, nota, status});
             tableAvaliacoesAluno.setModel(model);
         }
 
