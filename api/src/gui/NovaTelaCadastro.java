@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class NovaTelaCadastro extends javax.swing.JFrame {
     List<SalaHorario> GlobalListSalaHorario = new ArrayList<>();
+    List<String> GlobalstudentNames = new ArrayList<>();
     /**
      * Creates new form NovaTelaCadastro
      */
@@ -47,7 +48,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jTableAlunos = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
@@ -113,7 +114,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
         jTextField1.setForeground(new java.awt.Color(102, 102, 102));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 { new Boolean(false), null},
                 {null, null},
@@ -150,14 +151,14 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable3.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        jTable3.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable3);
-        jTable3.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setResizable(false);
-            jTable3.getColumnModel().getColumn(0).setPreferredWidth(30);
-            jTable3.getColumnModel().getColumn(1).setPreferredWidth(368);
+        jTableAlunos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        jTableAlunos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableAlunos);
+        jTableAlunos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (jTableAlunos.getColumnModel().getColumnCount() > 0) {
+            jTableAlunos.getColumnModel().getColumn(0).setResizable(false);
+            jTableAlunos.getColumnModel().getColumn(0).setPreferredWidth(30);
+            jTableAlunos.getColumnModel().getColumn(1).setPreferredWidth(368);
         }
 
         jTable1.setFont(new java.awt.Font("Dubai", 0, 12)); // NOI18N
@@ -297,7 +298,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +351,41 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        List<String> studentNames = GlobalstudentNames;
+          Sala salin = new Sala();
+                salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+                salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome())); 
+        int ct=0;
+        
+        for(int i = 0; i < jTableAlunos.getRowCount(); i++){
+            if(Boolean.valueOf(String.valueOf(jTableAlunos.getValueAt(i, 0))))
+            {
+                String name = studentNames.get(i);
+                AlunoDAO aluno = new AlunoDAO();
+                AlunoAvaliacaoDAO alunoAvaliacao = new AlunoAvaliacaoDAO();
+                int alunoId = aluno.inativarAluno(name,salin.getSalaId());
+              
+                System.out.println(alunoId);
+                alunoAvaliacao.inativarAlunoAvaliacao(alunoId);
+                
+                
+                
+                ct++;
+            }
+        }
+        if(ct>0){
+            JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione o aluno para deletá-lo");
 
+        }
+        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
+        populaSalaAluno(salin);
+        
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -363,15 +398,10 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         for (int i=0; i< jTable1.getRowCount();i++){
             if (Boolean.valueOf(String.valueOf(jTable1.getValueAt(i, 0))))
             {      
-//                System.out.println(i);
                 int id =  ListSalahorario.get(i).getSalaHorarioID();
-//                System.out.println(id);
                 new SalaHorarioDAO().deleteSalaHorario(id);
                 ct++;
             }
-//            else{
-//             System.out.println("BN");
-//            }
         }
         if (ct>0){
         JOptionPane.showMessageDialog(null, "Deletado com sucesso");
@@ -476,7 +506,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTableAlunos;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
@@ -490,19 +520,22 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     }
     
             public void populaSalaAluno(Sala sala){
-              DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+              DefaultTableModel model = (DefaultTableModel) jTableAlunos.getModel();
         model.setRowCount(0);
-        jTable3.setModel(model);
+        jTableAlunos.setModel(model);
             
             List<String> studentNames = new SalaDAO().buscarTodosAlunos(sala);
-            
+            GlobalstudentNames = studentNames;
+
             for (int i = 0; i < studentNames.size(); i++) {
                 String nome = studentNames.get(i);
                 model.addRow(new Object[] { false,nome});
                // model.addRow(new Object[] {false, nome});
-                jTable3.setModel(model);
+                jTableAlunos.setModel(model);
                 
             }
+            
+           
             
 //            String listNomes[] = new String[studentNames.size()];
 //            for (int i = 0; i < studentNames.size(); i++){
