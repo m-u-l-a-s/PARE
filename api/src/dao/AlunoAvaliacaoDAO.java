@@ -5,6 +5,7 @@ import modelo.Avaliacao;
 import modelo.Aluno;
 import java.sql.*;
 import java.sql.PreparedStatement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import dao.AlunoDAO;
@@ -128,5 +129,12 @@ public class AlunoAvaliacaoDAO {
          for (int i=0; i<ListAlunoAvaliacao.size(); i++){
                 UpdateAlunosAvaliacao(ListAlunoAvaliacao.get(i));
         }
+    }
+    public static String formataData(String inputDate) {
+        LocalDate date = LocalDate.parse(inputDate);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String outputDate = date.format(outputFormatter);
+        System.out.println(outputDate);
+        return outputDate;
     }
 }
