@@ -49,6 +49,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             listHorarios[i] = (ListSalaHorario.get(i).getSalaHorarioDia() + " - " + ListSalaHorario.get(i).getSalaHorarioHora());
         }
         listSalaHorario.setListData(listHorarios);
+        
     }
 
     public void populaLista() {
@@ -111,10 +112,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     public void setCombo() {
         ComboSala.setSelectedItem(salaHorarioController.getSalaAtual());
+        
+        listRendimentoGeral.setListData(calculaRendimentoGeral());
     }
 
     // Calcular e exibir rendimento geral da sala:
-    public void calculaRendimentoGeral() {
+    public String[] calculaRendimentoGeral() {
         int entregue = 0;
         int atrasado = 0;
         int pendente = 0;
@@ -143,13 +146,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String porCentagemAtrasado = decimalFormat.format((double) (atrasado * 100) / totalAlunos);
         String porCentagemPendente = decimalFormat.format((double) (pendente * 100) / totalAlunos);
 
-//        System.out.println("Entregue: "+entregue+" de "+ totalAlunos);
-//        System.out.println("Atrasado: "+atrasado+" de "+ totalAlunos);
-//        System.out.println("Pendente: "+pendente+" de "+ totalAlunos);
-//        System.out.println("Entregues: " + porCentagemEntregue + "%");
-//        System.out.println("Atrasados: " + porCentagemAtrasado + "%");
-//        System.out.println("Pendentes: " + porCentagemPendente + "%");
+        ArrayList<String> rendimentoGeral = new ArrayList<>();
 
+        rendimentoGeral.add("Entregue: "+entregue+" de "+ totalAlunos + " ("+porCentagemEntregue + "%)");
+        rendimentoGeral.add("Atrasado: "+atrasado+" de "+ totalAlunos + " ("+porCentagemEntregue + "%)");
+        rendimentoGeral.add("Pendente: "+pendente+" de "+ totalAlunos + " ("+porCentagemEntregue + "%)");
+
+        String[] rendimentoGeralArray = rendimentoGeral.toArray(new String[0]);
+        return rendimentoGeralArray;
     }
     public void PopulaTabela() {
 
@@ -293,6 +297,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         ordenarPorData = new javax.swing.JRadioButton();
         ordenarPorNome = new javax.swing.JRadioButton();
+        labelAvaliacaoNome3 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        listRendimentoGeral = new javax.swing.JList<>();
         btnCadastrar = new javax.swing.JButton();
         ComboSala = new javax.swing.JComboBox<>();
         btnNovoTrabalho = new javax.swing.JButton();
@@ -401,13 +408,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        labelAvaliacaoNome3.setBackground(new java.awt.Color(255, 255, 255));
+        labelAvaliacaoNome3.setFont(new java.awt.Font("Dubai", 0, 21));
+        labelAvaliacaoNome3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAvaliacaoNome3.setText("Rendimento da Turma");
+        labelAvaliacaoNome3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        listRendimentoGeral.setFont(new java.awt.Font("Dubai", 0, 16));
+        jScrollPane5.setViewportView(listRendimentoGeral);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelAvaliacaoNome3, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
@@ -433,16 +452,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(comboAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(9, 9, 9)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ordenarPorData)
-                            .addComponent(ordenarPorNome))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ordenarPorNome)))
+                    .addComponent(jScrollPane3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAvaliacaoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelAvaliacaoNome3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 34, Short.MAX_VALUE))
         );
 
@@ -542,7 +565,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Sala salin = new Sala();
         salin.setSalaNome(ComboSala.getSelectedItem().toString());
         populaSalaHorario(salin);
-        calculaRendimentoGeral();
+        listRendimentoGeral.setListData(calculaRendimentoGeral());
+
     }//GEN-LAST:event_ComboSalaActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
@@ -608,6 +632,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 PopulaTabelaPorNome();
             }
         }
+
     }//GEN-LAST:event_comboAvaliacaoActionPerformed
 
     private void listTrabalhosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTrabalhosMouseClicked
@@ -662,8 +687,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel labelAvaliacaoNome1;
     private javax.swing.JLabel labelAvaliacaoNome2;
+    private javax.swing.JLabel labelAvaliacaoNome3;
+    private javax.swing.JList<String> listRendimentoGeral;
     private javax.swing.JList<String> listSalaHorario;
     private javax.swing.JList<String> listTrabalhos;
     private javax.swing.JRadioButton ordenarPorData;
