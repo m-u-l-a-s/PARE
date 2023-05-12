@@ -30,8 +30,8 @@ public class AlunoAvaliacaoDAO {
     }
 
     public void cadastrarAlunoAvaliacao(Aluno aluno,Avaliacao avaliacao){
-        String sql = "INSERT INTO aluno_avaliacao(avaliacao_id,aluno_id,aluno_avaliacao_data_entrega)"
-        + "VALUES(?,?,?);";
+        String sql = "INSERT INTO aluno_avaliacao(avaliacao_id,aluno_id,aluno_avaliacao_data_entrega,aluno_avaliacao_status)"
+        + "VALUES(?,?,?,?);";
         
         try(PreparedStatement stmt = connection.prepareStatement(sql,
                 Statement.RETURN_GENERATED_KEYS)){
@@ -39,6 +39,7 @@ public class AlunoAvaliacaoDAO {
             stmt.setInt(1, avaliacao.getAvaliacaoId());
             stmt.setInt(2, aluno.getAlunoId());
             stmt.setDate(3, java.sql.Date.valueOf(LocalDate.parse("9999-12-12")));
+            stmt.setString(4,"M");
             
             stmt.execute();           
             stmt.close();
@@ -46,10 +47,22 @@ public class AlunoAvaliacaoDAO {
 
     }
 
+     public void inativarAlunoAvaliacao(int alunoId) {
+    String sql = "UPDATE aluno_avaliacao SET aluno_avaliacao_status = 'i' WHERE aluno_id = ?;";
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setInt(1, alunoId);
+        stmt.execute();
+        stmt.close();
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+}
+
     public List<AlunoAvaliacao> buscarTodosAlunoAvaliacao(Avaliacao avaliacao) {
         List<AlunoAvaliacao> ListAlunoAvaliacao = new ArrayList<>();
 
-        String sql = "select * from api.aluno_avaliacao where avaliacao_id = ? order by aluno_avaliacao_data_entrega desc;";
+        String sql = "select * from api.aluno_avaliacao where avaliacao_id = ? and aluno_avaliacao_status = 'M'order by aluno_avaliacao_data_entrega desc;";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             
@@ -82,12 +95,14 @@ public class AlunoAvaliacaoDAO {
     {
         List<String> ListAtrasados = new ArrayList<>();
 
-        String sql = "select aluno_avaliacao.aluno_id as Atrasado from api.aluno_avaliacao, api.avaliacao where avaliacao.avaliacao_id = ? and aluno_avaliacao.avaliacao_id = ? and aluno_avaliacao.aluno_avaliacao_data_entrega > avaliacao.avaliacao_data_final;";
+        String sql = "select aluno_avaliacao.aluno_id as Atrasado from "
+        + "api.aluno_avaliacao, api.avaliacao where avaliacao.avaliacao_id = ? and aluno_avaliacao_status = ? and aluno_avaliacao.avaliacao_id = ? and aluno_avaliacao.aluno_avaliacao_data_entrega > avaliacao.avaliacao_data_final;";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             
             stmt.setInt(1, id );
-            stmt.setInt(2, id );
+            stmt.setString(2, "M" );
+            stmt.setInt(3, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

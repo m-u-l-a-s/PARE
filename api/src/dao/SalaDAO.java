@@ -69,10 +69,11 @@ public class SalaDAO {
     public List<String> buscarTodosAlunos(Sala sala) {
         List<String> studentNames = new ArrayList<>();
 
-        String sql = "select aluno_nome from api.aluno where sala_id = ?;";
+        String sql = "select aluno_nome from api.aluno where sala_id = ? and aluno_status = ? ;";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, sala.getSalaId());
+            stmt.setString(2,"M");
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

@@ -22,12 +22,13 @@ public class AlunoDAO {
     }
     
     public void cadastrar(Aluno aluno){
-        String sql = "INSERT INTO aluno(aluno_nome,sala_id) VALUES(?,?)";
+        String sql = "INSERT INTO aluno(aluno_nome,sala_id,aluno_status) VALUES(?,?,?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1,aluno.getAlunoNome());
             stmt.setInt(2, aluno.getAlunoSalaId());
+            stmt.setString(3,"M");
             stmt.execute();
             // Pegar chave primaria gerada pelo banco de dados mysql
             ResultSet keys = stmt.getGeneratedKeys();
@@ -90,9 +91,41 @@ ArrayList<Avaliacao> avaliacoesDaSala = avaliacao.getAvaliacoesDaSala(aluno.getA
         }
         return idsAlunos;
     }
+
+  public int inativarAluno(String nome,int idSala) {
+    String updateSql = "UPDATE aluno SET aluno_status = 'i' WHERE aluno_nome = ? and sala_id = ?";
+    String selectSql = "SELECT aluno_id FROM aluno WHERE aluno_nome = ? and sala_id = ?";
+    int idAluno = -1;
+
+    try (PreparedStatement updateStmt = connection.prepareStatement(updateSql);
+         PreparedStatement selectStmt = connection.prepareStatement(selectSql)) {
+
+        // Execute the update statement
+        updateStmt.setString(1, nome);
+        updateStmt.setInt(2, idSala);
+        updateStmt.executeUpdate();
+
+        // Execute the select statement to retrieve the updated aluno_id
+        selectStmt.setString(1, nome);
+        selectStmt.setInt(2,idSala);
+        try (ResultSet rs = selectStmt.executeQuery()) {
+            if (rs.next()) {
+                idAluno = rs.getInt("aluno_id");
+            }
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+
+    return idAluno;
+}
+
+
     
 }
-    
+
+  
+
     
 
   
