@@ -123,7 +123,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="comboAvaliacao" min="-2" pref="38" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -135,9 +135,9 @@
                               <Component id="ordenarPorNome" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="357" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelAvaliacaoNome1" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="labelAvaliacaoNome3" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
@@ -147,7 +147,7 @@
                       <Component id="jScrollPane1" min="-2" pref="169" max="-2" attributes="0"/>
                       <Component id="jScrollPane5" min="-2" pref="169" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="34" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
