@@ -142,6 +142,7 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
                     id = rs.getInt("avaliacao_id");
                     av.setAvaliacaoId(id);
                     av.setAvaliacaoDataFinal(rs.getDate("avaliacao_data_final").toString());
+                    av.setAvaliacaoNome(rs.getString("avaliacao_nome"));
                 }
             }
         } catch (SQLException e) {

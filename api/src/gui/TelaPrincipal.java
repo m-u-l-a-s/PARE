@@ -29,14 +29,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
 
         initComponents();
+
+        tableAvaliacoesAluno.getColumnModel().getColumn(4).setResizable(true);
         //PopulaCombo: Popula combo com os nomes das salas
         PopulaCombo();
 
         // setCombo: Altera valor do combo box para sala atual.
         setCombo();
         PopulaComboAvaliacao();
-        //Desabilita lista de trabalhos no lado esquerdo da tela para não sobreescrever as linhas destacadas quando o usuário clica
-        //listTrabalhos.setEnabled(false);
 
     }
 
@@ -101,6 +101,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     public void PopulaComboAvaliacao() {
         comboAvaliacao.removeAllItems();
+        comboAvaliacao.addItem("Geral");
         AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
         int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
         ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
@@ -124,7 +125,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
         Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
-        
+
         GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
         int totalAlunos = ListAlunoAvaliacao.size();
 
@@ -164,30 +165,50 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
         Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
+        List<AlunoAvaliacao> ListAlunoAvaliacao;
 
-        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+        tableAvaliacoesAluno.getColumnModel().getColumn(4).setWidth(0);
+        tableAvaliacoesAluno.getColumnModel().getColumn(4).setMaxWidth(0);
+        tableAvaliacoesAluno.getColumnModel().getColumn(4).setMinWidth(0);
+        ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+        if (comboAvaliacao.getSelectedItem().toString() == "Geral") {
+            tableAvaliacoesAluno.getColumnModel().getColumn(4).setWidth(94);
+            tableAvaliacoesAluno.getColumnModel().getColumn(4).setMaxWidth(94);
+            tableAvaliacoesAluno.getColumnModel().getColumn(4).setMinWidth(94);
+
+            Sala salin = new Sala();
+            salin.setSalaId(new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString()));
+
+            ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarGeral(salin);
+        }
 
         if (ordenarPorNome.isSelected()) {
-                Collections.sort(ListAlunoAvaliacao, new Comparator<AlunoAvaliacao>() {
-                    @Override
-                    public int compare(AlunoAvaliacao aluno1, AlunoAvaliacao aluno2) {
-                        return aluno1.getAlunoNome().compareTo(aluno2.getAlunoNome());
-                    }
-                ;
-            }
-            );
+            Collections.sort(ListAlunoAvaliacao, new Comparator<AlunoAvaliacao>() {
+                @Override
+                public int compare(AlunoAvaliacao aluno1, AlunoAvaliacao aluno2) {
+                    return aluno1.getAlunoNome().compareTo(aluno2.getAlunoNome());
+                }
+            ;
+        }
+        );
         }
         
         GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
 
         for (int i = 0; i < ListAlunoAvaliacao.size(); i++) {
+            String AvaliacaoNome = "";
             String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
             String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
-             //Aparentemente Comentando a linha de formatação de data o update volta a funcionar com o sort por nome
+            //Aparentemente Comentando a linha de formatação de data o update volta a funcionar com o sort por nome
             String dataAlunoFormatada = dataAluno;
             //String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
             String status = "Entregue";
             float nota = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
+
+            if (comboAvaliacao.getSelectedItem().toString() == "Geral") {
+                av = new AvaliacaoDAO().getAvaliacao(ListAlunoAvaliacao.get(i).getAvaliacaoId());
+                AvaliacaoNome = av.getAvaliacaoNome();
+            }
 
             if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
                 status = "Atrasado";
@@ -196,12 +217,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 dataAlunoFormatada = "-";
                 status = "Pendente";
             }
-            model.addRow(new Object[]{nome, dataAlunoFormatada, nota, status});
+
+            model.addRow(new Object[]{nome, dataAlunoFormatada, nota, status, AvaliacaoNome});
             tableAvaliacoesAluno.setModel(model);
         }
 
     }
-
 
     SalaHorarioDAO salaHorarioController = new SalaHorarioDAO();
 
@@ -289,20 +310,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tableAvaliacoesAluno.setFont(new java.awt.Font("Dubai", 0, 14));
         tableAvaliacoesAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Data de Entrega", "Nota", "Status"
+                "Nome", "Data de Entrega", "Nota", "Status", "Avaliação"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, false
+                false, true, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -560,12 +581,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void ordenarPorNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordenarPorNomeActionPerformed
-        ((DefaultTableModel) tableAvaliacoesAluno.getModel()).setRowCount(0);
         PopulaTabela();
     }//GEN-LAST:event_ordenarPorNomeActionPerformed
 
     private void ordenarPorDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordenarPorDataActionPerformed
-        ((DefaultTableModel) tableAvaliacoesAluno.getModel()).setRowCount(0);
         PopulaTabela();
     }//GEN-LAST:event_ordenarPorDataActionPerformed
 

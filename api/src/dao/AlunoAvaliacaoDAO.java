@@ -11,6 +11,7 @@ import java.util.List;
 import dao.AlunoDAO;
 import dao.AvaliacaoDAO;
 import java.time.LocalDate;
+import modelo.Sala;
 
 public class AlunoAvaliacaoDAO {
     private Connection connection;
@@ -151,5 +152,37 @@ public class AlunoAvaliacaoDAO {
         String outputDate = date.format(outputFormatter);
         //System.out.println(inputDate + "==> " + outputDate);
         return outputDate;
+    }
+    
+    //Função para buscar todos os alunosAvaliação de uma sala independente da avaliação
+    public List<AlunoAvaliacao> buscarGeral(Sala sala) {
+        List<AlunoAvaliacao> ListAlunoAvaliacao = new ArrayList<>();
+
+        String sql = "select * from api.aluno_avaliacao where avaliacao_id in (select avaliacao_id from api.avaliacao where sala_id = ?) order by aluno_avaliacao_data_entrega desc,avaliacao_id;";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setInt(1, sala.getSalaId());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int aluno_avaliacaoid = rs.getInt("aluno_avaliacao_id");
+                    //Não esquecer a data
+                    float nota = rs.getFloat("aluno_avaliacao_nota");
+                    int aluno_id = rs.getInt("aluno_id");
+                    int avaliacao_id = rs.getInt("avaliacao_id");
+                    String data = rs.getDate("aluno_avaliacao_data_entrega").toString();
+                    AlunoAvaliacao alunoavaliacao = new AlunoAvaliacao(aluno_avaliacaoid ,aluno_id,avaliacao_id,data,nota);
+                    String nome = new AlunoDAO().getAlunoNome(aluno_id);
+                    alunoavaliacao.setAlunoNome(nome);
+                    ListAlunoAvaliacao.add(alunoavaliacao);
+                    
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ListAlunoAvaliacao;
     }
 }
