@@ -383,7 +383,6 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 AlunoAvaliacaoDAO alunoAvaliacao = new AlunoAvaliacaoDAO();
                 int alunoId = aluno.inativarAluno(name, salin.getSalaId());
 
-                System.out.println(alunoId);
                 alunoAvaliacao.inativarAlunoAvaliacao(alunoId);
 
                 ct++;
@@ -443,6 +442,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 aluno.setAlunoNome(String.valueOf(jTableAlunos.getValueAt(i, 1)));
                 aluno.setAlunoSalaId(salaID);
                 new AlunoDAO().cadastrar(aluno);
+                new AlunoDAO().cadastrarAlunoEmAvaliacoes(aluno);
             }
             
         }
