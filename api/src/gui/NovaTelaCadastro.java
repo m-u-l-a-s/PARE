@@ -19,8 +19,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Franc
  */
 public class NovaTelaCadastro extends javax.swing.JFrame {
+    
+    //Variaveis Globais:
     List<SalaHorario> GlobalListSalaHorario = new ArrayList<>();
     List<String> GlobalstudentNames = new ArrayList<>();
+    int salaID;
+
     /**
      * Creates new form NovaTelaCadastro
      */
@@ -57,7 +61,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnCadastro = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -153,6 +157,21 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         });
         jTableAlunos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         jTableAlunos.getTableHeader().setReorderingAllowed(false);
+        jTableAlunos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTableAlunosFocusGained(evt);
+            }
+        });
+        jTableAlunos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableAlunosMouseClicked(evt);
+            }
+        });
+        jTableAlunos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTableAlunosKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableAlunos);
         jTableAlunos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (jTableAlunos.getColumnModel().getColumnCount() > 0) {
@@ -264,11 +283,11 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jButton2.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
-        jButton2.setText("Cadastrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastro.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
+        btnCadastro.setText("Cadastrar");
+        btnCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCadastroActionPerformed(evt);
             }
         });
 
@@ -314,7 +333,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 .addGap(44, 44, 44))
             .addGroup(layout.createSequentialGroup()
                 .addGap(451, 451, 451)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -342,7 +361,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnCadastro)
                 .addContainerGap(598, Short.MAX_VALUE))
         );
 
@@ -352,62 +371,56 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         List<String> studentNames = GlobalstudentNames;
-          Sala salin = new Sala();
-                salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
-                salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome())); 
-        int ct=0;
-        
-        for(int i = 0; i < jTableAlunos.getRowCount(); i++){
-            if(Boolean.valueOf(String.valueOf(jTableAlunos.getValueAt(i, 0))))
-            {
+        Sala salin = new Sala();
+        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
+        int ct = 0;
+
+        for (int i = 0; i < jTableAlunos.getRowCount(); i++) {
+            if (Boolean.valueOf(String.valueOf(jTableAlunos.getValueAt(i, 0)))) {
                 String name = studentNames.get(i);
                 AlunoDAO aluno = new AlunoDAO();
                 AlunoAvaliacaoDAO alunoAvaliacao = new AlunoAvaliacaoDAO();
-                int alunoId = aluno.inativarAluno(name,salin.getSalaId());
-              
+                int alunoId = aluno.inativarAluno(name, salin.getSalaId());
+
                 System.out.println(alunoId);
                 alunoAvaliacao.inativarAlunoAvaliacao(alunoId);
-                
-                
-                
+
                 ct++;
             }
         }
-        if(ct>0){
+        if (ct > 0) {
             JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione o aluno para deletá-lo");
 
         }
         salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
         salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
         populaSalaAluno(salin);
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        new TelaPrincipal().setVisible(true); dispose();
+        new TelaPrincipal().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         List<SalaHorario> ListSalahorario = GlobalListSalaHorario;
-        int ct=0;
-        for (int i=0; i< jTable1.getRowCount();i++){
-            if (Boolean.valueOf(String.valueOf(jTable1.getValueAt(i, 0))))
-            {      
-                int id =  ListSalahorario.get(i).getSalaHorarioID();
+        int ct = 0;
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            if (Boolean.valueOf(String.valueOf(jTable1.getValueAt(i, 0)))) {
+                int id = ListSalahorario.get(i).getSalaHorarioID();
                 new SalaHorarioDAO().deleteSalaHorario(id);
                 ct++;
             }
         }
-        if (ct>0){
-        JOptionPane.showMessageDialog(null, "Deletado com sucesso");
-        }
-        else{
-        JOptionPane.showMessageDialog(null, "Selecione o horário para deletá-lo");
+        if (ct > 0) {
+            JOptionPane.showMessageDialog(null, "Deletado com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione o horário para deletá-lo");
         }
         Sala salin = new Sala();
         salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
@@ -420,38 +433,77 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
     }//GEN-LAST:event_NovoComboSalaItemStateChanged
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        
+        for (int i = GlobalstudentNames.size(); i < jTableAlunos.getRowCount(); i++) {
+            if (!String.valueOf(jTableAlunos.getValueAt(i, 1)).isEmpty())
+            {
+                Aluno aluno = new Aluno();
+                aluno.setAlunoNome(String.valueOf(jTableAlunos.getValueAt(i, 1)));
+                aluno.setAlunoSalaId(salaID);
+                new AlunoDAO().cadastrar(aluno);
+            }
+            
+        }
+        
+    }//GEN-LAST:event_btnCadastroActionPerformed
 
     private void NovoComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NovoComboSalaActionPerformed
-         Sala salin = new Sala();
-         salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        Sala salin = new Sala();
+        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
         if (NovoComboSala.getSelectedItem().toString().equals("Nova Sala")) {
             jLabel4.setVisible(true);
             jTextField1.setVisible(true);
             jLabel5.setVisible(true);
-            
+
 //            jTable1.setModel(new DefaultTableModel());
 //            jTable3.setModel(new DefaultTableModel());
-           
-            salin.setSalaId(999); 
-    }
-        else {
+            salin.setSalaId(999);
+            salaID = 999;
+        } else {
             jLabel4.setVisible(false);
             jTextField1.setVisible(false);
-            jLabel5.setVisible(false);  
-            
-            
-            salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome())); 
+            jLabel5.setVisible(false);
+
+            salaID = new SalaDAO().getSalaId(salin.getSalaNome());
+            salin.setSalaId(salaID);
             
         }
         
-       
-    populaSalaAluno(salin);
-    populaSalaHorario(salin);
+        populaSalaAluno(salin);
+        populaSalaHorario(salin);
     }//GEN-LAST:event_NovoComboSalaActionPerformed
-    
+
+    private void jTableAlunosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableAlunosKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            DefaultTableModel model = (DefaultTableModel) jTableAlunos.getModel();
+            model.addRow(new Object[]{false, ""});
+            jTableAlunos.setModel(model);
+        } else if (evt.getKeyCode() == 8) {
+            DefaultTableModel model = (DefaultTableModel) jTableAlunos.getModel();
+            int i = model.getRowCount() - 1;
+            if (String.valueOf(model.getValueAt(i, 1)).isEmpty() && (i > GlobalstudentNames.size()) ) {
+                model.removeRow(i);
+                jTableAlunos.setModel(model);
+            }
+
+        }
+    }//GEN-LAST:event_jTableAlunosKeyPressed
+
+    private void jTableAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAlunosMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTableAlunosMouseClicked
+
+    private void jTableAlunosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableAlunosFocusGained
+        // TODO add your handling code here:
+        if (jTableAlunos.getSelectedRowCount() < 1)
+        {
+            jTableAlunos.setColumnSelectionInterval(0, 0);
+        }
+    }//GEN-LAST:event_jTableAlunosFocusGained
 
     /**
      * @param args the command line arguments
@@ -490,7 +542,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> NovoComboSala;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCadastro;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -518,47 +570,40 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         }
 
     }
-    
-            public void populaSalaAluno(Sala sala){
-              DefaultTableModel model = (DefaultTableModel) jTableAlunos.getModel();
+
+    public void populaSalaAluno(Sala sala) {
+        DefaultTableModel model = (DefaultTableModel) jTableAlunos.getModel();
         model.setRowCount(0);
         jTableAlunos.setModel(model);
-            
-            List<String> studentNames = new SalaDAO().buscarTodosAlunos(sala);
-            GlobalstudentNames = studentNames;
 
-            for (int i = 0; i < studentNames.size(); i++) {
-                String nome = studentNames.get(i);
-                model.addRow(new Object[] { false,nome});
-               // model.addRow(new Object[] {false, nome});
-                jTableAlunos.setModel(model);
-                
-            }
-            
-           
-            
-//            String listNomes[] = new String[studentNames.size()];
-//            for (int i = 0; i < studentNames.size(); i++){
-//                listNomes[i] = (studentNames.get(i));
-//            }
-//            ListaAlunosSala.setListData(listNomes);           
+        List<String> studentNames = new SalaDAO().buscarTodosAlunos(sala);
+        GlobalstudentNames = studentNames;
+
+        for (int i = 0; i < studentNames.size(); i++) {
+            String nome = studentNames.get(i);
+            model.addRow(new Object[]{false, nome});
+            jTableAlunos.setModel(model);
         }
-            
-             public void populaSalaHorario(Sala sala){
-              DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        jTableAlunos.setModel(model);
+        model.addRow(new Object[]{false, ""});
+
+    }
+
+    public void populaSalaHorario(Sala sala) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         jTable1.setModel(model);
-            
-            List<SalaHorario> ListSalaHorario = new SalaHorarioDAO().buscarTodosHorarios(sala);
-            GlobalListSalaHorario = ListSalaHorario;
-            for (int i = 0; i < ListSalaHorario.size(); i++) {
-                String dia = ListSalaHorario.get(i).getSalaHorarioDia();
-                String hora = ListSalaHorario.get(i).getSalaHorarioHora();
-                model.addRow(new Object[] { false, dia, hora});
-               // model.addRow(new Object[] {false, nome});
-                jTable1.setModel(model);
-                
-            }
-            
-}
+
+        List<SalaHorario> ListSalaHorario = new SalaHorarioDAO().buscarTodosHorarios(sala);
+        GlobalListSalaHorario = ListSalaHorario;
+        for (int i = 0; i < ListSalaHorario.size(); i++) {
+            String dia = ListSalaHorario.get(i).getSalaHorarioDia();
+            String hora = ListSalaHorario.get(i).getSalaHorarioHora();
+            model.addRow(new Object[]{false, dia, hora});
+            // model.addRow(new Object[] {false, nome});
+            jTable1.setModel(model);
+
+        }
+
+    }
 }

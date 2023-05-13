@@ -149,7 +149,7 @@ public class AlunoAvaliacaoDAO {
         LocalDate date = LocalDate.parse(inputDate);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String outputDate = date.format(outputFormatter);
-        System.out.println(inputDate + "==> " + outputDate);
+        //System.out.println(inputDate + "==> " + outputDate);
         return outputDate;
     }
 }
