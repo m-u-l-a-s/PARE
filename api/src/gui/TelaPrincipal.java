@@ -49,7 +49,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             listHorarios[i] = (ListSalaHorario.get(i).getSalaHorarioDia() + " - " + ListSalaHorario.get(i).getSalaHorarioHora());
         }
         listSalaHorario.setListData(listHorarios);
-        
+
     }
 
     public void populaLista() {
@@ -112,7 +112,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     public void setCombo() {
         ComboSala.setSelectedItem(salaHorarioController.getSalaAtual());
-        
+
         listRendimentoGeral.setListData(calculaRendimentoGeral());
     }
 
@@ -124,6 +124,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
         Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+        
         GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
         int totalAlunos = ListAlunoAvaliacao.size();
 
@@ -132,12 +133,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
 
             if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
-                atrasado ++;
-            }
-            else if (dataAlunoFormatada.contains("9999")) {
-                pendente ++;
+                atrasado++;
+            } else if (dataAlunoFormatada.contains("9999")) {
+                pendente++;
             } else {
-                entregue ++;
+                entregue++;
             }
         }
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -148,33 +148,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         ArrayList<String> rendimentoGeral = new ArrayList<>();
 
-        rendimentoGeral.add("Entregue: "+entregue+" de "+ totalAlunos + " ("+porCentagemEntregue + "%)");
-        rendimentoGeral.add("Atrasado: "+atrasado+" de "+ totalAlunos + " ("+porCentagemEntregue + "%)");
-        rendimentoGeral.add("Pendente: "+pendente+" de "+ totalAlunos + " ("+porCentagemEntregue + "%)");
+        rendimentoGeral.add("Entregue: " + entregue + " de " + totalAlunos + " (" + porCentagemEntregue + "%)");
+        rendimentoGeral.add("Atrasado: " + atrasado + " de " + totalAlunos + " (" + porCentagemEntregue + "%)");
+        rendimentoGeral.add("Pendente: " + pendente + " de " + totalAlunos + " (" + porCentagemEntregue + "%)");
 
         String[] rendimentoGeralArray = rendimentoGeral.toArray(new String[0]);
         return rendimentoGeralArray;
     }
+
     public void PopulaTabela() {
 
         DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
         model.setRowCount(0);
         tableAvaliacoesAluno.setModel(model);
 
-        //Não apaga pq vai q volta a usar depois
-//        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
-//        labelAvaliacaoNome.setText(AvaliacaoNome);
         int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
         Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
 
         List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
 
+        if (ordenarPorNome.isSelected()) {
+                Collections.sort(ListAlunoAvaliacao, new Comparator<AlunoAvaliacao>() {
+                    @Override
+                    public int compare(AlunoAvaliacao aluno1, AlunoAvaliacao aluno2) {
+                        return aluno1.getAlunoNome().compareTo(aluno2.getAlunoNome());
+                    }
+                ;
+            }
+            );
+        }
+        
         GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
 
         for (int i = 0; i < ListAlunoAvaliacao.size(); i++) {
             String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
             String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
-            String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
+             //Aparentemente Comentando a linha de formatação de data o update volta a funcionar com o sort por nome
+            String dataAlunoFormatada = dataAluno;
+            //String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
             String status = "Entregue";
             float nota = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
 
@@ -191,49 +202,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }
 
-    public void PopulaTabelaPorNome() {
-
-        DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
-        model.setRowCount(0);
-        tableAvaliacoesAluno.setModel(model);
-
-        //Não apaga pq vai q volta a usar depois
-//        String AvaliacaoNome = new AvaliacaoDAO().getAvaliacaoNome(3);
-//        labelAvaliacaoNome.setText(AvaliacaoNome);
-        int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
-        Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
-
-        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
-
-        GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
-        Collections.sort(ListAlunoAvaliacao, new Comparator<AlunoAvaliacao>() {
-            @Override
-            public int compare(AlunoAvaliacao aluno1, AlunoAvaliacao aluno2) {
-                return aluno1.getAlunoNome().compareTo(aluno2.getAlunoNome());
-            }
-        ;
-        });
-          for (int i = 0; i < ListAlunoAvaliacao.size(); i++) {
-            String nome = new AlunoDAO().getAlunoNome(ListAlunoAvaliacao.get(i).getAlunoId());
-            String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
-            String status = "Entregue";
-            float nota = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoNota();
-
-            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
-                status = "Atrasado";
-            } else {
-
-            }
-
-            if (dataAluno.contains("9999")) {
-                dataAluno = "-";
-                status = "Pendente";
-            }
-            model.addRow(new Object[]{nome, dataAluno, nota, status});
-            tableAvaliacoesAluno.setModel(model);
-        }
-
-    }
 
     SalaHorarioDAO salaHorarioController = new SalaHorarioDAO();
 
@@ -593,7 +561,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ordenarPorNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordenarPorNomeActionPerformed
         ((DefaultTableModel) tableAvaliacoesAluno.getModel()).setRowCount(0);
-        PopulaTabelaPorNome();
+        PopulaTabela();
     }//GEN-LAST:event_ordenarPorNomeActionPerformed
 
     private void ordenarPorDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordenarPorDataActionPerformed
@@ -609,12 +577,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         for (int i = 0; i < tableAvaliacoesAluno.getRowCount(); i++) {
             AlunoAvaliacao Aux = GlobalListAlunoAvaliacao.get(i);
             if ((tableAvaliacoesAluno.getValueAt(i, colunaData) != "-") && ((tableAvaliacoesAluno.getValueAt(i, colunaData) != Aux.getAlunoAvaliacaoData())
-                || (tableAvaliacoesAluno.getValueAt(i, colunaNota) != String.valueOf(Aux.getAlunoAvaliacaoNota())))) {
+                    || (tableAvaliacoesAluno.getValueAt(i, colunaNota) != String.valueOf(Aux.getAlunoAvaliacaoNota())))) {
 
-            Aux.setAlunoAvaliacaoNota(Float.valueOf(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaNota))));
-            Aux.setAlunoAvaliacaoData(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaData)));
-            ListAlunoAvaliacao.add(Aux);
-        }
+                Aux.setAlunoAvaliacaoNota(Float.valueOf(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaNota))));
+                Aux.setAlunoAvaliacaoData(String.valueOf(tableAvaliacoesAluno.getValueAt(i, colunaData)));
+                ListAlunoAvaliacao.add(Aux);
+            }
 
         }
         if (ListAlunoAvaliacao.size() > 0) {
@@ -625,12 +593,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void comboAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAvaliacaoActionPerformed
         // TODO add your handling code here:
         if (comboAvaliacao.getSelectedIndex() != -1) {
-            if (ordenarPorData.isSelected()) {
-                PopulaTabela();
-            }
-            if (ordenarPorNome.isSelected()) {
-                PopulaTabelaPorNome();
-            }
+            PopulaTabela();
         }
 
     }//GEN-LAST:event_comboAvaliacaoActionPerformed
