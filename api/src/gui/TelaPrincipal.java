@@ -566,8 +566,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnNovoTrabalhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTrabalhoActionPerformed
         // TODO add your handling code here:
         int sala_id = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
-        PopupCadastroAvaliacao f2 = new PopupCadastroAvaliacao(sala_id);
+        String sala_nome = ComboSala.getSelectedItem().toString();
+        PopupCadastroAvaliacao f2 = new PopupCadastroAvaliacao(sala_id, sala_nome);
         f2.setVisible(true);
+  
     }//GEN-LAST:event_btnNovoTrabalhoActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus

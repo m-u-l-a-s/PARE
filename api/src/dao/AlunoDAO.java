@@ -119,6 +119,23 @@ ArrayList<Avaliacao> avaliacoesDaSala = avaliacao.getAvaliacoesDaSala(aluno.getA
 
     return idAluno;
 }
+    public boolean alunoExiste(String nomeAluno) {
+        boolean existe = false;
+        String sql = "select * from api.aluno where aluno_nome = ? ";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, nomeAluno);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
 
 
     

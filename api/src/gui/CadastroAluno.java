@@ -360,30 +360,34 @@ public class CadastroAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String nomeAluno = NomeDoAluno.getText();
+        if (new AlunoDAO().alunoExiste(nomeAluno)) {
+            JOptionPane.showMessageDialog(rootPane, "Erro: Aluno já cadastrado.");
+        } 
+        else {
 
-        
-        Aluno aluno= new Aluno();
+            Aluno aluno = new Aluno();
             aluno.setAlunoNome(NomeDoAluno.getText());
             aluno.setAlunoSalaId(new SalaDAO().getSalaId(comboSala.getSelectedItem().toString()));
+
+            if (NomeDoAluno.getText().isEmpty() || (NomeDoAluno.getText() == "Nome do(a) Aluno(a):")) {
+                JOptionPane.showMessageDialog(null, "O campo está vazio, favor preenchê-lo");
+            } else {
+                AlunoDAO alunodao = new AlunoDAO();
+                alunodao.cadastrar(aluno);
+                alunodao.cadastrarAlunoEmAvaliacoes(aluno);
+
+                JOptionPane.showMessageDialog(null, "Aluno cadastrado!");
+            }
         
-        if (NomeDoAluno.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"O campo está vazio, favor preenchê-lo");
-        }
-        else{
-            AlunoDAO alunodao= new AlunoDAO();
-            alunodao.cadastrar(aluno);
-            alunodao.cadastrarAlunoEmAvaliacoes(aluno);
-            
-        
-        
-            JOptionPane.showMessageDialog(null, "Aluno cadastrado!");
-        }        
-        
+
         NomeDoAluno.setText("Nome do(a) Aluno(a):");
         NomeDoAluno.setForeground(new Color(102, 102, 102));
         Sala sala = new Sala();
         sala.setSalaId(aluno.getAlunoSalaId());
         populaSalaAluno(sala);
+
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
