@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Franc
  */
 public class NovaTelaCadastro extends javax.swing.JFrame {
-    
+
     //Variaveis Globais:
     List<SalaHorario> GlobalListSalaHorario = new ArrayList<>();
     List<String> GlobalstudentNames = new ArrayList<>();
@@ -46,11 +46,11 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        NovoComboSala = new javax.swing.JComboBox<>();
+        ComboSala = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextSalaNome = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableAlunos = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -89,15 +89,15 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         setIconImages(null);
         setPreferredSize(new java.awt.Dimension(1022, 700));
 
-        NovoComboSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nova Sala" }));
-        NovoComboSala.addItemListener(new java.awt.event.ItemListener() {
+        ComboSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nova Sala" }));
+        ComboSala.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                NovoComboSalaItemStateChanged(evt);
+                ComboSalaItemStateChanged(evt);
             }
         });
-        NovoComboSala.addActionListener(new java.awt.event.ActionListener() {
+        ComboSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NovoComboSalaActionPerformed(evt);
+                ComboSalaActionPerformed(evt);
             }
         });
 
@@ -116,7 +116,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
         jLabel4.setText("Cadastrar Sala:");
 
-        jTextField1.setForeground(new java.awt.Color(102, 102, 102));
+        jTextSalaNome.setForeground(new java.awt.Color(102, 102, 102));
 
         jTableAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -322,13 +322,13 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(NovoComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
+                                    .addComponent(jTextSalaNome, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(44, 44, 44))
             .addGroup(layout.createSequentialGroup()
@@ -342,12 +342,12 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NovoComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboSala, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextSalaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addGap(31, 31, 31)
@@ -372,7 +372,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         List<String> studentNames = GlobalstudentNames;
         Sala salin = new Sala();
-        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        salin.setSalaNome(ComboSala.getSelectedItem().toString());
         salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
         int ct = 0;
 
@@ -394,7 +394,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione o aluno para deletá-lo");
 
         }
-        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        salin.setSalaNome(ComboSala.getSelectedItem().toString());
         salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
         populaSalaAluno(salin);
 
@@ -422,39 +422,60 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione o horário para deletá-lo");
         }
         Sala salin = new Sala();
-        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
+        salin.setSalaNome(ComboSala.getSelectedItem().toString());
         salin.setSalaId(new SalaDAO().getSalaId(salin.getSalaNome()));
         populaSalaHorario(salin);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void NovoComboSalaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_NovoComboSalaItemStateChanged
+    private void ComboSalaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboSalaItemStateChanged
 
-    }//GEN-LAST:event_NovoComboSalaItemStateChanged
+    }//GEN-LAST:event_ComboSalaItemStateChanged
 
     private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
         // TODO add your handling code here:
-        
-        for (int i = GlobalstudentNames.size(); i < jTableAlunos.getRowCount(); i++) {
-            if (!String.valueOf(jTableAlunos.getValueAt(i, 1)).isEmpty())
-            {
-                Aluno aluno = new Aluno();
-                aluno.setAlunoNome(String.valueOf(jTableAlunos.getValueAt(i, 1)));
-                aluno.setAlunoSalaId(salaID);
-                new AlunoDAO().cadastrar(aluno);
-                new AlunoDAO().cadastrarAlunoEmAvaliacoes(aluno);
+        boolean VerificaSalaNovaVazia = true;
+        if (ComboSala.getSelectedItem().toString().equals("Nova Sala")) {
+
+            if (jTextSalaNome.getText().isEmpty()) {
+                VerificaSalaNovaVazia = false;
+                JOptionPane.showMessageDialog(null, "Nome da sala vazio!  Dados não serão cadastrados!");
+            } else {
+                Sala sala = new Sala();
+                sala.setSalaNome(jTextSalaNome.getText());
+                new SalaDAO().cadastrarSala(sala);
+                salaID = sala.getSalaId();
             }
-            
+
         }
-        
+        if (VerificaSalaNovaVazia) {
+            for (int i = GlobalstudentNames.size(); i < jTableAlunos.getRowCount(); i++) {
+                if (!String.valueOf(jTableAlunos.getValueAt(i, 1)).isEmpty()) {
+                    Aluno aluno = new Aluno();
+                    aluno.setAlunoNome(String.valueOf(jTableAlunos.getValueAt(i, 1)));
+                    aluno.setAlunoSalaId(salaID);
+                    new AlunoDAO().cadastrar(aluno);
+                    new AlunoDAO().cadastrarAlunoEmAvaliacoes(aluno);
+                }
+
+            }
+
+            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+            ComboSala.removeAll();
+            ComboSala.addItem("Nova Sala");
+            PopulaCombo();
+            jTextSalaNome.setText("");
+        }
+
+
     }//GEN-LAST:event_btnCadastroActionPerformed
 
-    private void NovoComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NovoComboSalaActionPerformed
+    private void ComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboSalaActionPerformed
         Sala salin = new Sala();
-        salin.setSalaNome(NovoComboSala.getSelectedItem().toString());
-        if (NovoComboSala.getSelectedItem().toString().equals("Nova Sala")) {
+        salin.setSalaNome(ComboSala.getSelectedItem().toString());
+        if (ComboSala.getSelectedItem().toString().equals("Nova Sala")) {
             jLabel4.setVisible(true);
-            jTextField1.setVisible(true);
+            jTextSalaNome.setVisible(true);
             jLabel5.setVisible(true);
 
 //            jTable1.setModel(new DefaultTableModel());
@@ -463,17 +484,17 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
             salaID = 999;
         } else {
             jLabel4.setVisible(false);
-            jTextField1.setVisible(false);
+            jTextSalaNome.setVisible(false);
             jLabel5.setVisible(false);
 
             salaID = new SalaDAO().getSalaId(salin.getSalaNome());
             salin.setSalaId(salaID);
-            
+
         }
-        
+
         populaSalaAluno(salin);
         populaSalaHorario(salin);
-    }//GEN-LAST:event_NovoComboSalaActionPerformed
+    }//GEN-LAST:event_ComboSalaActionPerformed
 
     private void jTableAlunosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableAlunosKeyPressed
         // TODO add your handling code here:
@@ -481,10 +502,10 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) jTableAlunos.getModel();
             model.addRow(new Object[]{false, ""});
             jTableAlunos.setModel(model);
-        } else if (evt.getKeyCode() == 8) {
+        } else if (evt.getKeyCode() == 17) {
             DefaultTableModel model = (DefaultTableModel) jTableAlunos.getModel();
             int i = model.getRowCount() - 1;
-            if (String.valueOf(model.getValueAt(i, 1)).isEmpty() && (i > GlobalstudentNames.size()) ) {
+            if (String.valueOf(model.getValueAt(i, 1)).isEmpty() && (i > GlobalstudentNames.size())) {
                 model.removeRow(i);
                 jTableAlunos.setModel(model);
             }
@@ -494,13 +515,12 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
     private void jTableAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAlunosMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTableAlunosMouseClicked
 
     private void jTableAlunosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableAlunosFocusGained
         // TODO add your handling code here:
-        if (jTableAlunos.getSelectedRowCount() < 1)
-        {
+        if (jTableAlunos.getSelectedRowCount() < 1) {
             jTableAlunos.setColumnSelectionInterval(0, 0);
         }
     }//GEN-LAST:event_jTableAlunosFocusGained
@@ -541,7 +561,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> NovoComboSala;
+    private javax.swing.JComboBox<String> ComboSala;
     private javax.swing.JButton btnCadastro;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
@@ -559,14 +579,16 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTableAlunos;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextSalaNome;
     // End of variables declaration//GEN-END:variables
 
     public void PopulaCombo() {
+        
+        
         List<String> ListSalas = new SalaDAO().buscarTodasSalas();
 
         for (int i = 0; i < ListSalas.size(); i++) {
-            NovoComboSala.addItem(ListSalas.get(i));
+            ComboSala.addItem(ListSalas.get(i));
         }
 
     }
