@@ -73,7 +73,7 @@ public class SalaDAO {
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, sala.getSalaId());
-            stmt.setString(2,"M");
+            stmt.setInt(2,1);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
