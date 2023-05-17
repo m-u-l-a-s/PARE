@@ -1,15 +1,15 @@
-
+drop database api;
 create database api;
 use api;
 create table sala(
 	sala_id int not null AUTO_INCREMENT,
-    sala_nome varchar(255) not null,
+    sala_nome varchar(50) not null, ## varchar(50) 1°B - História = 14Strings
     primary key (sala_id)
 );
 create table sala_horario(
 	sala_horario_id int not null AUTO_INCREMENT,
     sala_id int ,
-    sala_dia varchar(250),
+    sala_dia varchar(15), ## varchar(15)
     sala_hora time,
     primary key (sala_horario_id),
     foreign key (sala_id) references sala(sala_id)
@@ -17,9 +17,9 @@ create table sala_horario(
 
 create table aluno(
 	aluno_id int AUTO_INCREMENT,
-    aluno_nome varchar(255) not null,
+    aluno_nome varchar(50) not null, ## 50 Dom pedro primeiro teixeira reis de orleans e bragança = 54Strings
     sala_id int,
-    aluno_status varchar(10),
+    aluno_status tinyint, ## 0 ou 1 podendo user tinyInt
     primary key (aluno_id),
     foreign key (sala_id) references sala(sala_id)
 );
@@ -27,9 +27,9 @@ create table aluno(
 
 create table avaliacao(
 	avaliacao_id int AUTO_INCREMENT,
-    avaliacao_nome varchar(250),
+    avaliacao_nome varchar(50), 
 	avaliacao_data_final date,
-    avaliacao_tipo varchar(250),
+    avaliacao_tipo varchar(50),
     avaliacao_conceito float,
     sala_id int,
     primary key (avaliacao_id),
@@ -39,10 +39,10 @@ create table avaliacao(
 create table aluno_avaliacao(
 	aluno_avaliacao_id int not null AUTO_INCREMENT,
     aluno_avaliacao_data_entrega date,
-    aluno_avaliacao_nota float,
+    aluno_avaliacao_nota float, ## Decimal(4,2)
     aluno_id int,
     avaliacao_id int,
-    aluno_avaliacao_status varchar(10),
+    aluno_avaliacao_status tinyint, ## 0 ou 1 tinyInt
     primary key(aluno_avaliacao_id),
     foreign key (aluno_id) references aluno(aluno_id),
     foreign key (avaliacao_id) references avaliacao(avaliacao_id)
@@ -62,13 +62,14 @@ create table aluno_avaliacao(
 
 LOCK TABLES `aluno` WRITE;
 /*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
-INSERT  IGNORE INTO `aluno` VALUES (1,'Michael Morais',1,'i'),(2,'Vitor Morais',1,'i'),(3,'Alexandre Jonas',1,'M'),(4,'Amanda Mendes',1,'M'),(5,'Alita Amâncio',1,'M'),(6,'Jean Rodrigues',1,'M'),(7,'Jonas Alves',1,'M'),(8,'Luiza Silva',1,'M'),(9,'Lucas Santos',1,'M'),(10,'Gabriela Costa',1,'M'),(11,'Bruno Oliveira',1,'M'),(12,'Maria Luiza Pereira',1,'M'),(13,'Pedro Henrique Lima',1,'M'),(14,'Julia Fernandes',1,'M'),(15,'Gustavo Almeida',1,'M'),(16,'Isabela Cardoso',1,'M'),(17,'Thiago Sousa',1,'M'),(18,'Camila Nogueira',1,'M'),(19,'Fernando Rodrigues',1,'M'),(20,'Larissa Souza',1,'M'),(21,'Marcelo Silva',1,'M'),(22,'Letícia Oliveira',1,'M'),(23,'Rafaela Martins',1,'M'),(24,'Diego Costa',1,'M'),(25,'Mariana Rocha',1,'M'),(26,'Vinicius Rodrigues',1,'M'),(27,'Aline Gonçalves',1,'M'),(28,'Henrique Oliveira',1,'M'),(29,'Carolina Santos',1,'M'),(30,'João Paulo Lima',1,'M');
+INSERT  IGNORE INTO `aluno` VALUES (1,'Michael Morais',1,0),(2,'Vitor Morais',1,0),(3,'Alexandre Jonas',1,1),(4,'Amanda Mendes',1,1),(5,'Alita Amâncio',1,1),(6,'Jean Rodrigues',1,1),(7,'Jonas Alves',1,1),(8,'Luiza Silva',1,1),(9,'Lucas Santos',1,1),(10,'Gabriela Costa',1,1),(11,'Bruno Oliveira',1,1),(12,'Maria Luiza Pereira',1,1),(13,'Pedro Henrique Lima',1,1),(14,'Julia Fernandes',1,1),(15,'Gustavo Almeida',1,1),(16,'Isabela Cardoso',1,1),(17,'Thiago Sousa',1,1),(18,'Camila Nogueira',1,1),(19,'Fernando Rodrigues',1,1),(20,'Larissa Souza',1,1),(21,'Marcelo Silva',1,1),(22,'Letícia Oliveira',1,1),(23,'Rafaela Martins',1,1),(24,'Diego Costa',1,1),(25,'Mariana Rocha',1,1),(26,'Vinicius Rodrigues',1,1),(27,'Aline Gonçalves',1,1),(28,'Henrique Oliveira',1,1),(29,'Carolina Santos',1,1),(30,'João Paulo Lima',1,1);
 /*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
 LOCK TABLES `aluno_avaliacao` WRITE;
 /*!40000 ALTER TABLE `aluno_avaliacao` DISABLE KEYS */;
-INSERT  IGNORE INTO `aluno_avaliacao` VALUES (4,'9999-12-12',NULL,1,4,'i'),(5,'9999-12-12',NULL,2,4,'i'),(6,'9999-12-12',NULL,3,4,'M'),(7,'9999-12-12',NULL,4,4,'M'),(8,'9999-12-12',NULL,5,4,'M'),(9,'9999-12-12',NULL,6,4,'M'),(10,'9999-12-12',NULL,7,4,'M'),(11,'9999-12-12',NULL,8,4,'M'),(12,'9999-12-12',NULL,9,4,'M'),(13,'9999-12-12',NULL,10,4,'M'),(14,'9999-12-12',NULL,11,4,'M'),(15,'9999-12-12',NULL,12,4,'M'),(16,'9999-12-12',NULL,13,4,'M'),(17,'9999-12-12',NULL,14,4,'M'),(18,'9999-12-12',NULL,15,4,'M'),(19,'9999-12-12',NULL,16,4,'M'),(20,'9999-12-12',NULL,17,4,'M'),(21,'9999-12-12',NULL,18,4,'M'),(22,'9999-12-12',NULL,19,4,'M'),(23,'9999-12-12',NULL,20,4,'M'),(24,'9999-12-12',NULL,21,4,'M'),(25,'9999-12-12',NULL,22,4,'M'),(26,'9999-12-12',NULL,23,4,'M'),(27,'9999-12-12',NULL,24,4,'M'),(28,'9999-12-12',NULL,25,4,'M'),(29,'9999-12-12',NULL,26,4,'M'),(30,'9999-12-12',NULL,27,4,'M'),(31,'9999-12-12',NULL,28,4,'M'),(32,'9999-12-12',NULL,29,4,'M'),(33,'9999-12-12',NULL,30,4,'M'),(34,'9999-12-12',NULL,1,5,'i'),(35,'9999-12-12',NULL,2,5,'i'),(36,'9999-12-12',NULL,3,5,'M'),(37,'9999-12-12',NULL,4,5,'M'),(38,'9999-12-12',NULL,5,5,'M'),(39,'9999-12-12',NULL,6,5,'M'),(40,'9999-12-12',NULL,7,5,'M'),(41,'9999-12-12',NULL,8,5,'M'),(42,'9999-12-12',NULL,9,5,'M'),(43,'9999-12-12',NULL,10,5,'M'),(44,'9999-12-12',NULL,11,5,'M'),(45,'9999-12-12',NULL,12,5,'M'),(46,'9999-12-12',NULL,13,5,'M'),(47,'9999-12-12',NULL,14,5,'M'),(48,'9999-12-12',NULL,15,5,'M'),(49,'9999-12-12',NULL,16,5,'M'),(50,'9999-12-12',NULL,17,5,'M'),(51,'9999-12-12',NULL,18,5,'M'),(52,'9999-12-12',NULL,19,5,'M'),(53,'9999-12-12',NULL,20,5,'M'),(54,'9999-12-12',NULL,21,5,'M'),(55,'9999-12-12',NULL,22,5,'M'),(56,'9999-12-12',NULL,23,5,'M'),(57,'9999-12-12',NULL,24,5,'M'),(58,'9999-12-12',NULL,25,5,'M'),(59,'9999-12-12',NULL,26,5,'M'),(60,'9999-12-12',NULL,27,5,'M'),(61,'9999-12-12',NULL,28,5,'M'),(62,'9999-12-12',NULL,29,5,'M'),(63,'9999-12-12',NULL,30,5,'M');
+INSERT  IGNORE INTO `aluno_avaliacao` VALUES (4,'9999-12-12',NULL,1,4,0),(5,'9999-12-12',NULL,2,4,0),(6,'9999-12-12',NULL,3,4,1),(7,'9999-12-12',NULL,4,4,1),(8,'9999-12-12',NULL,5,4,1),(9,'9999-12-12',NULL,6,4,1),(10,'9999-12-12',NULL,7,4,1),(11,'9999-12-12',NULL,8,4,1),(12,'9999-12-12',NULL,9,4,1),(13,'9999-12-12',NULL,10,4,1),(14,'9999-12-12',NULL,11,4,1),(15,'9999-12-12',NULL,12,4,1),(16,'9999-12-12',NULL,13,4,1),(17,'9999-12-12',NULL,14,4,1),(18,'9999-12-12',NULL,15,4,1),(19,'9999-12-12',NULL,16,4,1),(20,'9999-12-12',NULL,17,4,1),(21,'9999-12-12',NULL,18,4,1),(22,'9999-12-12',NULL,19,4,1),(23,'9999-12-12',NULL,20,4,1),(24,'9999-12-12',NULL,21,4,1),(25,'9999-12-12',NULL,22,4,1),(26,'9999-12-12',NULL,23,4,1),(27,'9999-12-12',NULL,24,4,1),(28,'9999-12-12',NULL,25,4,1),(29,'9999-12-12',NULL,26,4,1),(30,'9999-12-12',NULL,27,4,1),(31,'9999-12-12',NULL,28,4,1),(32,'9999-12-12',NULL,29,4,1),(33,'9999-12-12',NULL,30,4,1),(34,'9999-12-12',NULL,1,5,0),(35,'9999-12-12',NULL,2,5,0),(36,'9999-12-12',NULL,3,5,1),(37,'9999-12-12',NULL,4,5,1),(38,'9999-12-12',NULL,5,5,1),(39,'9999-12-12',NULL,6,5,1),(40,'9999-12-12',NULL,7,5,1),(41,'9999-12-12',NULL,8,5,1),(42,'9999-12-12',NULL,9,5,1),(43,'9999-12-12',NULL,10,5,1),(44,'9999-12-12',NULL,11,5,1),(45,'9999-12-12',NULL,12,5,1),(46,'9999-12-12',NULL,13,5,1),(47,'9999-12-12',NULL,14,5,1),(48,'9999-12-12',NULL,15,5,1),(49,'9999-12-12',NULL,16,5,1),(50,'9999-12-12',NULL,17,5,1),(51,'9999-12-12',NULL,18,5,1),(52,'9999-12-12',NULL,19,5,1),(53,'9999-12-12',NULL,20,5,1),(54,'9999-12-12',NULL,21,5,1),(55,'9999-12-12',NULL,22,5,1),(56,'9999-12-12',NULL,23,5,1),(57,'9999-12-12',NULL,24,5,1),(58,'9999-12-12',NULL,25,5,1),(59,'9999-12-12',NULL,26,5,1),(60,'9999-12-12',NULL,27,5,1),(61,'9999-12-12',NULL,28,5,1),(62,'9999-12-12',NULL,29,5,1),(63,'9999-12-12',NULL,30,5,1);
+
 /*!40000 ALTER TABLE `aluno_avaliacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
