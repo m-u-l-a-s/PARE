@@ -41,7 +41,7 @@ public class AlunoAvaliacaoDAO {
             stmt.setInt(1, avaliacao.getAvaliacaoId());
             stmt.setInt(2, aluno.getAlunoId());
             stmt.setDate(3, java.sql.Date.valueOf(LocalDate.parse("9999-12-12")));
-            stmt.setString(4,"M");
+            stmt.setInt(4,1);
             
             stmt.execute();           
             stmt.close();
@@ -50,7 +50,7 @@ public class AlunoAvaliacaoDAO {
     }
 
      public void inativarAlunoAvaliacao(int alunoId) {
-    String sql = "UPDATE aluno_avaliacao SET aluno_avaliacao_status = 'i' WHERE aluno_id = ?;";
+    String sql = "UPDATE aluno_avaliacao SET aluno_avaliacao_status = 0 WHERE aluno_id = ?;";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
         stmt.setInt(1, alunoId);
@@ -64,7 +64,7 @@ public class AlunoAvaliacaoDAO {
     public List<AlunoAvaliacao> buscarTodosAlunoAvaliacao(Avaliacao avaliacao) {
         List<AlunoAvaliacao> ListAlunoAvaliacao = new ArrayList<>();
 
-        String sql = "select * from api.aluno_avaliacao where avaliacao_id = ? and aluno_avaliacao_status = 'M'order by aluno_avaliacao_data_entrega desc;";
+        String sql = "select * from api.aluno_avaliacao where avaliacao_id = ? and aluno_avaliacao_status = 1 order by aluno_avaliacao_data_entrega desc;";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             
@@ -103,7 +103,7 @@ public class AlunoAvaliacaoDAO {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             
             stmt.setInt(1, id );
-            stmt.setString(2, "M" );
+            stmt.setInt(2, 1 );
             stmt.setInt(3, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
