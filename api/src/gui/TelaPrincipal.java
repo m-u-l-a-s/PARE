@@ -616,6 +616,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void comboAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAvaliacaoActionPerformed
         // TODO add your handling code here:
         if (comboAvaliacao.getSelectedIndex() != -1) {
+            tableAvaliacoesAluno.getColumnModel().getColumn(4).setWidth(0);
+            tableAvaliacoesAluno.getColumnModel().getColumn(4).setMaxWidth(0);
+            tableAvaliacoesAluno.getColumnModel().getColumn(4).setMinWidth(0);
             PopulaTabela();
         }
 
