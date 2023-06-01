@@ -7,13 +7,13 @@ package gui;
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import dao.*;
 import java.awt.Color;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.JOptionPane;
@@ -30,9 +30,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
 
         initComponents();
-        labelAvaliacaoNome3.setVisible(false);
-        listRendimentoGeral.setVisible(false);
-        jScrollPane5.setVisible(false);
+//        labelAvaliacaoNome3.setVisible(false);
+//        listRendimentoGeral.setVisible(false);
+//        jScrollPane5.setVisible(false);
         tableAvaliacoesAluno.getColumnModel().getColumn(4).setResizable(true);
         //PopulaCombo: Popula combo com os nomes das salas
         PopulaCombo();
@@ -119,49 +119,51 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     public void setCombo() {
         ComboSala.setSelectedItem(salaHorarioController.getSalaAtual());
-
-//        listRendimentoGeral.setListData(calculaRendimentoGeral());
     }
 
     // Calcular e exibir rendimento geral da sala:
-//    public String[] calculaRendimentoGeral() {
-//        int entregue = 0;
-//        int atrasado = 0;
-//        int pendente = 0;
-//        int id = new AvaliacaoDAO().getAvaliacaoID(comboAvaliacao.getSelectedItem().toString());
-//        Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
-//        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
-//
-//        GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
-//        int totalAlunos = ListAlunoAvaliacao.size();
-//
-//        for (int i = 0; i < totalAlunos; i++) {
-//            String dataAluno = ListAlunoAvaliacao.get(i).getAlunoAvaliacaoData();
-//            String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
-//
-//            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
-//                atrasado++;
-//            } else if (dataAlunoFormatada.contains("9999")) {
-//                pendente++;
-//            } else {
-//                entregue++;
-//            }
-//        }
-//        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-//
-//        String porCentagemEntregue = decimalFormat.format((double) (entregue * 100) / totalAlunos);
-//        String porCentagemAtrasado = decimalFormat.format((double) (atrasado * 100) / totalAlunos);
-//        String porCentagemPendente = decimalFormat.format((double) (pendente * 100) / totalAlunos);
-//
-//        ArrayList<String> rendimentoGeral = new ArrayList<>();
-//
-//        rendimentoGeral.add("Entregue: " + entregue + " de " + totalAlunos + " (" + porCentagemEntregue + "%)");
-//        rendimentoGeral.add("Atrasado: " + atrasado + " de " + totalAlunos + " (" + porCentagemEntregue + "%)");
-//        rendimentoGeral.add("Pendente: " + pendente + " de " + totalAlunos + " (" + porCentagemEntregue + "%)");
-//
-//        String[] rendimentoGeralArray = rendimentoGeral.toArray(new String[0]);
-//        return rendimentoGeralArray;
-//    }
+    public String[] calculaRendimentoGeral() {
+        int entregue = 0;
+        int atrasado = 0;
+        int pendente = 0;
+
+        int id = new AvaliacaoDAO().getAvaliacaoID(Objects.requireNonNull(comboAvaliacao.getSelectedItem()).toString());
+        String nomeAvaliacao = new AvaliacaoDAO().getAvaliacaoNome(id);
+        Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
+        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+
+        GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
+        int totalAlunos = ListAlunoAvaliacao.size();
+
+        for (AlunoAvaliacao alunoAvaliacao : ListAlunoAvaliacao) {
+            String dataAluno = alunoAvaliacao.getAlunoAvaliacaoData();
+            String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
+
+            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
+                atrasado++;
+            } else if (dataAlunoFormatada.contains("9999")) {
+                pendente++;
+            } else {
+                entregue++;
+            }
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        String porcentagemEntregue = decimalFormat.format((double) (entregue * 100) / totalAlunos);
+        String porcentagemAtrasado = decimalFormat.format((double) (atrasado * 100) / totalAlunos);
+        String porcentagemPendente = decimalFormat.format((double) (pendente * 100) / totalAlunos);
+
+        ArrayList<String> rendimentoGeral = new ArrayList<>();
+
+        rendimentoGeral.add("Nome da Avaliação: " + nomeAvaliacao);
+        rendimentoGeral.add("Entregue: " + entregue + " de " + totalAlunos + " (" + porcentagemEntregue + "%)");
+        rendimentoGeral.add("Atrasado: " + atrasado + " de " + totalAlunos + " (" + porcentagemAtrasado + "%)");
+        rendimentoGeral.add("Pendente: " + pendente + " de " + totalAlunos + " (" + porcentagemPendente + "%)");
+
+        String[] rendimentoGeralArray = rendimentoGeral.toArray(new String[0]);
+
+        return rendimentoGeralArray;
+    }
 
     public void PopulaTabela() {
 
@@ -177,7 +179,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tableAvaliacoesAluno.getColumnModel().getColumn(4).setMaxWidth(0);
         tableAvaliacoesAluno.getColumnModel().getColumn(4).setMinWidth(0);
         ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
-        if (comboAvaliacao.getSelectedItem().toString() == "Geral") {
+        if (Objects.equals(comboAvaliacao.getSelectedItem().toString(), "Geral")) {
             tableAvaliacoesAluno.getColumnModel().getColumn(4).setWidth(94);
             tableAvaliacoesAluno.getColumnModel().getColumn(4).setMaxWidth(94);
             tableAvaliacoesAluno.getColumnModel().getColumn(4).setMinWidth(94);
@@ -596,7 +598,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Sala salin = new Sala();
         salin.setSalaNome(ComboSala.getSelectedItem().toString());
         populaSalaHorario(salin);
-//        listRendimentoGeral.setListData(calculaRendimentoGeral());
 
     }//GEN-LAST:event_ComboSalaActionPerformed
 
@@ -622,6 +623,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         PopulaComboAvaliacao();
         listTrabalhos.setSelectedIndex(auxLista);
         comboAvaliacao.setSelectedIndex(aux);
+
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void ordenarPorNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordenarPorNomeActionPerformed
@@ -660,6 +662,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             tableAvaliacoesAluno.getColumnModel().getColumn(4).setMaxWidth(0);
             tableAvaliacoesAluno.getColumnModel().getColumn(4).setMinWidth(0);
             PopulaTabela();
+            if (!comboAvaliacao.getSelectedItem().toString().equals("Geral")) {
+                calculaRendimentoGeral();
+                // popula listRendimentoGeral
+                listRendimentoGeral.setListData(calculaRendimentoGeral());
+            }
+
         }
 
     }//GEN-LAST:event_comboAvaliacaoActionPerformed
