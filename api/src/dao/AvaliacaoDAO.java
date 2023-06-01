@@ -6,6 +6,7 @@ import java.sql.*;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AvaliacaoDAO {
     private Connection connection;
@@ -150,5 +151,47 @@ stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(avaliacao.getAvaliacaoData
         }
 
         return av;
+    }
+    
+    public List<String> listaHorarioFinal(){
+        List<String> listHoraFinal = new ArrayList<>();
+        
+        String sql = "SELECT avaliacao_data_final FROM api.avaliacao where DATE(avaliacao_data_final) = curdate()";
+        //select antigo: SELECT avaliacao_data_final FROM api.avaliacao
+        //select novo: SELECT avaliacao_data_final FROM api.avaliacao where DATE(avaliacao_data_final) = curdate();
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            try (ResultSet rs = stmt.executeQuery()){
+                while(rs.next()){
+                    String horarioFinal = rs.getDate("avaliacao_data_final").toString();
+                    listHoraFinal.add(horarioFinal);
+                }
+            }
+        } catch (SQLException e){throw new RuntimeException(e);
+        
+        }
+        return listHoraFinal ;
+    
+    }
+    
+        public List<String> listaNomeTrabalho(){
+        List<String> listNomeTrab = new ArrayList<>();
+        
+        String sql = "SELECT avaliacao_nome FROM api.avaliacao where DATE(avaliacao_data_final) = curdate()";
+        // select antigo: SELECT avaliacao_nome FROM api.avaliacao
+        // select novo: SELECT avaliacao_nome FROM api.avaliacao where DATE(avaliacao_data_final) = curdate()        
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            try (ResultSet rs = stmt.executeQuery()){
+                while(rs.next()){
+                    String nomeTrab = rs.getString("avaliacao_nome");
+                    listNomeTrab.add(nomeTrab);
+                }
+            }
+        } catch (SQLException e){throw new RuntimeException(e);
+        
+        }
+        return listNomeTrab;
+    
     }
 }

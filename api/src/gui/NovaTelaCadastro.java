@@ -117,6 +117,11 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         jLabel4.setText("Cadastrar Sala:");
 
         jTextSalaNome.setForeground(new java.awt.Color(102, 102, 102));
+        jTextSalaNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextSalaNomeActionPerformed(evt);
+            }
+        });
 
         jTableAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -365,7 +370,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        new TelaPrincipal().setVisible(true);
+        new TelaPrincipal(false).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -520,6 +525,10 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jTableHorariosKeyPressed
+
+    private void jTextSalaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextSalaNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextSalaNomeActionPerformed
 
     /**
      * @param args the command line arguments

@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
+import javax.swing.JOptionPane;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
@@ -24,7 +25,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     List<AlunoAvaliacao> GlobalListAlunoAvaliacao;
 
-    public TelaPrincipal() {
+    public TelaPrincipal(boolean flag) {
         getContentPane().setBackground(Color.decode("#658EA9"));
         getContentPane().setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
 
@@ -35,10 +36,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tableAvaliacoesAluno.getColumnModel().getColumn(4).setResizable(true);
         //PopulaCombo: Popula combo com os nomes das salas
         PopulaCombo();
-
+        
         // setCombo: Altera valor do combo box para sala atual.
         setCombo();
         PopulaComboAvaliacao();
+        
+        // verificar o sistema de aviso
+        verificaAlerta(flag);
 
     }
 
@@ -266,6 +270,42 @@ public class TelaPrincipal extends javax.swing.JFrame {
             ? getDiaEHora() + ". Não há turmas neste horário."
             : getDiaEHora() + ". Estamos na sala " + salaHorarioController.getSalaAtual();
 
+    public void verificaAlerta(boolean flag){    
+        if (flag!=false){
+            sistemaAlerta();
+        }
+//        else{
+//            System.out.println("DEU CERTO");
+//        }
+    }
+    
+    
+    public void sistemaAlerta(){
+        //listas com as datas e nomes dos trabalhos
+       List<String> listaHorarioAvaliacao = new AvaliacaoDAO().listaHorarioFinal();
+       List<String> listaNomeTrabalho = new AvaliacaoDAO().listaNomeTrabalho();
+       //for do pop-up alerta
+       for (int i=0;i<listaHorarioAvaliacao.size();i++){
+           JOptionPane.showMessageDialog(null, "O trabalho " + listaNomeTrabalho.get(i)+ " deve ser entregue hoje");
+       }
+   
+       // VERSÃO ANTIGA - comparação de todos os trabalho c data local pelo java
+       
+       //variavel para registrar o dia/mês/ano (já no formato do sql) do comp.
+       //LocalDate ld=LocalDate.now();
+       //String dataLocal=ld.toString();
+       // for que compara lista das datas com a data local
+       //for (int i=0;i<listaHorarioAvaliacao.size();i++){
+       //    if(dataLocal == null ? listaHorarioAvaliacao.get(i) == null : dataLocal.equals(listaHorarioAvaliacao.get(i))){
+//               System.out.println(listaNomeTrabalho.get(i));
+       //        JOptionPane.showMessageDialog(null, "O trabalho " + listaNomeTrabalho.get(i)+ " deve ser entregue hoje");
+       //    }
+//           else{
+//               System.out.println("Teste");
+//           }
+//       }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -661,7 +701,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+                new TelaPrincipal(true).setVisible(true);
             }
         });
     }
