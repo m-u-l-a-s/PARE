@@ -4,10 +4,17 @@
  */
 package gui;
 
+import dao.AlunoAvaliacaoDAO;
+import dao.AvaliacaoDAO;
 import dao.SalaDAO;
 import java.awt.Color;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
+import javax.swing.table.DefaultTableModel;
+import modelo.AlunoAvaliacao;
+import modelo.Avaliacao;
+import modelo.Sala;
 
 /**
  *
@@ -155,6 +162,8 @@ public class TelaRendimento extends javax.swing.JFrame {
 
     private void ComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboSalaActionPerformed
         // TODO add your handling code here:
+        int id = ComboSala.getSelectedIndex();
+        populaTabela();
     }//GEN-LAST:event_ComboSalaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -209,7 +218,6 @@ public class TelaRendimento extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-
     public void PopulaCombo() {
 
         List<String> ListSalas = new SalaDAO().buscarTodasSalas();
@@ -220,4 +228,41 @@ public class TelaRendimento extends javax.swing.JFrame {
 
     }
 
+    public double calculaMedia( Avaliacao avaliacao) {
+
+        int sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
+       
+       
+        List<AlunoAvaliacao> listaAlunos = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(avaliacao);
+
+        double media = 0.0;
+
+        for (int i = 0; i < listaAlunos.size(); i++) {
+            float nota = listaAlunos.get(i).getAlunoAvaliacaoNota();
+            media += nota;
+        }
+        media = media / listaAlunos.size();
+        System.out.println(media);
+        return media;
+
+    }
+
+    public void populaTabela() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        jTable1.setModel(model);
+
+        AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
+        int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
+        ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
+
+        for (int i = 0; i < avaliacoes.size(); i++) {
+            String nome = avaliacoes.get(i).getAvaliacaoNome();
+            double media = calculaMedia(avaliacoes.get(i));
+
+            model.addRow(new Object[]{nome, media, "", ""});
+            jTable1.setModel(model);
+        }
+
+    }
 }
