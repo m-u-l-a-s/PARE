@@ -284,10 +284,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     public void sistemaAlerta(){
         //listas com as datas e nomes dos trabalhos
-       List<String> listaHorarioAvaliacao = new AvaliacaoDAO().listaHorarioFinal();
+//       List<String> listaHorarioAvaliacao = new AvaliacaoDAO().listaHorarioFinal();
        List<String> listaNomeTrabalho = new AvaliacaoDAO().listaNomeTrabalho();
        //for do pop-up alerta
-       for (int i=0;i<listaHorarioAvaliacao.size();i++){
+       for (int i=0;i<listaNomeTrabalho.size();i++){
            JOptionPane.showMessageDialog(null, "O trabalho " + listaNomeTrabalho.get(i)+ " deve ser entregue hoje");
        }
    
