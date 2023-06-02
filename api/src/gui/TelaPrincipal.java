@@ -24,11 +24,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
      * Creates new form TelaPrincipal
      */
     List<AlunoAvaliacao> GlobalListAlunoAvaliacao;
+    boolean globalFlag;
 
     public TelaPrincipal(boolean flag) {
         getContentPane().setBackground(Color.decode("#658EA9"));
         getContentPane().setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
-
+        globalFlag = flag;
         initComponents();
 //        labelAvaliacaoNome3.setVisible(false);
 //        listRendimentoGeral.setVisible(false);
@@ -41,8 +42,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setCombo();
         PopulaComboAvaliacao();
         
-        // verificar o sistema de aviso
-        verificaAlerta(flag);
+        
+
 
     }
 
@@ -302,6 +303,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 formWindowGainedFocus(evt);
             }
             public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -637,6 +643,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         nome = nome.substring(25, listTrabalhos.getSelectedValue().indexOf(" ("));
         comboAvaliacao.setSelectedItem(nome);
     }//GEN-LAST:event_listTrabalhosMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+                // verificar o sistema de aviso
+        verificaAlerta(globalFlag);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
