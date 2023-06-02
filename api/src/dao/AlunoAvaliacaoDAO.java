@@ -5,12 +5,15 @@ import modelo.Avaliacao;
 import modelo.Aluno;
 import java.sql.*;
 import java.sql.PreparedStatement;
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import dao.AlunoDAO;
 import dao.AvaliacaoDAO;
 import java.time.LocalDate;
+import java.util.Objects;
+
 import modelo.Sala;
 
 public class AlunoAvaliacaoDAO {
@@ -184,5 +187,48 @@ public class AlunoAvaliacaoDAO {
         }
 
         return ListAlunoAvaliacao;
+    }
+
+
+    // Calcular e exibir rendimento geral da sala:
+    public String[] calculaRendimentoGeral(int id) {
+        int entregue = 0;
+        int atrasado = 0;
+        int pendente = 0;
+
+        String nomeAvaliacao = new AvaliacaoDAO().getAvaliacaoNome(id);
+        Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
+        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
+
+        int totalAlunos = ListAlunoAvaliacao.size();
+
+        for (AlunoAvaliacao alunoAvaliacao : ListAlunoAvaliacao) {
+            String dataAluno = alunoAvaliacao.getAlunoAvaliacaoData();
+            String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
+
+            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
+                atrasado++;
+            } else if (dataAlunoFormatada.contains("9999")) {
+                pendente++;
+            } else {
+                entregue++;
+            }
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        String porcentagemEntregue = decimalFormat.format((double) (entregue * 100) / totalAlunos);
+        String porcentagemAtrasado = decimalFormat.format((double) (atrasado * 100) / totalAlunos);
+        String porcentagemPendente = decimalFormat.format((double) (pendente * 100) / totalAlunos);
+
+        ArrayList<String> rendimentoGeral = new ArrayList<>();
+
+        rendimentoGeral.add("Nome da Avaliação: " + nomeAvaliacao);
+        rendimentoGeral.add("Entregue: " + entregue + " de " + totalAlunos + " (" + porcentagemEntregue + "%)");
+        rendimentoGeral.add("Atrasado: " + atrasado + " de " + totalAlunos + " (" + porcentagemAtrasado + "%)");
+        rendimentoGeral.add("Pendente: " + pendente + " de " + totalAlunos + " (" + porcentagemPendente + "%)");
+
+        String[] rendimentoGeralArray = rendimentoGeral.toArray(new String[0]);
+
+        return rendimentoGeralArray;
     }
 }

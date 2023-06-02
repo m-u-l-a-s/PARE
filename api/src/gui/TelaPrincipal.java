@@ -121,50 +121,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ComboSala.setSelectedItem(salaHorarioController.getSalaAtual());
     }
 
-    // Calcular e exibir rendimento geral da sala:
-    public String[] calculaRendimentoGeral() {
-        int entregue = 0;
-        int atrasado = 0;
-        int pendente = 0;
-
-        int id = new AvaliacaoDAO().getAvaliacaoID(Objects.requireNonNull(comboAvaliacao.getSelectedItem()).toString());
-        String nomeAvaliacao = new AvaliacaoDAO().getAvaliacaoNome(id);
-        Avaliacao av = new AvaliacaoDAO().getAvaliacao(id);
-        List<AlunoAvaliacao> ListAlunoAvaliacao = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(av);
-
-        GlobalListAlunoAvaliacao = ListAlunoAvaliacao;
-        int totalAlunos = ListAlunoAvaliacao.size();
-
-        for (AlunoAvaliacao alunoAvaliacao : ListAlunoAvaliacao) {
-            String dataAluno = alunoAvaliacao.getAlunoAvaliacaoData();
-            String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
-
-            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
-                atrasado++;
-            } else if (dataAlunoFormatada.contains("9999")) {
-                pendente++;
-            } else {
-                entregue++;
-            }
-        }
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
-        String porcentagemEntregue = decimalFormat.format((double) (entregue * 100) / totalAlunos);
-        String porcentagemAtrasado = decimalFormat.format((double) (atrasado * 100) / totalAlunos);
-        String porcentagemPendente = decimalFormat.format((double) (pendente * 100) / totalAlunos);
-
-        ArrayList<String> rendimentoGeral = new ArrayList<>();
-
-        rendimentoGeral.add("Nome da Avaliação: " + nomeAvaliacao);
-        rendimentoGeral.add("Entregue: " + entregue + " de " + totalAlunos + " (" + porcentagemEntregue + "%)");
-        rendimentoGeral.add("Atrasado: " + atrasado + " de " + totalAlunos + " (" + porcentagemAtrasado + "%)");
-        rendimentoGeral.add("Pendente: " + pendente + " de " + totalAlunos + " (" + porcentagemPendente + "%)");
-
-        String[] rendimentoGeralArray = rendimentoGeral.toArray(new String[0]);
-
-        return rendimentoGeralArray;
-    }
-
     public void PopulaTabela() {
 
         DefaultTableModel model = (DefaultTableModel) tableAvaliacoesAluno.getModel();
@@ -662,10 +618,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
             tableAvaliacoesAluno.getColumnModel().getColumn(4).setMaxWidth(0);
             tableAvaliacoesAluno.getColumnModel().getColumn(4).setMinWidth(0);
             PopulaTabela();
-            if (!comboAvaliacao.getSelectedItem().toString().equals("Geral")) {
-                calculaRendimentoGeral();
+            if (comboAvaliacao.getSelectedItem().toString().equals("Geral")) {
+                String[] txt = {"Escolha uma avaliação para ver mais detalhes."};
+                listRendimentoGeral.setListData(txt);
+            } else {
+                int id = new AvaliacaoDAO().getAvaliacaoID(Objects.requireNonNull(comboAvaliacao.getSelectedItem()).toString());
                 // popula listRendimentoGeral
-                listRendimentoGeral.setListData(calculaRendimentoGeral());
+                listRendimentoGeral.setListData(new AlunoAvaliacaoDAO().calculaRendimentoGeral(id));
             }
 
         }
