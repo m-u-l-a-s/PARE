@@ -87,9 +87,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(101, 142, 169));
         setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(1022, 700));
 
-        ComboSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nova Sala" }));
         ComboSala.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 ComboSalaItemStateChanged(evt);
@@ -428,9 +426,9 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                         new AlunoDAO().cadastrarAlunoEmAvaliacoes(aluno);
                     }
 
-                    }
+                }
 
-                for (int i = GlobalListSalaHorario.size(); i < jTableAlunos.getRowCount(); i++) {
+                for (int i = GlobalListSalaHorario.size(); i < jTableHorarios.getRowCount(); i++) {
                     if (!String.valueOf(jTableHorarios.getValueAt(i, 1)).isEmpty()) {
                         String dia = String.valueOf(jTableHorarios.getValueAt(i, 1));
                         String hora = String.valueOf(jTableHorarios.getValueAt(i, 2));
@@ -442,8 +440,6 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 }
             } finally {
                 JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
-                ComboSala.removeAllItems();
-                ComboSala.addItem("Nova Sala");
                 PopulaCombo();
                 jTextSalaNome.setText("");
             }
@@ -454,29 +450,31 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastroActionPerformed
 
     private void ComboSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboSalaActionPerformed
-        Sala salin = new Sala();
-        salin.setSalaNome(ComboSala.getSelectedItem().toString());
-        if (ComboSala.getSelectedItem().toString().equals("Nova Sala")) {
-            jLabel4.setVisible(true);
-            jTextSalaNome.setVisible(true);
-            jLabel5.setVisible(true);
+        if (ComboSala.getSelectedIndex() > -1) {
+            Sala salin = new Sala();
+            salin.setSalaNome(ComboSala.getSelectedItem().toString());
+            if (ComboSala.getSelectedItem().toString().equals("Nova Sala")) {
+                jLabel4.setVisible(true);
+                jTextSalaNome.setVisible(true);
+                jLabel5.setVisible(true);
 
 //            jTable1.setModel(new DefaultTableModel());
 //            jTable3.setModel(new DefaultTableModel());
-            salin.setSalaId(999);
-            salaID = 999;
-        } else {
-            jLabel4.setVisible(false);
-            jTextSalaNome.setVisible(false);
-            jLabel5.setVisible(false);
+                salin.setSalaId(999);
+                salaID = 999;
+            } else {
+                jLabel4.setVisible(false);
+                jTextSalaNome.setVisible(false);
+                jLabel5.setVisible(false);
 
-            salaID = new SalaDAO().getSalaId(salin.getSalaNome());
-            salin.setSalaId(salaID);
+                salaID = new SalaDAO().getSalaId(salin.getSalaNome());
+                salin.setSalaId(salaID);
 
+            }
+
+            populaSalaAluno(salin);
+            populaSalaHorario(salin);
         }
-
-        populaSalaAluno(salin);
-        populaSalaHorario(salin);
     }//GEN-LAST:event_ComboSalaActionPerformed
 
     private void jTableAlunosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableAlunosKeyPressed
@@ -589,6 +587,9 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
 
     public void PopulaCombo() {
 
+        ComboSala.removeAllItems();
+        ComboSala.addItem("Nova Sala");
+
         List<String> ListSalas = new SalaDAO().buscarTodasSalas();
 
         for (int i = 0; i < ListSalas.size(); i++) {
@@ -620,7 +621,7 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
         model.setRowCount(0);
         jTableHorarios.setModel(model);
         GlobalListSalaHorario.clear();
-        try {
+        if (sala.getSalaNome() != "Nova Sala") {
             List<SalaHorario> ListSalaHorario = new SalaHorarioDAO().buscarTodosHorarios(sala);
             GlobalListSalaHorario = ListSalaHorario;
             for (int i = 0; i < ListSalaHorario.size(); i++) {
@@ -630,10 +631,8 @@ public class NovaTelaCadastro extends javax.swing.JFrame {
                 // model.addRow(new Object[] {false, nome});
                 //jTableHorarios.setModel(model);
             }
-        } finally {
-            model.addRow(new Object[]{false, "", ""});
-            jTableHorarios.setModel(model);
         }
-
+        model.addRow(new Object[]{false, "", ""});
+        jTableHorarios.setModel(model);
     }
 }
