@@ -228,11 +228,10 @@ public class TelaRendimento extends javax.swing.JFrame {
 
     }
 
-    public double calculaMedia( Avaliacao avaliacao) {
+    public double calculaMedia(Avaliacao avaliacao) {
 
         int sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
-       
-       
+
         List<AlunoAvaliacao> listaAlunos = new AlunoAvaliacaoDAO().buscarTodosAlunoAvaliacao(avaliacao);
 
         double media = 0.0;
@@ -253,16 +252,20 @@ public class TelaRendimento extends javax.swing.JFrame {
         jTable1.setModel(model);
 
         AvaliacaoDAO avaliacaoController = new AvaliacaoDAO();
+        AlunoAvaliacaoDAO alunoAvaliacaoController = new AlunoAvaliacaoDAO();
         int id_sala = new SalaDAO().getSalaId(ComboSala.getSelectedItem().toString());
         ArrayList<Avaliacao> avaliacoes = avaliacaoController.getAvaliacoesDaSala(id_sala);
+        
+        for (Avaliacao av : avaliacoes) {
+            List<AlunoAvaliacao> avaliacaoAluno = alunoAvaliacaoController.buscarTodosAlunoAvaliacao(av);
+            String nome = av.getAvaliacaoNome();
+            double media = calculaMedia(av);
+            String aprovados = new AlunoAvaliacaoDAO().printarAprovados(av, avaliacaoAluno);
+            String rendimento = new AlunoAvaliacaoDAO().calculaRendimentoGeral(av.getAvaliacaoId())[1];
 
-        for (int i = 0; i < avaliacoes.size(); i++) {
-            String nome = avaliacoes.get(i).getAvaliacaoNome();
-            double media = calculaMedia(avaliacoes.get(i));
-
-            model.addRow(new Object[]{nome, media, "", ""});
+            model.addRow(new Object[]{nome, media, rendimento, aprovados});
             jTable1.setModel(model);
+            }            
         }
 
-    }
 }
