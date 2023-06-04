@@ -150,11 +150,20 @@ public class AlunoAvaliacaoDAO {
         }
     }
 
+    // Converter data yyyy-mm-dd para dd/mm/yyyy:
     public static String formataData(String inputDate) {
         LocalDate date = LocalDate.parse(inputDate);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String outputDate = date.format(outputFormatter);
         //System.out.println(inputDate + "==> " + outputDate);
+        return outputDate;
+    }
+    // Converter data dd/mm/yyyy para yyyy-mm-dd:
+    public static String desformataData(String inputDate) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(inputDate, inputFormatter);
+        String outputDate = date.format(outputFormatter);
         return outputDate;
     }
 
@@ -206,10 +215,11 @@ public class AlunoAvaliacaoDAO {
             String dataAluno = alunoAvaliacao.getAlunoAvaliacaoData();
             String dataAlunoFormatada = AlunoAvaliacaoDAO.formataData(dataAluno);
 
-            if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
-                atrasado++;
-            } else if (dataAlunoFormatada.contains("9999")) {
+            if (dataAlunoFormatada.contains("9999")) {
                 pendente++;
+            } else if (LocalDate.parse(dataAluno).isAfter(LocalDate.parse(av.getAvaliacaoDataFinal()))) {
+                atrasado++;
+                entregue++;
             } else {
                 entregue++;
             }
