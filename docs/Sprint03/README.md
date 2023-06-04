@@ -72,9 +72,9 @@ Nosso foco é identificar a principal finalidade de um produto para desenvolver 
 * [Amanda Mendes Caldeira](https://github.com/AmendoaM)
 * [Jonas Alves Bueno](https://github.com/dodekafonos)
 * [Michael Morais](https://github.com/itsmorais)
-* [Vitor F. Morais](https://github.com/vmorais111)
-#### Product Owner:
 * [Jean Cesar de Oliveira Rodrigues](https://github.com/JeanRodrigues1)
+#### Product Owner:
+* [Vitor F. Morais](https://github.com/vmorais111)
 #### Scrum Master:
 * [Alexandre Jonas de Souza Fonseca](https://github.com/AlexandreJonas)
 
