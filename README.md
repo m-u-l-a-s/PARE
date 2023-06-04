@@ -56,6 +56,7 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 [Sprint 1](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint01/README.md#burndown-da-sprint-1) |
 [Sprint 2](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint02/README.md#burndown-da-sprint-2) |
 [Sprint 3](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint03/README.md#burndown-da-sprint-3) |
+[Sprint 4](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint04/README.md#burndown-da-sprint-4) |
 
 
 ## Apresentação da Equipe:
