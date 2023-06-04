@@ -48,7 +48,7 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 ### User Stories:
 
 ![user story1](https://user-images.githubusercontent.com/112016792/234735452-b65ea839-7820-4da2-bf86-403c8cdfe616.png)
-![user story2](https://user-images.githubusercontent.com/112016792/234735681-bdd42ad4-6f65-4300-a74c-3b6566e3d00d.png)
+![user story2](https://github.com/m-u-l-a-s/PARE/assets/112016792/7f1eaa55-cf81-40b9-a034-dfe5894263e8)
 
 ## Planejamento de Entregas:
 ![Sprints](https://user-images.githubusercontent.com/89790349/229389192-a60fc7ed-d497-40e3-ae0e-6f54c8420048.png)
