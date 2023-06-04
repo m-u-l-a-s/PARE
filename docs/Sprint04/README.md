@@ -48,7 +48,10 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 ### User Stories:
 
 ![user story1](https://user-images.githubusercontent.com/112016792/234735452-b65ea839-7820-4da2-bf86-403c8cdfe616.png)
-![user story2](https://user-images.githubusercontent.com/112016792/234735681-bdd42ad4-6f65-4300-a74c-3b6566e3d00d.png)
+![user story2](https://github.com/m-u-l-a-s/PARE/assets/112016792/7f1eaa55-cf81-40b9-a034-dfe5894263e8)
+
+## Burndown da Sprint 4:
+![image](https://github.com/m-u-l-a-s/PARE/assets/112016792/0cf1a28f-8a0a-4bc0-afcf-b4cd443d086c)
 
 ## Planejamento de Entregas:
 ![Sprints](https://user-images.githubusercontent.com/89790349/229389192-a60fc7ed-d497-40e3-ae0e-6f54c8420048.png)
@@ -56,7 +59,7 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 [Sprint 1](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint01/README.md#burndown-da-sprint-1) |
 [Sprint 2](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint02/README.md#burndown-da-sprint-2) |
 [Sprint 3](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint03/README.md#burndown-da-sprint-3) |
-
+[Sprint 4](https://github.com/m-u-l-a-s/PARE/tree/main/docs/Sprint04/README.md#burndown-da-sprint-4) |
 
 ## Apresentação da Equipe:
 Somos uma equipe de jovens programadores interessados em criar soluções simples para problemas complexos e em aprender o máximo possível no processo.
