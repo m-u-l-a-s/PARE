@@ -37,9 +37,9 @@ O banco de dados trabalhado nesse projeto é o [MySQL](https://www.mysql.com/) e
 ### Modelo Conceitual:
 ![modelo_conceitual](docs/modeloConceitual_PARE.png)
 
-## Protótipo (Wireframe)
+## Projeto em Funcionamento
 ### Vídeo Demonstrativo
-[apiFigma.webm](https://user-images.githubusercontent.com/53665466/229374066-6726121a-f0a8-454c-9545-9b427cc361d7.webm)
+https://www.youtube.com/watch?v=8Zq2rWCrLl4
 
 ### Link Figma
 [Neste link](https://www.figma.com/file/0Ryi85LRWO7ZbmtkwX3PGo/Cadastro-Michael?fuid=1144429158156920531) é possível visualizar o protótipo das telas pensadas, como a inicial, a de busca e de cadastro.
