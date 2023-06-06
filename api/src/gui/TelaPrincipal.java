@@ -666,6 +666,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnCadastrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrar1ActionPerformed
         // TODO add your handling code here:
+         new NovaTelaCadastro().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnCadastrar1ActionPerformed
 
     /**
